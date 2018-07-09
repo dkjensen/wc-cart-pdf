@@ -1,0 +1,13 @@
+{
+    "name": "dkjensen/wc-cart-pdf",
+    "type": "wordpress-plugin",
+    "require": {
+        "dompdf/dompdf": "^0.8.2"
+    },
+    "authors": [
+        {
+            "name": "David Jensen",
+            "email": "david@dkjensen.com"
+        }
+    ]
+}
