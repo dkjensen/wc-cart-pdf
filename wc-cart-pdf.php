@@ -2,7 +2,7 @@
 /**
  * Plugin Name:  WooCommerce Cart PDF
  * Description:  Allows customers to download their cart as a PDF
- * Version:      1.0.0
+ * Version:      1.0.1
  * Author:       David Jensen
  * Author URI:   https://dkjensen.com
  * Text Domain:  wc-cart-pdf
@@ -25,7 +25,11 @@ if( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-require 'vendor/autoload.php';
+define( 'WC_CART_PDF_PATH', plugin_dir_path( __FILE__ ) );
+
+
+require WC_CART_PDF_PATH . 'vendor/autoload.php';
+require WC_CART_PDF_PATH . 'wc-cart-pdf-compatibility.php';
 
 
 /**
@@ -38,31 +42,43 @@ function wc_cart_pdf_process_download() {
         return;
     }
 
-    if( ! is_cart() || WC()->cart->is_empty() ) {
-        return;
-    }
-
     if( ! isset( $_GET['cart-pdf'] ) ) {
         return;
     }
 
+    if( ! is_cart() || WC()->cart->is_empty() ) {
+        return;
+    }
+
     if( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'cart-pdf' ) ) {
+        wc_add_notice( __( 'Invalid nonce. Unable to process PDF for download.', 'wc_cart_pdf' ), 'error' );
         return;
     }
 
     $dompdf = new \Dompdf\Dompdf();
 
-    ob_start();
+    $content = $css = '';
 
-    include 'templates/cart-table.php';
+    $cart_table = wc_locate_template( 'cart-table.php', '/woocommerce/wc-cart-pdf/', __DIR__ . '/templates/' );
+    $css        = wc_locate_template( 'pdf-styles.php', '/woocommerce/wc-cart-pdf/', __DIR__ . '/templates/' );
 
-    $content = ob_get_clean();
+    do_action( 'wc_cart_pdf_before_process' );
 
-    ob_start();
+    if( file_exists( $cart_table ) ) {
+        ob_start();
 
-    include 'templates/pdf-styles.php';
+        include $cart_table;
+
+        $content = ob_get_clean();
+    }
     
-    $css = apply_filters( 'woocommerce_email_styles', ob_get_clean() );
+    if( file_exists( $css ) ) {
+        ob_start();
+
+        include $css;
+
+        $css = apply_filters( 'woocommerce_email_styles', ob_get_clean() );
+    }
 
     $dompdf->loadHtml( '<style>' . $css . '</style>' . $content );
 
@@ -70,9 +86,8 @@ function wc_cart_pdf_process_download() {
 
     $dompdf->render();
 
-    ob_end_clean();
+    $dompdf->stream( apply_filters( 'wc_cart_pdf_filename', 'WC_Cart-' . date( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) ) . '.pdf' );
 
-    $dompdf->stream( 'WC_Cart-' . date( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) . '.pdf' );
     exit;
 }
 add_action( 'template_redirect', 'wc_cart_pdf_process_download' );

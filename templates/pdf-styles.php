@@ -91,6 +91,7 @@ a {
 }
 .row-subtotal {
     background: #f0f0f0;
+    vertical-align: middle;
 }
 #template_header_image {
     text-align: center;
