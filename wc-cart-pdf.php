@@ -2,7 +2,7 @@
 /**
  * Plugin Name:  WooCommerce Cart PDF
  * Description:  Allows customers to download their cart as a PDF
- * Version:      1.0.1
+ * Version:      1.0.2
  * Author:       David Jensen
  * Author URI:   https://dkjensen.com
  * Text Domain:  wc-cart-pdf
@@ -81,12 +81,17 @@ function wc_cart_pdf_process_download() {
     }
 
     $dompdf->loadHtml( '<style>' . $css . '</style>' . $content );
-
     $dompdf->setPaper( 'A4', 'portrait' );
-
     $dompdf->render();
-
-    $dompdf->stream( apply_filters( 'wc_cart_pdf_filename', 'WC_Cart-' . date( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) ) . '.pdf' );
+    $dompdf->stream( 
+        apply_filters( 'wc_cart_pdf_filename', 'WC_Cart-' . date( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) ) . '.pdf', 
+        
+        /**
+         * 'compress' => 1 or 0 - apply content stream compression, this is on (1) by default
+         * 'Attachment' => 1 or 0 - if 1, force the browser to open a download dialog, on (1) by default
+         */ 
+        apply_filters( 'wc_cart_pdf_stream_options', array( 'compress' => 1, 'Attachment' => 1 ) ) 
+    );
 
     exit;
 }
@@ -107,7 +112,7 @@ if( ! function_exists( 'wc_cart_pdf_button' ) ) {
         
         ?>
 
-        <a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'cart-pdf' => '1' ), wc_get_cart_url() ), 'cart-pdf' ) );?>" class="cart-pdf-button button">
+        <a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'cart-pdf' => '1' ), wc_get_cart_url() ), 'cart-pdf' ) );?>" class="cart-pdf-button button" target="_blank">
             <?php esc_html_e( 'Download Cart as PDF', 'wc-cart-pdf' ); ?>
         </a>
 
