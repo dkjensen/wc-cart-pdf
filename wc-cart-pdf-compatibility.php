@@ -2,7 +2,7 @@
 /**
  * Plugin compatibility
  * 
- * @package wc_cart_pdf
+ * @package wc-cart-pdf
  */
 
 
