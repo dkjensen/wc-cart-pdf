@@ -3,8 +3,8 @@
  * Plugin Name:  WC Cart PDF
  * Description:  Allows customers to download their cart as a PDF
  * Version:      1.0.2
- * Author:       David Jensen
- * Author URI:   https://dkjensen.com
+ * Author:       Seattle Web Co.
+ * Author URI:   https://seattlewebco.com
  * Text Domain:  wc-cart-pdf
  * Domain Path:  /languages/
  * Contributors: seattlewebco, dkjensen
