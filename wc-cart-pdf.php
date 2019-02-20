@@ -7,6 +7,7 @@
  * Author URI:   https://dkjensen.com
  * Text Domain:  wc-cart-pdf
  * Domain Path:  /languages/
+ * Contributors: seattlewebco, dkjensen
  * Requires PHP: 5.3.6
  *
  * This program is free software; you can redistribute it and/or modify
