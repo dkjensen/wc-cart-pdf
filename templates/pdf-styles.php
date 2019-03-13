@@ -31,7 +31,7 @@ $text_lighter_20 = wc_hex_lighter( $text, 20 );
 body {
     color: <?php echo esc_attr( $text_lighter_20 ); ?>;
     font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-    font-size: 14px;
+    font-size: 13px;
 	margin: 0;
 	padding: 0;
 	-webkit-text-size-adjust: none !important;
@@ -45,21 +45,30 @@ a {
     table-layout: fixed;
     width: 100%;
 }
-.shop_table .product-thumbnail,
+.shop_table .product-thumbnail {
+    width: 10%;
+    text-align: right;
+}
+.shop_table .product-quantity {
+    width: 15%;
+    text-align: right;
+}
 .shop_table .product-price,
-.shop_table .product-quantity,
 .shop_table .product-subtotal {
-    width: 12.5%;
+    width: 20%;
+    text-align: right;
 }
 .shop_table .product-name {
-    width: 50%;
+    width: 35%;
 }
 .shop_table .product-thumbnail img {
     max-width: 100%;
     height: auto;
 }
-.shop_table td {
+.shop_table td,
+.shop_table th {
     vertical-align: top;
+    padding: .5em .5em 1em;
 }
 .shop_table dl {
     margin: 0;
@@ -86,12 +95,11 @@ a {
     height: 0;
     white-space: pre;
 }
-.shop_table td {
-    padding: .5em .5em 1em;
-}
 .row-subtotal {
-    background: #f0f0f0;
-    vertical-align: middle;
+    background: #f5f5f5;
+}
+.row-subtotal:last-child {
+    text-align: right;
 }
 #template_header_image {
     text-align: center;

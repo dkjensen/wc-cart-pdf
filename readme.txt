@@ -1,8 +1,8 @@
 === WooCommerce Cart PDF ===
 Contributors: dkjensen, seattlewebco
-Tested up to: 5.1
+Tested up to: 5.1.1
 Requires PHP: 5.3.6
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 
 Adds ability for users and guests to download their WooCommerce cart as PDF
 
@@ -16,6 +16,11 @@ Useful for many cases such as if a user needs a quote before completing purchase
 2. Ensure WooCommerce is installed and activated as well
 
 == Changelog ==
+1.0.3
+* Add customizer option to change PDF header logo, width and alignment
+* Adjustments to default widths and styling of PDF cart table
+* Bug fix: Expand {site_title} variable placeholder in PDF footer text
+
 1.0.2
 * Tested up to WordPress 5.1
 * Add `wc_cart_pdf_stream_options` filter for stream options

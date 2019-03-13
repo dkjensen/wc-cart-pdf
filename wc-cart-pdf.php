@@ -2,7 +2,7 @@
 /**
  * Plugin Name:  WC Cart PDF
  * Description:  Allows customers to download their cart as a PDF
- * Version:      1.0.2
+ * Version:      1.0.3
  * Author:       Seattle Web Co.
  * Author URI:   https://seattlewebco.com
  * Text Domain:  wc-cart-pdf
@@ -121,3 +121,92 @@ if( ! function_exists( 'wc_cart_pdf_button' ) ) {
     }
 }
 add_action( 'woocommerce_proceed_to_checkout', 'wc_cart_pdf_button', 21 );
+
+
+/**
+ * Register various customizer options for modifying the cart PDF
+ *
+ * @since 1.0.3
+ * @param WP_Customize_Manager $wp_customize Theme Customizer object.
+ * @return void
+ */
+function wc_cart_pdf_customize_register( $wp_customize ) {
+	$wp_customize->add_section( 'wc_cart_pdf', array(
+        'title'                 => __( 'Cart PDF', 'wc-cart-pdf' ),
+        'priority'              => 50,
+        'panel'                 => 'woocommerce',
+    ) );
+
+    $wp_customize->add_setting( 'wc_cart_pdf_logo', array(
+        'default'               => get_option( 'woocommerce_email_header_image' ),
+        'type'                  => 'option',
+        'capability'            => 'manage_woocommerce',
+        'sanitize_callback'     => 'esc_url',
+        'transport'             => 'postMessage'
+    ) );
+
+    $wp_customize->add_control( 'wc_cart_pdf_logo', array(
+        'label'                 => __( 'Logo URL', 'wc-cart-pdf'),
+        'description'           => __( 'Image URL of logo for the cart PDF, must live on current server.', 'wc-cart-pdf'),
+        'section'               => 'wc_cart_pdf',
+        'settings'              => 'wc_cart_pdf_logo',
+        'type'                  => 'text',
+    ) );
+
+    $wp_customize->add_setting( 'wc_cart_pdf_logo_width', array(
+        'default'               => 400,
+        'type'                  => 'option',
+        'capability'            => 'manage_woocommerce',
+        'sanitize_callback'     => 'absint',
+        'sanitize_js_callback'  => 'absint',
+        'transport'             => 'postMessage'
+    ) );
+
+    $wp_customize->add_control( 'wc_cart_pdf_logo_width', array(
+        'label'                 => __( 'Logo width', 'wc-cart-pdf'),
+        'description'           => __( 'Logo size used for the cart PDF.', 'wc-cart-pdf'),
+        'section'               => 'wc_cart_pdf',
+        'settings'              => 'wc_cart_pdf_logo_width',
+        'type'                  => 'number',
+        'input_attrs'           => array(
+            'min'           => 0,
+            'step'          => 1,
+        ),
+    ) );
+
+    $wp_customize->add_setting( 'wc_cart_pdf_logo_alignment', array(
+        'default'               => 'center',
+        'type'                  => 'option',
+        'capability'            => 'manage_woocommerce',
+        'sanitize_callback'     => 'wc_clean',
+        'sanitize_js_callback'  => 'wc_clean',
+        'transport'             => 'postMessage'
+    ) );
+
+    $wp_customize->add_control( 'wc_cart_pdf_logo_alignment', array(
+        'label'                 => __( 'Logo alignment', 'wc-cart-pdf'),
+        'description'           => __( 'Alignment of the logo within header of the cart PDF.', 'wc-cart-pdf'),
+        'section'               => 'wc_cart_pdf',
+        'settings'              => 'wc_cart_pdf_logo_alignment',
+        'type'                  => 'radio',
+        'choices'               => array(
+            'left'          => __( 'Left', 'wc-cart-pdf'),
+            'center'        => __( 'Center', 'wc-cart-pdf'),
+            'right'         => __( 'Right', 'wc-cart-pdf'),
+        ),
+    ) );
+}
+add_action( 'customize_register', 'wc_cart_pdf_customize_register' );
+
+
+/**
+ * Expand {site_title} placeholder variable
+ *
+ * @since 1.0.3
+ * @param string $string
+ * @return string
+ */
+function wc_cart_pdf_footer_text( $string ) {
+    return str_replace( '{site_title}', wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ), $string );
+}
+add_filter( 'woocommerce_email_footer_text', 'wc_cart_pdf_footer_text' );

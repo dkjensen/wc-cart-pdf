@@ -1,10 +1,23 @@
+<?php
+/**
+ * WC Cart PDF template
+ * 
+ * @package wc-cart-pdf
+ */
+
+$logo = parse_url( get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_header_image' ) ), PHP_URL_PATH );
+$logo = ! $logo ? '' : $_SERVER['DOCUMENT_ROOT'] . $logo;
+
+?>
 <div id="template_header_image">
     <?php
-        if ( $img = get_option( 'woocommerce_email_header_image' ) ) {
-            $img = parse_url( $img, PHP_URL_PATH );
-            $img = esc_url( $_SERVER['DOCUMENT_ROOT'] . $img );
-
-            echo '<p style="margin-top:0;"><img src="' . esc_url( $img ) . '" alt="' . get_bloginfo( 'name', 'display' ) . '" /></p>';
+        if ( file_exists( $logo ) ) {
+            printf( '<p style="margin-top: 0; text-align: %s;"><img src="%s" style="width: %s;" alt="%s" /></p>',
+                get_option( 'wc_cart_pdf_logo_alignment', 'center' ),
+                esc_url( $logo ),
+                get_option( 'wc_cart_pdf_logo_width' ) ? get_option( 'wc_cart_pdf_logo_width' ) . 'px' : 'auto',
+                get_bloginfo( 'name', 'display' )
+            );
         }
     ?>
 </div>
