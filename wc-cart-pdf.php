@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:  WC Cart PDF
+ * Plugin Name:  WooCommerce Cart PDF
  * Description:  Allows customers to download their cart as a PDF
  * Version:      1.0.3
  * Author:       Seattle Web Co.
