@@ -5,10 +5,17 @@
  * @package wc-cart-pdf
  */
 
+/**
+ * Before template hook
+ *
+ * @since 1.0.4
+ */
+do_action( 'wc_cart_pdf_before_template' );
+
 $logo = parse_url( get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_header_image' ) ), PHP_URL_PATH );
 $logo = ! $logo ? '' : $_SERVER['DOCUMENT_ROOT'] . $logo;
-
 ?>
+
 <div id="template_header_image">
     <?php
         if ( file_exists( $logo ) ) {
@@ -153,3 +160,11 @@ $logo = ! $logo ? '' : $_SERVER['DOCUMENT_ROOT'] . $logo;
 <div id="template_footer">
     <?php echo wpautop( wp_kses_post( wptexturize( apply_filters( 'woocommerce_email_footer_text', get_option( 'woocommerce_email_footer_text' ) ) ) ) ); ?>
 </div>
+
+<?php
+/**
+ * After template hook
+ *
+ * @since 1.0.4
+ */
+do_action( 'wc_cart_pdf_after_template' );
