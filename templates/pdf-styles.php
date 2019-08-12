@@ -30,7 +30,7 @@ $text_lighter_20 = wc_hex_lighter( $text, 20 );
 ?>
 body {
     color: <?php echo esc_attr( $text_lighter_20 ); ?>;
-    font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+    font-family: Verdana, "Dejavu Sans", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
     font-size: 13px;
 	margin: 0;
 	padding: 0;
@@ -40,6 +40,10 @@ body {
 }
 a {
     color: <?php echo esc_attr( $base ); ?>;
+    text-decoration: none;
+}
+b, strong, th {
+    font-weight: normal;
 }
 .shop_table {
     table-layout: fixed;
@@ -48,6 +52,7 @@ a {
 .shop_table .product-thumbnail {
     width: 10%;
     text-align: right;
+    overflow: hidden;
 }
 .shop_table .product-quantity {
     width: 15%;

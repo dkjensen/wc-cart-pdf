@@ -2,7 +2,7 @@
 /**
  * Plugin Name:  WooCommerce Cart PDF
  * Description:  Allows customers to download their cart as a PDF
- * Version:      1.0.4
+ * Version:      1.0.5
  * Author:       Seattle Web Co.
  * Author URI:   https://seattlewebco.com
  * Text Domain:  wc-cart-pdf
@@ -210,3 +210,25 @@ function wc_cart_pdf_footer_text( $string ) {
     return str_replace( '{site_title}', wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ), $string );
 }
 add_filter( 'woocommerce_email_footer_text', 'wc_cart_pdf_footer_text' );
+
+
+/**
+* Change PDF font to Noto Sans for language support
+*
+* @since 1.0.5
+* @return void
+*/
+function wc_cart_pdf_default_font() {
+?>
+
+<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i&display=swap&subset=cyrillic,cyrillic-ext,devanagari,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
+
+<style>
+body {
+    font-family: 'Noto Sans', sans-serif;
+}
+</style>
+
+<?php
+}
+add_action( 'wc_cart_pdf_before_template', 'wc_cart_pdf_default_font' );
