@@ -1,6 +1,6 @@
 === WooCommerce Cart PDF ===
 Contributors: dkjensen, seattlewebco
-Tested up to: 5.2.2
+Tested up to: 5.2.4
 Requires PHP: 5.3.6
 Stable tag: 1.0.5
 
