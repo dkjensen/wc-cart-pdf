@@ -51,18 +51,12 @@ $logo = ! $logo ? '' : $_SERVER['DOCUMENT_ROOT'] . $logo;
 
                     <td class="product-thumbnail">
                     <?php
-                    if ( $_product->get_image_id() ) {
-                        $image = wp_get_attachment_image_src( $_product->get_image_id() );
-
-                        $image = parse_url( $image[0], PHP_URL_PATH );
-
-                        $thumbnail = sprintf( '<img src="%s" />', esc_url( $_SERVER['DOCUMENT_ROOT'] . $image ) );
-                    }
+                    $thumbnail = apply_filters( 'woocommerce_cart_item_thumbnail', $_product->get_image(), $cart_item, $cart_item_key );
 
                     if ( ! $product_permalink ) {
-                        echo wp_kses_post( $thumbnail );
+                        echo $thumbnail; // PHPCS: XSS ok.
                     } else {
-                        printf( '<a href="%s">%s</a>', esc_url( $product_permalink ), wp_kses_post( $thumbnail ) );
+                        printf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $thumbnail ); // PHPCS: XSS ok.
                     }
                     ?>
                     </td>
@@ -82,15 +76,15 @@ $logo = ! $logo ? '' : $_SERVER['DOCUMENT_ROOT'] . $logo;
 
                     // Backorder notification.
                     if ( $_product->backorders_require_notification() && $_product->is_on_backorder( $cart_item['quantity'] ) ) {
-                        echo wp_kses_post( apply_filters( 'woocommerce_cart_item_backorder_notification', '<p class="backorder_notification">' . esc_html__( 'Available on backorder', 'woocommerce' ) . '</p>' ) );
+                        echo wp_kses_post( apply_filters( 'woocommerce_cart_item_backorder_notification', '<p class="backorder_notification">' . esc_html__( 'Available on backorder', 'woocommerce' ) . '</p>', $product_id ) );
                     }
                     ?>
                     </td>
 
                     <td class="product-price" data-title="<?php esc_attr_e( 'Price', 'woocommerce' ); ?>">
                         <?php
-                            echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key ); // PHPCS: XSS ok.
-                        ?>
+							echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key ); // PHPCS: XSS ok.
+						?>
                     </td>
 
                     <td class="product-quantity" data-title="<?php esc_attr_e( 'Quantity', 'woocommerce' ); ?>">
@@ -99,8 +93,8 @@ $logo = ! $logo ? '' : $_SERVER['DOCUMENT_ROOT'] . $logo;
 
                     <td class="product-subtotal" data-title="<?php esc_attr_e( 'Total', 'woocommerce' ); ?>">
                         <?php
-                            echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); // PHPCS: XSS ok.
-                        ?>
+							echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); // PHPCS: XSS ok.
+						?>
                     </td>
                 </tr>
                 <?php

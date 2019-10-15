@@ -26,17 +26,15 @@ $base_lighter_20 = wc_hex_lighter( $base, 20 );
 $base_lighter_40 = wc_hex_lighter( $base, 40 );
 $text_lighter_20 = wc_hex_lighter( $text, 20 );
 
-// !important; is a gmail hack to prevent styles being stripped if it doesn't like something.
 ?>
 body {
     color: <?php echo esc_attr( $text_lighter_20 ); ?>;
-    font-family: Verdana, "Dejavu Sans", "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+    font-family: "dejavusans", "notosans", ""helveticaneue", helvetica, roboto, arial, sans-serif;
     font-size: 13px;
 	margin: 0;
 	padding: 0;
 	-webkit-text-size-adjust: none !important;
 	width: 100%;
-    text-align: <?php echo is_rtl() ? 'right' : 'left'; ?>;
 }
 a {
     color: <?php echo esc_attr( $base ); ?>;

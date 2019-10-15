@@ -2,7 +2,7 @@
     "name": "dkjensen/wc-cart-pdf",
     "type": "wordpress-plugin",
     "require": {
-        "dompdf/dompdf": "^0.8.2"
+        "mpdf/mpdf": "^8.0"
     },
     "authors": [
         {

@@ -2,13 +2,13 @@
 /**
  * Plugin Name:     WooCommerce Cart PDF
  * Description:     Allows customers to download their cart as a PDF
- * Version:         1.0.5
+ * Version:         2.0.0
  * Author:          Seattle Web Co.
  * Author URI:      https://seattlewebco.com
  * Text Domain:     wc-cart-pdf
  * Domain Path:     /languages/
  * Contributors:    seattlewebco, dkjensen
- * Requires PHP:    5.3.6
+ * Requires PHP:    5.6.0
  * WC tested up to: 3.7.1
  *
  * This program is free software; you can redistribute it and/or modify
@@ -40,24 +40,24 @@ require WC_CART_PDF_PATH . 'wc-cart-pdf-compatibility.php';
  * @return void
  */
 function wc_cart_pdf_process_download() {
-    if( ! function_exists( 'WC' ) ) {
+    if ( ! function_exists( 'WC' ) ) {
         return;
     }
 
-    if( ! isset( $_GET['cart-pdf'] ) ) {
+    if ( ! isset( $_GET['cart-pdf'] ) ) {
         return;
     }
 
-    if( ! is_cart() || WC()->cart->is_empty() ) {
+    if ( ! is_cart() || WC()->cart->is_empty() ) {
         return;
     }
 
-    if( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'cart-pdf' ) ) {
+    if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'cart-pdf' ) ) {
         wc_add_notice( __( 'Invalid nonce. Unable to process PDF for download.', 'wc_cart_pdf' ), 'error' );
         return;
     }
 
-    $dompdf = new \Dompdf\Dompdf();
+    $mpdf = new \Mpdf\Mpdf( array( 'format' => 'A4', 'default_font' => 'dejavusans' ) );
 
     $content = $css = '';
 
@@ -82,17 +82,23 @@ function wc_cart_pdf_process_download() {
         $css = apply_filters( 'woocommerce_email_styles', ob_get_clean() );
     }
 
-    $dompdf->loadHtml( '<style>' . $css . '</style>' . $content );
-    $dompdf->setPaper( 'A4', 'portrait' );
-    $dompdf->render();
-    $dompdf->stream( 
+    $dest = \Mpdf\Output\Destination::DOWNLOAD;
+
+    if ( is_rtl() ) {
+        $mpdf->SetDirectionality( 'rtl' );
+    }
+
+    $stream_options = apply_filters( 'wc_cart_pdf_stream_options', array( 'compress' => 1, 'Attachment' => 1 ) );
+
+    if ( $stream_options['Attachment'] == 0 ) {
+        $dest = \Mpdf\Output\Destination::INLINE;
+    }
+
+    $mpdf->WriteHTML( $css, \Mpdf\HTMLParserMode::HEADER_CSS );
+    $mpdf->WriteHTML( $content, \Mpdf\HTMLParserMode::HTML_BODY );
+    $mpdf->Output( 
         apply_filters( 'wc_cart_pdf_filename', 'WC_Cart-' . date( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) ) . '.pdf', 
-        
-        /**
-         * 'compress' => 1 or 0 - apply content stream compression, this is on (1) by default
-         * 'Attachment' => 1 or 0 - if 1, force the browser to open a download dialog, on (1) by default
-         */ 
-        apply_filters( 'wc_cart_pdf_stream_options', array( 'compress' => 1, 'Attachment' => 1 ) ) 
+        apply_filters( 'wc_cart_pdf_destination', $dest )
     );
 
     exit;
@@ -211,25 +217,3 @@ function wc_cart_pdf_footer_text( $string ) {
     return str_replace( '{site_title}', wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ), $string );
 }
 add_filter( 'woocommerce_email_footer_text', 'wc_cart_pdf_footer_text' );
-
-
-/**
-* Change PDF font to Noto Sans for language support
-*
-* @since 1.0.5
-* @return void
-*/
-function wc_cart_pdf_default_font() {
-?>
-
-<link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,400i,700,700i&display=swap&subset=cyrillic,cyrillic-ext,devanagari,greek,greek-ext,latin-ext,vietnamese" rel="stylesheet">
-
-<style>
-body {
-    font-family: 'Noto Sans', sans-serif;
-}
-</style>
-
-<?php
-}
-add_action( 'wc_cart_pdf_before_template', 'wc_cart_pdf_default_font' );
