@@ -48,14 +48,55 @@ Useful for many cases such as if a user needs a quote before completing purchase
 1.0.0
 * Initial plugin release
 
+== Upgrade Notice ==
+2.0.0
+* PDF generation library changed from Dompdf to mPDF
+* Requires PHP >= 5.6.0
+
 == Frequently Asked Questions ==
 = How to view or open PDF instead of download? =
 
 Add the following code snippet to your themes functions.php:
 
-    function child_theme_wc_cart_pdf_destination( $options ) {
-        $options['Attachment'] = 0;
+    function child_theme_wc_cart_pdf_destination( $dest ) {
+        if ( class_exists( '\Mpdf\Output\Destination' ) ) {
+            $dest = \Mpdf\Output\Destination::INLINE;
+        }
 
-        return $options;
+        return $dest;
     }
     add_filter( 'wc_cart_pdf_destination', 'child_theme_wc_cart_pdf_destination' );
+
+= How to require user to be logged in to download cart as PDF? =
+
+Add the following code snippet to your themes functions.php:
+
+    /**
+    * Remove the default download cart button
+    */
+    remove_action( 'woocommerce_proceed_to_checkout', 'wc_cart_pdf_button', 21 );
+
+
+    /**
+    * Replace the default download cart button with our own logic to display a login notice for guests
+    */
+    function child_theme_wc_cart_pdf_button() {
+        if( ! is_cart() || WC()->cart->is_empty() ) {
+            return;
+        }
+
+        if ( is_user_logged_in() ) :
+        ?>
+
+        <a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'cart-pdf' => '1' ), wc_get_cart_url() ), 'cart-pdf' ) );?>" class="cart-pdf-button button" target="_blank">
+            <?php esc_html_e( 'Download Cart as PDF', 'wc-cart-pdf' ); ?>
+        </a>
+
+        <?php else : ?>
+
+        <p><a href="<?php echo get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ); ?>" class="cart-pdf-login"><?php esc_html_e( 'Please login to download your cart as a PDF', 'wc-cart-pdf' ); ?></a></p>
+
+        <?php 
+        endif;
+    }
+    add_action( 'woocommerce_proceed_to_checkout', 'child_theme_wc_cart_pdf_button', 21 );

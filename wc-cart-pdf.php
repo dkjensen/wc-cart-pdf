@@ -106,26 +106,23 @@ function wc_cart_pdf_process_download() {
 add_action( 'template_redirect', 'wc_cart_pdf_process_download' );
 
 
-if( ! function_exists( 'wc_cart_pdf_button' ) ) {
-
-    /**
-     * Renders the download cart as PDF button
-     *
-     * @return void
-     */
-    function wc_cart_pdf_button() {
-        if( ! is_cart() || WC()->cart->is_empty() ) {
-            return;
-        }
-        
-        ?>
-
-        <a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'cart-pdf' => '1' ), wc_get_cart_url() ), 'cart-pdf' ) );?>" class="cart-pdf-button button" target="_blank">
-            <?php esc_html_e( 'Download Cart as PDF', 'wc-cart-pdf' ); ?>
-        </a>
-
-        <?php
+/**
+ * Renders the download cart as PDF button
+ *
+ * @return void
+ */
+function wc_cart_pdf_button() {
+    if( ! is_cart() || WC()->cart->is_empty() ) {
+        return;
     }
+    
+    ?>
+
+    <a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'cart-pdf' => '1' ), wc_get_cart_url() ), 'cart-pdf' ) );?>" class="cart-pdf-button button" target="_blank">
+        <?php esc_html_e( 'Download Cart as PDF', 'wc-cart-pdf' ); ?>
+    </a>
+
+    <?php
 }
 add_action( 'woocommerce_proceed_to_checkout', 'wc_cart_pdf_button', 21 );
 
