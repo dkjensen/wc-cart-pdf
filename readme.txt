@@ -1,8 +1,8 @@
 === WooCommerce Cart PDF ===
 Contributors: dkjensen, seattlewebco
 Tested up to: 5.2.4
-Requires PHP: 5.3.6
-Stable tag: 1.0.5
+Requires PHP: 5.6.0
+Stable tag: 2.0.0
 
 Adds ability for users and guests to download their WooCommerce cart as PDF
 
@@ -16,6 +16,10 @@ Useful for many cases such as if a user needs a quote before completing purchase
 2. Ensure WooCommerce is installed and activated as well
 
 == Changelog ==
+2.0.0
+* Change PDF library from Dompdf to mPDF
+* Add support for RTL languages
+
 1.0.5
 * Fix CSS for language support
 * Default font to Noto Sans for language support
@@ -49,9 +53,9 @@ Useful for many cases such as if a user needs a quote before completing purchase
 
 Add the following code snippet to your themes functions.php:
 
-`function child_theme_wc_cart_pdf_stream_options( $options ) {
-`    $options['Attachment'] = 0;
-`
-`    return $options;
-`}
-`add_filter( 'wc_cart_pdf_stream_options', 'child_theme_wc_cart_pdf_stream_options' );
+    function child_theme_wc_cart_pdf_destination( $options ) {
+        $options['Attachment'] = 0;
+
+        return $options;
+    }
+    add_filter( 'wc_cart_pdf_destination', 'child_theme_wc_cart_pdf_destination' );
