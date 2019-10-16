@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     WooCommerce Cart PDF
  * Description:     Allows customers to download their cart as a PDF
- * Version:         2.0.0
+ * Version:         2.0.1
  * Author:          Seattle Web Co.
  * Author URI:      https://seattlewebco.com
  * Text Domain:     wc-cart-pdf
@@ -58,6 +58,9 @@ function wc_cart_pdf_process_download() {
     }
 
     $mpdf = new \Mpdf\Mpdf( array( 'format' => 'A4', 'default_font' => 'dejavusans' ) );
+    $mpdf->shrink_tables_to_fit = 1;
+    $mpdf->simpleTables = true;
+    $mpdf->packTableData = true;
 
     $content = $css = '';
 
