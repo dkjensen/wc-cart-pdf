@@ -2,7 +2,7 @@
 Contributors: dkjensen, seattlewebco
 Tested up to: 5.2.4
 Requires PHP: 5.6.0
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 
 Adds ability for users and guests to download their WooCommerce cart as PDF
 
@@ -14,6 +14,10 @@ Useful for many cases such as if a user needs a quote before completing purchase
 == Installation ==
 1. Upload plugin and then activate
 2. Ensure WooCommerce is installed and activated as well
+
+== Changelog ==
+2.0.2
+* Add ability to save the pdf to wp-content/uploads/wc-cart-pdf folder with new 'wc_cart_pdf_save' filter (defaults to false)
 
 == Changelog ==
 2.0.1
@@ -99,7 +103,7 @@ Add the following code snippet to your themes functions.php:
 
         <p><a href="<?php echo get_permalink( get_option( 'woocommerce_myaccount_page_id' ) ); ?>" class="cart-pdf-login"><?php esc_html_e( 'Please login to download your cart as a PDF', 'wc-cart-pdf' ); ?></a></p>
 
-        <?php 
+        <?php
         endif;
     }
     add_action( 'woocommerce_proceed_to_checkout', 'child_theme_wc_cart_pdf_button', 21 );
