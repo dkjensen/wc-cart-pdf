@@ -87,6 +87,9 @@ function wc_cart_pdf_process_download() {
 
     $dest = \Mpdf\Output\Destination::DOWNLOAD;
 
+    $uploads_dir = wp_upload_dir( $time = null, $create_dir = true, $refresh_cache = false );
+    $uploads_folder = $uploads_dir['basedir'] . '/wc-cart-pdf/';
+
     if ( is_rtl() ) {
         $mpdf->SetDirectionality( 'rtl' );
     }
@@ -99,8 +102,19 @@ function wc_cart_pdf_process_download() {
 
     $mpdf->WriteHTML( $css, \Mpdf\HTMLParserMode::HEADER_CSS );
     $mpdf->WriteHTML( $content, \Mpdf\HTMLParserMode::HTML_BODY );
-    $mpdf->Output( 
-        apply_filters( 'wc_cart_pdf_filename', 'WC_Cart-' . date( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) ) . '.pdf', 
+
+    // Add a new filter 'wc_cart_pdf_save' option and save the pdf to wp-content/woocommerce-cart-pdf/ folder
+    if (apply_filters('wc_cart_pdf_save', false) == true) {
+        $mpdf->Output(
+            $uploads_folder . apply_filters( 'wc_cart_pdf_filename', 'WC_Cart-' . date( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) ) . '.pdf',
+            \Mpdf\Output\Destination::FILE
+        );
+    }
+
+    // Continue standard download behaviour
+    $dest = \Mpdf\Output\Destination::DOWNLOAD;
+    $mpdf->Output(
+        apply_filters( 'wc_cart_pdf_filename', 'WC_Cart-' . date( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) ) . '.pdf',
         apply_filters( 'wc_cart_pdf_destination', $dest )
     );
 
