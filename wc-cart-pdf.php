@@ -206,6 +206,26 @@ function wc_cart_pdf_customize_register( $wp_customize ) {
 add_action( 'customize_register', 'wc_cart_pdf_customize_register' );
 
 
+
+/**
+ * Plugin activation hook
+ *
+ * @since 2.0.2
+ * @return void
+ */
+function wc_cart_pdf_activate() {
+    $upload = wp_upload_dir();
+    $upload_dir = $upload['basedir'];
+    $upload_dir = $upload_dir . '/wc-cart-pdf';
+    if (! is_dir($upload_dir)) {
+       mkdir( $upload_dir, 0755 );
+    }
+}
+
+register_activation_hook( __FILE__, 'wc_cart_pdf_activate' );
+
+
+
 /**
  * Expand {site_title} placeholder variable
  *
