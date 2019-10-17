@@ -114,6 +114,11 @@ function wc_cart_pdf_process_download() {
         );
     }
 
+
+    // Run some custom code, for mailing the pdf or create a post
+    do_action( 'wc_cart_pdf_after_action', $uploads_folder, $filename);
+
+
     // Continue standard download behaviour
     $dest = \Mpdf\Output\Destination::DOWNLOAD;
     $mpdf->Output(
