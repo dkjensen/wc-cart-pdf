@@ -103,10 +103,13 @@ function wc_cart_pdf_process_download() {
     $mpdf->WriteHTML( $css, \Mpdf\HTMLParserMode::HEADER_CSS );
     $mpdf->WriteHTML( $content, \Mpdf\HTMLParserMode::HTML_BODY );
 
+    // Create filename before output actions, to avoid different file names between download and saved pdf
+    $filename = apply_filters( 'wc_cart_pdf_filename', 'WC_Cart-' . date( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) ) . '.pdf';
+
     // Add a new filter 'wc_cart_pdf_save' option and save the pdf to wp-content/woocommerce-cart-pdf/ folder
     if (apply_filters('wc_cart_pdf_save', false) == true) {
         $mpdf->Output(
-            $uploads_folder . apply_filters( 'wc_cart_pdf_filename', 'WC_Cart-' . date( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) ) . '.pdf',
+            $uploads_folder . $filename,
             \Mpdf\Output\Destination::FILE
         );
     }
@@ -114,7 +117,7 @@ function wc_cart_pdf_process_download() {
     // Continue standard download behaviour
     $dest = \Mpdf\Output\Destination::DOWNLOAD;
     $mpdf->Output(
-        apply_filters( 'wc_cart_pdf_filename', 'WC_Cart-' . date( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) ) . '.pdf',
+        $filename,
         apply_filters( 'wc_cart_pdf_destination', $dest )
     );
 
