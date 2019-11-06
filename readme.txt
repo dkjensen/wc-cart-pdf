@@ -1,8 +1,8 @@
 === WooCommerce Cart PDF ===
 Contributors: dkjensen, seattlewebco
-Tested up to: 5.2.4
+Tested up to: 5.2.5
 Requires PHP: 5.6.0
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 
 Adds ability for users and guests to download their WooCommerce cart as PDF
 
