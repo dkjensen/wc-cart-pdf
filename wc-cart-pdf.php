@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     WooCommerce Cart PDF
  * Description:     Allows customers to download their cart as a PDF
- * Version:         2.0.3
+ * Version:         2.0.4
  * Author:          Seattle Web Co.
  * Author URI:      https://seattlewebco.com
  * Text Domain:     wc-cart-pdf
@@ -69,6 +69,11 @@ function wc_cart_pdf_process_download() {
 
     do_action( 'wc_cart_pdf_before_process' );
 
+    /**
+     * Run the calculate totals method for plugins that modify the cart using this hook
+     */
+    WC()->cart->calculate_totals();
+
     if( file_exists( $cart_table ) ) {
         ob_start();
 
@@ -122,7 +127,7 @@ function wc_cart_pdf_button() {
     ?>
 
     <a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'cart-pdf' => '1' ), wc_get_cart_url() ), 'cart-pdf' ) );?>" class="cart-pdf-button button" target="_blank">
-        <?php esc_html_e( 'Download Cart as PDF', 'wc-cart-pdf' ); ?>
+        <?php esc_html_e( get_option( 'wc_cart_pdf_button_label', __( 'Download Cart as PDF', 'wc-cart-pdf' ) ) ); ?>
     </a>
 
     <?php
@@ -142,6 +147,22 @@ function wc_cart_pdf_customize_register( $wp_customize ) {
         'title'                 => __( 'Cart PDF', 'wc-cart-pdf' ),
         'priority'              => 50,
         'panel'                 => 'woocommerce',
+    ) );
+
+    $wp_customize->add_setting( 'wc_cart_pdf_button_label', array(
+        'default'               => __( 'Download Cart as PDF', 'wc-cart-pdf' ),
+        'type'                  => 'option',
+        'capability'            => 'manage_woocommerce',
+        'sanitize_callback'     => 'esc_html',
+        'transport'             => 'refresh'
+    ) );
+
+    $wp_customize->add_control( 'wc_cart_pdf_button_label', array(
+        'label'                 => __( 'Button label', 'wc-cart-pdf'),
+        'description'           => __( 'Text that is displayed on the button which generates the PDF.', 'wc-cart-pdf'),
+        'section'               => 'wc_cart_pdf',
+        'settings'              => 'wc_cart_pdf_button_label',
+        'type'                  => 'text',
     ) );
 
     $wp_customize->add_setting( 'wc_cart_pdf_logo', array(
