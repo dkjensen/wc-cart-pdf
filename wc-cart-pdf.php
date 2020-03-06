@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     WooCommerce Cart PDF
  * Description:     Allows customers to download their cart as a PDF
- * Version:         2.0.4
+ * Version:         2.0.5
  * Author:          Seattle Web Co.
  * Author URI:      https://seattlewebco.com
  * Text Domain:     wc-cart-pdf
@@ -26,6 +26,38 @@
 if( ! defined( 'ABSPATH' ) ) {
     exit;
 }
+
+if ( ! extension_loaded( 'gd' ) || ! extension_loaded( 'mbstring' ) || version_compare( phpversion(), '5.6.0', '<' ) ) {
+
+    /**
+     * Admin notice to display requirements
+     *
+     * @return void
+     */
+    function wc_cart_pdf_admin_notices() {
+        ?>
+
+        <div class="notice notice-warning is-dismissible">
+            <p><strong><?php esc_html_e( 'WooCommerce Cart PDF requirements not met', 'wc-cart-pdf' ); ?></strong></p>
+            <p><?php esc_html_e( 'WooCommerce Cart PDF requires at least PHP 5.6.0 with the mbstring and gd extensions loaded. ', 'wc-cart-pdf' ); ?></p>
+        </div>
+
+        <?php
+    }
+
+    /**
+     * Hook to add admin notices...
+     *
+     * @return void
+     */
+    function wc_cart_pdf_admin_requirements_notice() {
+        add_action( 'admin_notices', 'wc_cart_pdf_admin_notices' );
+    }
+    add_action( 'admin_init', 'wc_cart_pdf_admin_requirements_notice' );
+
+    return;
+}
+
 
 define( 'WC_CART_PDF_PATH', plugin_dir_path( __FILE__ ) );
 
