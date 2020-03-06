@@ -98,10 +98,11 @@ b, strong, th {
     height: 0;
     white-space: pre;
 }
-.row-subtotal {
-    background: #f5f5f5;
+.cart-total-row th,
+.cart-total-row td {
+    background: #fafafa;
 }
-.row-subtotal:last-child {
+.cart-total-row td {
     text-align: right;
 }
 .woocommerce-remove-coupon {
