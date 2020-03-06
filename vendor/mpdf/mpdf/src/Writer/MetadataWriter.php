@@ -54,7 +54,7 @@ class MetadataWriter implements \Psr\Log\LoggerAwareInterface
 	{
 		$this->writer->object();
 		$this->mpdf->MetadataRoot = $this->mpdf->n;
-		$Producer = 'mPDF ' . Mpdf::VERSION;
+		$Producer = 'mPDF' . ($this->mpdf->exposeVersion ? (' ' . Mpdf::VERSION) : '');
 		$z = date('O'); // +0200
 		$offset = substr($z, 0, 3) . ':' . substr($z, 3, 2);
 		$CreationDate = date('Y-m-d\TH:i:s') . $offset; // 2006-03-10T10:47:26-05:00 2006-06-19T09:05:17Z
@@ -151,7 +151,7 @@ class MetadataWriter implements \Psr\Log\LoggerAwareInterface
 
 	public function writeInfo() // _putinfo
 	{
-		$this->writer->write('/Producer ' . $this->writer->utf16BigEndianTextString('mPDF ' . $this->getVersionString()));
+		$this->writer->write('/Producer ' . $this->writer->utf16BigEndianTextString('mPDF' . ($this->mpdf->exposeVersion ? (' ' . $this->getVersionString()) : '')));
 
 		if (!empty($this->mpdf->title)) {
 			$this->writer->write('/Title ' . $this->writer->utf16BigEndianTextString($this->mpdf->title));
@@ -455,23 +455,29 @@ class MetadataWriter implements \Psr\Log\LoggerAwareInterface
 		}
 
 		if ($this->mpdf->hasOC || count($this->mpdf->layers)) {
+
 			$p = $v = $h = $l = $loff = $lall = $as = '';
+
 			if ($this->mpdf->hasOC) {
+
 				if (($this->mpdf->hasOC & 1) === 1) {
 					$p = $this->mpdf->n_ocg_print . ' 0 R';
 				}
+
 				if (($this->mpdf->hasOC & 2) === 2) {
 					$v = $this->mpdf->n_ocg_view . ' 0 R';
 				}
+
 				if (($this->mpdf->hasOC & 4) === 4) {
 					$h = $this->mpdf->n_ocg_hidden . ' 0 R';
 				}
+
 				$as = "<</Event /Print /OCGs [$p $v $h] /Category [/Print]>> <</Event /View /OCGs [$p $v $h] /Category [/View]>>";
 			}
 
 			if (count($this->mpdf->layers)) {
 				foreach ($this->mpdf->layers as $k => $layer) {
-					if (strtolower($this->mpdf->layerDetails[$k]['state']) === 'hidden') {
+					if (isset($this->mpdf->layerDetails[$k]) && strtolower($this->mpdf->layerDetails[$k]['state']) === 'hidden') {
 						$loff .= $layer['n'] . ' 0 R ';
 					} else {
 						$l .= $layer['n'] . ' 0 R ';
@@ -479,11 +485,14 @@ class MetadataWriter implements \Psr\Log\LoggerAwareInterface
 					$lall .= $layer['n'] . ' 0 R ';
 				}
 			}
+
 			$this->writer->write("/OCProperties <</OCGs [$p $v $h $lall] /D <</ON [$p $l] /OFF [$v $h $loff] ");
 			$this->writer->write("/Order [$v $p $h $lall] ");
+
 			if ($as) {
 				$this->writer->write("/AS [$as] ");
 			}
+
 			$this->writer->write('>>>>');
 		}
 	}
