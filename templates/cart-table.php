@@ -102,27 +102,27 @@ $logo = ! $logo ? '' : $_SERVER['DOCUMENT_ROOT'] . $logo;
         }
         ?>
 
-        <tr class="cart-subtotal">
+        <tr class="cart-subtotal cart-total-row">
 			<th class="row-subtotal" colspan="4" style="text-align: right;"><?php _e( 'Subtotal', 'woocommerce' ); ?></th>
 			<td class="row-subtotal" data-title="<?php esc_attr_e( 'Subtotal', 'woocommerce' ); ?>"><?php wc_cart_totals_subtotal_html(); ?></td>
         </tr>
         
         <?php if ( 0 < WC()->cart->get_shipping_total() ) : ?>
-            <tr class="shipping">
+            <tr class="shipping cart-total-row">
                 <th class="row-subtotal" colspan="4" style="text-align: right;"><?php _e( 'Shipping', 'woocommerce' ); ?></th>
                 <td class="row-subtotal" data-title="<?php esc_attr_e( 'Shipping', 'woocommerce' ); ?>"><?php echo WC()->cart->get_cart_shipping_total(); ?></td>
             </tr>
         <?php endif; ?>
 
         <?php foreach ( WC()->cart->get_coupons() as $code => $coupon ) : ?>
-			<tr class="cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?>">
+			<tr class="cart-discount coupon-<?php echo esc_attr( sanitize_title( $code ) ); ?> cart-total-row">
 				<th class="row-coupon" colspan="4" style="text-align: right;"><?php wc_cart_totals_coupon_label( $coupon ); ?></th>
 				<td class="row-coupon" data-title="<?php echo esc_attr( wc_cart_totals_coupon_label( $coupon, false ) ); ?>"><?php wc_cart_totals_coupon_html( $coupon ); ?></td>
 			</tr>
 		<?php endforeach; ?>
 
         <?php foreach ( WC()->cart->get_fees() as $fee ) : ?>
-			<tr class="fee">
+			<tr class="fee cart-total-row">
 				<th class="row-subtotal" colspan="4" style="text-align: right;"><?php echo esc_html( $fee->name ); ?></th>
 				<td class="row-subtotal" data-title="<?php echo esc_attr( $fee->name ); ?>"><?php wc_cart_totals_fee_html( $fee ); ?></td>
 			</tr>
@@ -136,13 +136,13 @@ $logo = ! $logo ? '' : $_SERVER['DOCUMENT_ROOT'] . $logo;
 
 			if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) : ?>
 				<?php foreach ( WC()->cart->get_tax_totals() as $code => $tax ) : ?>
-					<tr class="tax-rate tax-rate-<?php echo sanitize_title( $code ); ?>">
+					<tr class="tax-rate tax-rate-<?php echo sanitize_title( $code ); ?> cart-total-row">
 						<th class="row-subtotal" colspan="4" style="text-align: right;"><?php echo esc_html( $tax->label ) . $estimated_text; ?></th>
 						<td class="row-subtotal" data-title="<?php echo esc_attr( $tax->label ); ?>"><?php echo wp_kses_post( $tax->formatted_amount ); ?></td>
 					</tr>
 				<?php endforeach; ?>
 			<?php else : ?>
-				<tr class="tax-total">
+				<tr class="tax-total cart-total-row">
 					<th class="row-subtotal" colspan="4" style="text-align: right;"><?php echo esc_html( WC()->countries->tax_or_vat() ) . $estimated_text; ?></th>
 					<td class="row-subtotal" data-title="<?php echo esc_attr( WC()->countries->tax_or_vat() ); ?>"><?php wc_cart_totals_taxes_total_html(); ?></td>
 				</tr>
@@ -151,7 +151,7 @@ $logo = ! $logo ? '' : $_SERVER['DOCUMENT_ROOT'] . $logo;
 
 		<?php do_action( 'woocommerce_cart_totals_before_order_total' ); ?>
 
-        <tr class="order-total">
+        <tr class="order-total cart-total-row">
 			<th class="row-subtotal" colspan="4" style="text-align: right;"><?php _e( 'Total', 'woocommerce' ); ?></th>
 			<td class="row-subtotal" data-title="<?php esc_attr_e( 'Total', 'woocommerce' ); ?>"><?php wc_cart_totals_order_total_html(); ?></td>
 		</tr>
