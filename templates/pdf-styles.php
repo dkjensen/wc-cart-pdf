@@ -104,6 +104,9 @@ b, strong, th {
 .row-subtotal:last-child {
     text-align: right;
 }
+.woocommerce-remove-coupon {
+    display: none !important;
+}
 #template_header_image {
     text-align: center;
     padding: 2em 0;
