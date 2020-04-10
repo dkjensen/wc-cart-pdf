@@ -20,6 +20,12 @@ Useful for many cases such as if a user needs a quote before completing purchase
 * Update compatibility tag
 * Two new hooks to modify PDF output
 
+2.0.5
+* WordPress 5.4 compatibility
+* Add support for coupons displaying on PDF
+* Add minimum PHP requirements admin notice and prevent loading if not satisfied
+* Minor styling update to PDF
+
 2.0.4
 * Added compatibility with Visual Products Configurator
 * Perform WC cart calculate_totals() method prior to generating PDF
