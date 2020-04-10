@@ -2,14 +2,14 @@
 /**
  * Plugin Name:     WooCommerce Cart PDF
  * Description:     Allows customers to download their cart as a PDF
- * Version:         2.0.5
+ * Version:         2.0.6
  * Author:          Seattle Web Co.
  * Author URI:      https://seattlewebco.com
  * Text Domain:     wc-cart-pdf
  * Domain Path:     /languages/
  * Contributors:    seattlewebco, dkjensen
  * Requires PHP:    5.6.0
- * WC tested up to: 3.8
+ * WC tested up to: 4.0.1
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -89,10 +89,11 @@ function wc_cart_pdf_process_download() {
         return;
     }
 
-    $mpdf = new \Mpdf\Mpdf( array( 'format' => 'A4', 'default_font' => 'dejavusans' ) );
+    $mpdf = new \Mpdf\Mpdf( array( 'mode' => get_locale(), 'format' => 'A4', 'default_font' => 'dejavusans' ) );
     $mpdf->shrink_tables_to_fit = 1;
     $mpdf->simpleTables = true;
     $mpdf->packTableData = true;
+    $mpdf->autoLangToFont = true;
 
     $content = $css = '';
 
@@ -134,12 +135,26 @@ function wc_cart_pdf_process_download() {
         $dest = \Mpdf\Output\Destination::INLINE;
     }
 
+    /**
+     * Hook to modify mPDF object before generating
+     * 
+     * @since 2.0.6
+     */
+    $mpdf = apply_filters( 'wc_cart_pdf_mpdf', $mpdf );
+
     $mpdf->WriteHTML( $css, \Mpdf\HTMLParserMode::HEADER_CSS );
     $mpdf->WriteHTML( $content, \Mpdf\HTMLParserMode::HTML_BODY );
     $mpdf->Output( 
         apply_filters( 'wc_cart_pdf_filename', 'WC_Cart-' . date( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) ) . '.pdf', 
         apply_filters( 'wc_cart_pdf_destination', $dest )
     );
+
+    /**
+     * Perform custom actions after PDF generated
+     * 
+     * @since 2.0.6
+     */
+    do_action( 'wc_cart_pdf_output', $mpdf );
 
     exit;
 }
