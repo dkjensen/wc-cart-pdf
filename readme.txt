@@ -2,7 +2,7 @@
 Contributors: dkjensen, seattlewebco
 Tested up to: 5.6.2
 Requires PHP: 5.6.0
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 
 Adds ability for users and guests to download their WooCommerce cart as PDF
 
@@ -16,6 +16,9 @@ Useful for many cases such as if a user needs a quote before completing purchase
 2. Ensure WooCommerce is installed and activated as well
 
 == Changelog ==
+2.1.1
+* Send admin email as HTML
+
 2.1.0
 * Ability to send an emailed copy of generated PDF to admin
 * Add date to PDF

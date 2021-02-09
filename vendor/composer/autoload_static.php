@@ -15,6 +15,10 @@ class ComposerStaticInit2ba5e503d0935e74f37fe4b0297e7ee5
         array (
             'setasign\\Fpdi\\' => 14,
         ),
+        'V' => 
+        array (
+            'VariableAnalysis\\' => 17,
+        ),
         'P' => 
         array (
             'Psr\\Log\\' => 8,
@@ -26,6 +30,7 @@ class ComposerStaticInit2ba5e503d0935e74f37fe4b0297e7ee5
         'D' => 
         array (
             'DeepCopy\\' => 9,
+            'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 55,
         ),
     );
 
@@ -33,6 +38,10 @@ class ComposerStaticInit2ba5e503d0935e74f37fe4b0297e7ee5
         'setasign\\Fpdi\\' => 
         array (
             0 => __DIR__ . '/..' . '/setasign/fpdi/src',
+        ),
+        'VariableAnalysis\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sirbrillig/phpcs-variable-analysis/VariableAnalysis',
         ),
         'Psr\\Log\\' => 
         array (
@@ -45,6 +54,10 @@ class ComposerStaticInit2ba5e503d0935e74f37fe4b0297e7ee5
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
+        ),
+        'Dealerdirect\\Composer\\Plugin\\Installers\\PHPCodeSniffer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/dealerdirect/phpcodesniffer-composer-installer/src',
         ),
     );
 

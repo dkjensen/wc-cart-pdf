@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     WooCommerce Cart PDF
  * Description:     Allows customers to download their cart as a PDF
- * Version:         2.1.0
+ * Version:         2.1.1
  * Author:          Seattle Web Co.
  * Author URI:      https://seattlewebco.com
  * Text Domain:     wc-cart-pdf
@@ -393,7 +393,7 @@ function wc_cart_pdf_maybe_send_admin_copy( $mpdf ) {
 			apply_filters( 'wc_cart_pdf_admin_copy_email', get_option( 'admin_email' ), $mpdf, $customer ),
 			apply_filters( 'wc_cart_pdf_admin_copy_subject', esc_html__( 'A user has downloaded their cart as PDF', 'wc-cart-pdf' ), $customer ),
 			apply_filters( 'wc_cart_pdf_admin_copy_body', $body, $customer ),
-			apply_filters( 'wc_cart_pdf_admin_copy_headers', '', $customer ),
+			apply_filters( 'wc_cart_pdf_admin_copy_headers', array( 'Content-Type: text/html; charset=UTF-8' ), $customer ),
 			array( $file_path )
 		);
 
