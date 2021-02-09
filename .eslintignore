@@ -1,0 +1,6 @@
+node_modules/
+vendor/
+assets/
+*.json
+*.scss
+*.css

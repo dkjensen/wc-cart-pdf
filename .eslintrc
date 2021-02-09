@@ -1,0 +1,23 @@
+{
+    "parser": "babel-eslint",
+    "extends": [
+
+    ],
+    "env": {
+      "browser": true,
+      "es6": true,
+		  "node": true,
+		  "mocha": true
+    },
+    "globals": {
+      "wp": true,
+      "wpApiSettings": true,
+      "window": true,
+      "document": true
+	  },
+    "rules": {
+      "object-curly-spacing": "warn",
+      "array-bracket-spacing": 1,
+      "space-in-parens": 1
+    }
+}

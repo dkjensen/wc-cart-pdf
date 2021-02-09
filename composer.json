@@ -1,13 +1,23 @@
 {
-    "name": "dkjensen/wc-cart-pdf",
-    "type": "wordpress-plugin",
-    "require": {
-        "mpdf/mpdf": "^8.0"
-    },
-    "authors": [
-        {
-            "name": "David Jensen",
-            "email": "david@dkjensen.com"
-        }
-    ]
+  "name": "dkjensen/wc-cart-pdf",
+  "type": "wordpress-plugin",
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "*",
+    "phpcompatibility/phpcompatibility-wp": "*",
+    "php-stubs/wordpress-stubs": "^5.4",
+    "phpcompatibility/php-compatibility": "^9.3",
+    "wp-coding-standards/wpcs": "^2.2",
+    "squizlabs/php_codesniffer": "^3.5",
+    "automattic/vipwpcs": "^2.2",
+    "php-stubs/woocommerce-stubs": "^4.9"
+  },
+  "require": {
+    "mpdf/mpdf": "^8.0"
+  },
+  "authors": [
+    {
+      "name": "David Jensen",
+      "email": "david@dkjensen.com"
+    }
+  ]
 }

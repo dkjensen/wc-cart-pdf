@@ -37,10 +37,10 @@ Thumbs.db
 
 # Composer #
 ##########
+vendor/
 vendors/composer/
 !assets/js/vendor/
 wpcs/
-composer.lock
 
 # Bower #
 ##########
@@ -69,6 +69,3 @@ assets/sass/HTML
 assets/sass/Rails
 HTML
 Rails
-
-# VS Code #
-.vscode

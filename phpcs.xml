@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<ruleset name="WordPress Coding Standards">
+	<description>PHP_CodeSniffer ruleset.</description>
+
+	<file>wc-cart-pdf.php</file>
+	<file>wc-cart-pdf-compatibility.php</file>
+
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/tests/*</exclude-pattern>
+	<exclude-pattern>*/resources/*</exclude-pattern>
+	<exclude-pattern>*/assets/*</exclude-pattern>
+
+	<!-- Show progress, show the error codes for each message (source). -->
+	<arg value="ps" />
+
+	<!-- Strip the filepaths in reports down to the relevant bit. -->
+	<arg name="basepath" value="./" />
+
+	<!-- Check up to 8 files simultaneously. -->
+	<arg name="parallel" value="8" />
+
+	<!-- Configs -->
+	<config name="minimum_supported_wp_version" value="4.7" />
+	<config name="testVersion" value="5.6-" />
+
+	<rule ref="WordPress">
+		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.ShortPrefixPassed"/>
+		<exclude name="WordPress.PHP.YodaConditions"/>
+	</rule>
+
+	<rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
+		<exclude-pattern>src/</exclude-pattern>
+	</rule>
+
+	<rule ref="WordPress.Files.FileName.InvalidClassFileName">
+		<exclude-pattern>src/</exclude-pattern>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.ValidVariableName">
+		<properties>
+			<property name="customPropertiesWhitelist" type="array" value="clientId,clientSecret,redirectUri"/>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.Arrays.MultipleStatementAlignment">
+		<properties>
+			<!-- No need to adjust alignment of large arrays when the item with the largest key is removed. -->
+			<property name="exact" value="false"/>
+			<!-- Don't align multi-line items if ALL items in the array are multi-line. -->
+			<property name="alignMultilineItems" value="!=100"/>
+			<!-- Array assignment operator should always be on the same line as the array key. -->
+			<property name="ignoreNewlines" value="false"/>
+		</properties>
+	</rule>
+
+	<rule ref="PHPCompatibilityWP" />
+
+	<rule ref="Generic.Commenting">
+		<exclude-pattern>tests/</exclude-pattern>
+		<exclude-pattern>assets/</exclude-pattern>
+		<exclude name="Generic.Commenting.DocComment.NonParamGroup" />
+	</rule>
+
+	<rule ref="PEAR.Functions.FunctionCallSignature.EmptyLine">
+		<exclude-pattern>tests/e2e-tests/</exclude-pattern>
+	</rule>
+
+	<rule ref="Squiz.Commenting.FileComment.Missing">
+		<exclude-pattern>tests/</exclude-pattern>
+	</rule>
+
+	<rule ref="Squiz.Commenting.FunctionCommentThrowTag.Missing">
+		<exclude-pattern>tests/</exclude-pattern>
+	</rule>
+
+	<rule ref="Squiz.Commenting.FileComment.Missing">
+		<exclude-pattern>tests/</exclude-pattern>
+	</rule>
+</ruleset>

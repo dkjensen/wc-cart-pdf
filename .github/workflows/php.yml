@@ -3,19 +3,34 @@ name: Deploy to WordPress.org
 on:
   push:
     tags:
-    - "*"
+      - "*"
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: WordPress Plugin Deploy
-      uses: 10up/action-wordpress-plugin-deploy@1.4.1
-      env:
-        SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
-        SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-        SLUG: wc-cart-pdf
+      - name: Build
+        run: |
+          composer clear-cache
+          composer install --no-dev --prefer-dist
+
+      - name: WordPress Plugin Deploy
+        uses: 10up/action-wordpress-plugin-deploy@1.5.0
+        with:
+          generate-zip: true
+        env:
+          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+          SLUG: wc-cart-pdf
+      - name: Upload release asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ${{github.workspace}}/${{ github.event.repository.name }}.zip
+          asset_name: ${{ github.event.repository.name }}.zip
+          asset_content_type: application/zip
