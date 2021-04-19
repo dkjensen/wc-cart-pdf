@@ -26,6 +26,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Load localization files
+ *
+ * @return void
+ */
+function wc_cart_pdf_language_init() {
+	load_plugin_textdomain( 'wc-cart-pdf', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}
+add_action( 'plugins_loaded', 'wc_cart_pdf_language_init' );
+
 if ( ! extension_loaded( 'gd' ) || ! extension_loaded( 'mbstring' ) || version_compare( phpversion(), '5.6.0', '<' ) ) {
 
 	/**

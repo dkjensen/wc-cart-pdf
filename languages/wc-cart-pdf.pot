@@ -1,0 +1,163 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Project-Id-Version: WooCommerce Cart PDF\n"
+"POT-Creation-Date: 2021-04-19 23:17+0200\n"
+"PO-Revision-Date: 2021-04-19 23:16+0200\n"
+"Last-Translator: David <david@closemarketing.es>\n"
+"Language-Team: David <david@closemarketing.es>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
+"X-Poedit-WPHeader: wc-cart-pdf.php\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: vendor\n"
+
+#: templates/cart-table.php:49 templates/cart-table.php:89
+msgid "Product"
+msgstr ""
+
+#: templates/cart-table.php:50 templates/cart-table.php:109
+msgid "Price"
+msgstr ""
+
+#: templates/cart-table.php:51 templates/cart-table.php:115
+msgid "Quantity"
+msgstr ""
+
+#: templates/cart-table.php:52 templates/cart-table.php:119
+#: templates/cart-table.php:182 templates/cart-table.php:183
+msgid "Total"
+msgstr ""
+
+#: templates/cart-table.php:104
+msgid "Available on backorder"
+msgstr ""
+
+#: templates/cart-table.php:131 templates/cart-table.php:132
+msgid "Subtotal"
+msgstr ""
+
+#: templates/cart-table.php:137 templates/cart-table.php:138
+msgid "Shipping"
+msgstr ""
+
+#: templates/cart-table.php:160
+#, php-format
+msgid "(estimated for %s)"
+msgstr ""
+
+#: wc-cart-pdf-compatibility.php:41
+msgid "Edit"
+msgstr ""
+
+#: wc-cart-pdf.php:50
+msgid "WooCommerce Cart PDF requirements not met"
+msgstr ""
+
+#: wc-cart-pdf.php:51
+msgid ""
+"WooCommerce Cart PDF requires at least PHP 5.6.0 with the mbstring and gd "
+"extensions loaded. "
+msgstr ""
+
+#: wc-cart-pdf.php:97
+msgid "Invalid nonce. Unable to process PDF for download."
+msgstr ""
+
+#: wc-cart-pdf.php:198 wc-cart-pdf.php:226
+msgid "Download Cart as PDF"
+msgstr ""
+
+#: wc-cart-pdf.php:217
+msgid "Cart PDF"
+msgstr ""
+
+#: wc-cart-pdf.php:237
+msgid "Button label"
+msgstr ""
+
+#: wc-cart-pdf.php:238
+msgid "Text that is displayed on the button which generates the PDF."
+msgstr ""
+
+#: wc-cart-pdf.php:259
+msgid "Logo URL"
+msgstr ""
+
+#: wc-cart-pdf.php:260
+msgid "Image URL of logo for the cart PDF, must live on current server."
+msgstr ""
+
+#: wc-cart-pdf.php:282
+msgid "Logo width"
+msgstr ""
+
+#: wc-cart-pdf.php:283
+msgid "Logo size used for the cart PDF."
+msgstr ""
+
+#: wc-cart-pdf.php:309
+msgid "Logo alignment"
+msgstr ""
+
+#: wc-cart-pdf.php:310
+msgid "Alignment of the logo within header of the cart PDF."
+msgstr ""
+
+#: wc-cart-pdf.php:315
+msgid "Left"
+msgstr ""
+
+#: wc-cart-pdf.php:316
+msgid "Center"
+msgstr ""
+
+#: wc-cart-pdf.php:317
+msgid "Right"
+msgstr ""
+
+#: wc-cart-pdf.php:337
+msgid "Send a copy of PDF to admin via email"
+msgstr ""
+
+#: wc-cart-pdf.php:381
+msgid "A user has downloaded their cart as PDF, and is attached to this email."
+msgstr ""
+
+#: wc-cart-pdf.php:386
+msgid "Name"
+msgstr ""
+
+#: wc-cart-pdf.php:387
+msgid "Email"
+msgstr ""
+
+#: wc-cart-pdf.php:404
+msgid "A user has downloaded their cart as PDF"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "WooCommerce Cart PDF"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Allows customers to download their cart as a PDF"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Seattle Web Co."
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://seattlewebco.com"
+msgstr ""
