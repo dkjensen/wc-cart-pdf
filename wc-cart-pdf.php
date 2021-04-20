@@ -7,7 +7,7 @@
  * Author URI:      https://seattlewebco.com
  * Text Domain:     wc-cart-pdf
  * Domain Path:     /languages/
- * Contributors:    seattlewebco, dkjensen
+ * Contributors:    seattlewebco, dkjensen, davidperez
  * Requires PHP:    5.6.0
  * WC tested up to: 5.0.0
  *
