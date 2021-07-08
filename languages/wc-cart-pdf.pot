@@ -1,58 +1,48 @@
-#, fuzzy
+# Copyright (C) 2021 Seattle Web Co.
+# This file is distributed under the same license as the WooCommerce Cart PDF package.
 msgid ""
 msgstr ""
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"Project-Id-Version: WooCommerce Cart PDF\n"
-"POT-Creation-Date: 2021-04-19 23:17+0200\n"
-"PO-Revision-Date: 2021-04-19 23:16+0200\n"
-"Last-Translator: David <david@closemarketing.es>\n"
-"Language-Team: David <david@closemarketing.es>\n"
+"Project-Id-Version: WooCommerce Cart PDF 2.1.3\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-cart-pdf\n"
+"POT-Creation-Date: 2021-07-08 10:49:31+00:00\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.2\n"
-"X-Poedit-Basepath: ..\n"
-"X-Poedit-Flags-xgettext: --add-comments=translators:\n"
-"X-Poedit-WPHeader: wc-cart-pdf.php\n"
-"X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
-"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
-"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
-"X-Poedit-SearchPath-0: .\n"
-"X-Poedit-SearchPathExcluded-0: *.min.js\n"
-"X-Poedit-SearchPathExcluded-1: vendor\n"
+"PO-Revision-Date: 2021-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: node-wp-i18n 1.2.5\n"
 
-#: templates/cart-table.php:49 templates/cart-table.php:89
+#: templates/cart-table.php:52 templates/cart-table.php:92
 msgid "Product"
 msgstr ""
 
-#: templates/cart-table.php:50 templates/cart-table.php:109
+#: templates/cart-table.php:53 templates/cart-table.php:112
 msgid "Price"
 msgstr ""
 
-#: templates/cart-table.php:51 templates/cart-table.php:115
+#: templates/cart-table.php:54 templates/cart-table.php:118
 msgid "Quantity"
 msgstr ""
 
-#: templates/cart-table.php:52 templates/cart-table.php:119
-#: templates/cart-table.php:182 templates/cart-table.php:183
+#: templates/cart-table.php:55 templates/cart-table.php:122
+#: templates/cart-table.php:185 templates/cart-table.php:186
 msgid "Total"
 msgstr ""
 
-#: templates/cart-table.php:104
+#: templates/cart-table.php:107
 msgid "Available on backorder"
 msgstr ""
 
-#: templates/cart-table.php:131 templates/cart-table.php:132
+#: templates/cart-table.php:134 templates/cart-table.php:135
 msgid "Subtotal"
 msgstr ""
 
-#: templates/cart-table.php:137 templates/cart-table.php:138
+#: templates/cart-table.php:140 templates/cart-table.php:141
 msgid "Shipping"
 msgstr ""
 
-#: templates/cart-table.php:160
-#, php-format
+#: templates/cart-table.php:163
 msgid "(estimated for %s)"
 msgstr ""
 
@@ -60,89 +50,89 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
-#: wc-cart-pdf.php:50
+#: wc-cart-pdf.php:52
 msgid "WooCommerce Cart PDF requirements not met"
 msgstr ""
 
-#: wc-cart-pdf.php:51
+#: wc-cart-pdf.php:53
 msgid ""
 "WooCommerce Cart PDF requires at least PHP 5.6.0 with the mbstring and gd "
 "extensions loaded. "
 msgstr ""
 
-#: wc-cart-pdf.php:97
+#: wc-cart-pdf.php:100
 msgid "Invalid nonce. Unable to process PDF for download."
 msgstr ""
 
-#: wc-cart-pdf.php:198 wc-cart-pdf.php:226
+#: wc-cart-pdf.php:194 wc-cart-pdf.php:221
 msgid "Download Cart as PDF"
 msgstr ""
 
-#: wc-cart-pdf.php:217
+#: wc-cart-pdf.php:212
 msgid "Cart PDF"
 msgstr ""
 
-#: wc-cart-pdf.php:237
+#: wc-cart-pdf.php:232
 msgid "Button label"
 msgstr ""
 
-#: wc-cart-pdf.php:238
+#: wc-cart-pdf.php:233
 msgid "Text that is displayed on the button which generates the PDF."
 msgstr ""
 
-#: wc-cart-pdf.php:259
+#: wc-cart-pdf.php:254
 msgid "Logo URL"
 msgstr ""
 
-#: wc-cart-pdf.php:260
+#: wc-cart-pdf.php:255
 msgid "Image URL of logo for the cart PDF, must live on current server."
 msgstr ""
 
-#: wc-cart-pdf.php:282
+#: wc-cart-pdf.php:277
 msgid "Logo width"
 msgstr ""
 
-#: wc-cart-pdf.php:283
+#: wc-cart-pdf.php:278
 msgid "Logo size used for the cart PDF."
 msgstr ""
 
-#: wc-cart-pdf.php:309
+#: wc-cart-pdf.php:304
 msgid "Logo alignment"
 msgstr ""
 
-#: wc-cart-pdf.php:310
+#: wc-cart-pdf.php:305
 msgid "Alignment of the logo within header of the cart PDF."
 msgstr ""
 
-#: wc-cart-pdf.php:315
+#: wc-cart-pdf.php:310
 msgid "Left"
 msgstr ""
 
-#: wc-cart-pdf.php:316
+#: wc-cart-pdf.php:311
 msgid "Center"
 msgstr ""
 
-#: wc-cart-pdf.php:317
+#: wc-cart-pdf.php:312
 msgid "Right"
 msgstr ""
 
-#: wc-cart-pdf.php:337
+#: wc-cart-pdf.php:332
 msgid "Send a copy of PDF to admin via email"
 msgstr ""
 
-#: wc-cart-pdf.php:381
+#: wc-cart-pdf.php:372
 msgid "A user has downloaded their cart as PDF, and is attached to this email."
 msgstr ""
 
-#: wc-cart-pdf.php:386
+#: wc-cart-pdf.php:377
 msgid "Name"
 msgstr ""
 
-#: wc-cart-pdf.php:387
+#: wc-cart-pdf.php:378
 msgid "Email"
 msgstr ""
 
-#: wc-cart-pdf.php:404
+#: wc-cart-pdf.php:395
 msgid "A user has downloaded their cart as PDF"
 msgstr ""
 

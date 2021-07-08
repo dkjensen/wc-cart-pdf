@@ -2,14 +2,14 @@
 /**
  * Plugin Name:     WooCommerce Cart PDF
  * Description:     Allows customers to download their cart as a PDF
- * Version:         2.1.2
+ * Version:         2.1.3
  * Author:          Seattle Web Co.
  * Author URI:      https://seattlewebco.com
  * Text Domain:     wc-cart-pdf
  * Domain Path:     /languages/
  * Contributors:    seattlewebco, dkjensen, davidperez
  * Requires PHP:    5.6.0
- * WC tested up to: 5.0.0
+ * WC tested up to: 5.4.1
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,8 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
+ *
+ * @package dkjensen/wc-cart-pdf
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -70,10 +72,8 @@ if ( ! extension_loaded( 'gd' ) || ! extension_loaded( 'mbstring' ) || version_c
 
 define( 'WC_CART_PDF_PATH', plugin_dir_path( __FILE__ ) );
 
-
 require WC_CART_PDF_PATH . 'vendor/autoload.php';
 require WC_CART_PDF_PATH . 'wc-cart-pdf-compatibility.php';
-
 
 /**
  * Generates the PDF for download
@@ -81,6 +81,9 @@ require WC_CART_PDF_PATH . 'wc-cart-pdf-compatibility.php';
  * @return void
  */
 function wc_cart_pdf_process_download() {
+	$content = '';
+	$css     = '';
+
 	if ( ! function_exists( 'WC' ) ) {
 		return;
 	}
@@ -93,24 +96,26 @@ function wc_cart_pdf_process_download() {
 		return;
 	}
 
-	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( $_GET['_wpnonce'], 'cart-pdf' ) ) {
-		wc_add_notice( __( 'Invalid nonce. Unable to process PDF for download.', 'wc_cart_pdf' ), 'error' );
+	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'cart-pdf' ) ) {
+		wc_add_notice( __( 'Invalid nonce. Unable to process PDF for download.', 'wc-cart-pdf' ), 'error' );
 		return;
 	}
 
-	$mpdf                       = new \Mpdf\Mpdf(
-		array(
-			'mode'         => get_locale(),
-			'format'       => 'A4',
-			'default_font' => 'dejavusans',
+	$mpdf = new \Mpdf\Mpdf(
+		apply_filters(
+			'wc_cart_pdf_mpdf_args',
+			array(
+				'mode'           => get_locale(),
+				'format'         => 'A4',
+				'default_font'   => 'dejavusans',
+			)
 		)
 	);
+
 	$mpdf->shrink_tables_to_fit = 1;
 	$mpdf->simpleTables         = true;
 	$mpdf->packTableData        = true;
 	$mpdf->autoLangToFont       = true;
-
-	$content = $css = '';
 
 	$cart_table = wc_locate_template( 'cart-table.php', '/woocommerce/wc-cart-pdf/', __DIR__ . '/templates/' );
 	$css        = wc_locate_template( 'pdf-styles.php', '/woocommerce/wc-cart-pdf/', __DIR__ . '/templates/' );
@@ -152,6 +157,7 @@ function wc_cart_pdf_process_download() {
 		)
 	);
 
+	// phpcs:ignore
 	if ( $stream_options['Attachment'] == 0 ) {
 		$dest = \Mpdf\Output\Destination::INLINE;
 	}
@@ -166,7 +172,7 @@ function wc_cart_pdf_process_download() {
 	$mpdf->WriteHTML( $css, \Mpdf\HTMLParserMode::HEADER_CSS );
 	$mpdf->WriteHTML( $content, \Mpdf\HTMLParserMode::HTML_BODY );
 	$mpdf->Output(
-		apply_filters( 'wc_cart_pdf_filename', 'WC_Cart-' . date( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) ) . '.pdf',
+		apply_filters( 'wc_cart_pdf_filename', 'WC_Cart-' . gmdate( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) ) . '.pdf',
 		apply_filters( 'wc_cart_pdf_destination', $dest )
 	);
 
@@ -181,7 +187,6 @@ function wc_cart_pdf_process_download() {
 }
 add_action( 'template_redirect', 'wc_cart_pdf_process_download' );
 
-
 /**
  * Renders the download cart as PDF button
  *
@@ -195,13 +200,12 @@ function wc_cart_pdf_button() {
 	?>
 
 	<a href="<?php echo esc_url( wp_nonce_url( add_query_arg( array( 'cart-pdf' => '1' ), wc_get_cart_url() ), 'cart-pdf' ) ); ?>" class="cart-pdf-button button" target="_blank">
-		<?php esc_html_e( get_option( 'wc_cart_pdf_button_label', __( 'Download Cart as PDF', 'wc-cart-pdf' ) ) ); ?>
+		<?php echo esc_html( get_option( 'wc_cart_pdf_button_label', __( 'Download Cart as PDF', 'wc-cart-pdf' ) ) ); ?>
 	</a>
 
 	<?php
 }
 add_action( 'woocommerce_proceed_to_checkout', 'wc_cart_pdf_button', 21 );
-
 
 /**
  * Register various customizer options for modifying the cart PDF
@@ -343,21 +347,17 @@ function wc_cart_pdf_customize_register( $wp_customize ) {
 }
 add_action( 'customize_register', 'wc_cart_pdf_customize_register' );
 
-
 /**
  * Expand {site_title} placeholder variable
  *
  * @since 1.0.3
- * @param string $string
+ * @param string $string Default footer text.
  * @return string
  */
 function wc_cart_pdf_footer_text( $string ) {
 	return str_replace( '{site_title}', wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ), $string );
 }
 add_filter( 'woocommerce_email_footer_text', 'wc_cart_pdf_footer_text' );
-
-
-
 
 /**
  * Maybe send a copy of the PDF to admin

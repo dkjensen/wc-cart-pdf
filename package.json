@@ -1,0 +1,24 @@
+{
+  "name": "wc-cart-pdf",
+  "version": "1.2.0",
+  "description": "Adds ability for users and guests to download their WooCommerce cart as PDF",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dkjensen/wc-cart-pdf.git"
+  },
+  "author": "David Jensen",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/dkjensen/wc-cart-pdf/issues"
+  },
+  "homepage": "https://github.com/dkjensen/wc-cart-pdf#readme",
+  "dependencies": {
+    "node-wp-i18n": "^1.2.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "i18n": "npm run i18n:textdomain && npm run i18n:pot",
+    "i18n:textdomain": "npx wpi18n addtextdomain --exclude=vendor,tests,node_modules",
+    "i18n:pot": "npx wpi18n makepot --domain-path=languages"
+  }
+}

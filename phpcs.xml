@@ -27,6 +27,7 @@
 	<rule ref="WordPress">
 		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.ShortPrefixPassed"/>
 		<exclude name="WordPress.PHP.YodaConditions"/>
+		<exclude name="WordPress.NamingConventions.ValidVariableName"/>
 	</rule>
 
 	<rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">

@@ -1,8 +1,8 @@
 === WooCommerce Cart PDF ===
 Contributors: dkjensen, seattlewebco, davidperez
-Tested up to: 5.6.2
+Tested up to: 5.7.2
 Requires PHP: 5.6.0
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 
 Adds ability for users and guests to download their WooCommerce cart as PDF
 
@@ -16,6 +16,10 @@ Useful for many cases such as if a user needs a quote before completing purchase
 2. Ensure WooCommerce is installed and activated as well
 
 == Changelog ==
+2.1.3
+* Add language translation file
+* Stylesheet changes
+
 2.1.2
 * Add compatibility with Gravity PDF plugin
 
