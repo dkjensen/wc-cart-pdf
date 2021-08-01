@@ -4,6 +4,7 @@
 /.github
 /.babelrc
 /.vscode
+/.husky
 /.eslintignore
 /phpcs.xml
 /node_modules
@@ -15,6 +16,7 @@
 
 # Files
 .babelrc
+.commitlintrc.js
 .distignore
 .env
 .eslintignore

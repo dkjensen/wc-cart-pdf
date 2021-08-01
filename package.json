@@ -12,12 +12,23 @@
     "url": "https://github.com/dkjensen/wc-cart-pdf/issues"
   },
   "homepage": "https://github.com/dkjensen/wc-cart-pdf#readme",
+  "lint-staged": {
+    "*.php": [
+      "php -d display_errors=1 -l",
+      "composer run-script phpcs-pre-commit"
+    ],
+    "*.js": [
+      "eslint --fix"
+    ]
+  },
   "dependencies": {
     "node-wp-i18n": "^1.2.5"
   },
   "devDependencies": {
     "@babel/plugin-transform-classes": "^7.9.5",
     "@babel/polyfill": "^7.8.7",
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "browser-sync": "^2.26.3",
@@ -29,6 +40,7 @@
     "eslint-config-wordpress": "^2.0.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^8.0.0",
+    "husky": "^7.0.1",
     "js-cookie": "^3.0.0",
     "laravel-mix": "^6.0.11",
     "laravel-mix-polyfill": "^3.0.0",
