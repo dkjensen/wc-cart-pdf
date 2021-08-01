@@ -4,3 +4,4 @@ assets/
 *.json
 *.scss
 *.css
+webpack.mix.js

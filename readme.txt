@@ -2,20 +2,28 @@
 Contributors: dkjensen, seattlewebco, davidperez
 Tested up to: 5.7.2
 Requires PHP: 5.6.0
-Stable tag: 2.1.3
+Stable tag: 2.1.4
 
 Adds ability for users and guests to download their WooCommerce cart as PDF
 
 == Description ==
-Adds ability for users and guests to download their WooCommerce cart as PDF
+Adds ability for users and guests to download their WooCommerce cart as PDF. Useful for many cases such as if a user needs a quote before completing purchase.
 
-Useful for many cases such as if a user needs a quote before completing purchase
+= Features =
+
+- Full PDF template customization
+- Send copy of each generated cart PDF to admin
+- Capture customer / guest information from checkout and display on generated PDF
 
 == Installation ==
 1. Upload plugin and then activate
 2. Ensure WooCommerce is installed and activated as well
 
 == Changelog ==
+2.1.4
+* Customizer option to show Download Cart as PDF button on checkout
+* Ability to capture customer and guest information from checkout and display on PDF
+
 2.1.3
 * Add language translation file
 * Stylesheet changes
@@ -139,3 +147,13 @@ Add the following code snippet to your themes functions.php:
         endif;
     }
     add_action( 'woocommerce_proceed_to_checkout', 'child_theme_wc_cart_pdf_button', 21 );
+
+= Product images are not showing on PDF =
+
+The library that generates the PDF (mPDF), requires images to be hosted locally, and not on an external server such as a CDN. 
+
+= How can I customize the PDF template? =
+
+Copy the PDF template from the plugin folder **wc-cart-pdf/templates/cart-table.php** into your child theme folder **child-theme/woocommerce/wc-cart-pdf/cart-table.php**.
+
+From there you can modify the PDF template in your child theme.

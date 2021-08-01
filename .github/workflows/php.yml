@@ -17,6 +17,7 @@ jobs:
           composer clear-cache
           composer install --no-dev --prefer-dist
           npm ci
+          npm run build
           npm run i18n
 
       - name: WordPress Plugin Deploy

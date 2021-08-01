@@ -9,15 +9,16 @@
  * Before template hook
  *
  * @since 1.0.4
+ * @package dkjensen/wc-cart-pdf
  */
 do_action( 'wc_cart_pdf_before_template' );
 
-$customer = new \WC_Customer( get_current_user_id() );
+$customer = wc_cart_pdf_get_customer();
 ?>
 <div class="wc_cart_pdf_template">
 	<?php
-	$logo = parse_url( get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_header_image' ) ), PHP_URL_PATH );
-	$logo = ! $logo ? '' : $_SERVER['DOCUMENT_ROOT'] . $logo;
+	$logo = wp_parse_url( get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_header_image' ) ), PHP_URL_PATH );
+	$logo = ! $logo ? '' : isset( $_SERVER['DOCUMENT_ROOT'] ) ? sanitize_file_name( wp_unslash( $_SERVER['DOCUMENT_ROOT'] ) ) : '' . $logo;
 
 	if ( file_exists( $logo ) ) {
 		printf(
@@ -34,16 +35,11 @@ $customer = new \WC_Customer( get_current_user_id() );
 		<p>
 			<?php echo esc_html( gmdate( get_option( 'date_format' ) ) ); ?>
 		</p>
-
-		<?php if ( $customer->get_id() ) : ?>
-
-			<p>
-				<?php echo esc_html( $customer->get_first_name() . ' ' . $customer->get_last_name() ); ?><br>
-				<?php echo esc_html( $customer->get_email() ); ?><br>
-				<?php echo esc_html( $customer->get_billing_phone() ); ?>
-			</p>
-
-		<?php endif; ?>
+		<p>
+			<?php echo esc_html( $customer->get_billing_first_name() . ' ' . $customer->get_billing_last_name() ); ?><br>
+			<?php echo esc_html( $customer->get_billing_email() ); ?><br>
+			<?php echo esc_html( $customer->get_billing_phone() ); ?>
+		</p>
 	</div>
 	<table class="shop_table shop_table_responsive cart woocommerce-cart-form__contents" cellspacing="0">
 		<thead>
@@ -82,9 +78,9 @@ $customer = new \WC_Customer( get_current_user_id() );
 						);
 
 						if ( ! $product_permalink ) {
-							echo $thumbnail; // PHPCS: XSS ok.
+							echo $thumbnail; // phpcs:ignore
 						} else {
-							printf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $thumbnail ); // PHPCS: XSS ok.
+							printf( '<a href="%s">%s</a>', esc_url( $product_permalink ), $thumbnail ); // phpcs:ignore
 						}
 						?>
 						</td>
@@ -100,7 +96,7 @@ $customer = new \WC_Customer( get_current_user_id() );
 						do_action( 'woocommerce_after_cart_item_name', $cart_item, $cart_item_key );
 
 						// Meta data.
-						echo wc_get_formatted_cart_item_data( $cart_item ); // PHPCS: XSS ok.
+						echo wc_get_formatted_cart_item_data( $cart_item ); // phpcs:ignore
 
 						// Backorder notification.
 						if ( $_product->backorders_require_notification() && $_product->is_on_backorder( $cart_item['quantity'] ) ) {
@@ -111,7 +107,7 @@ $customer = new \WC_Customer( get_current_user_id() );
 
 						<td class="product-price" data-title="<?php esc_attr_e( 'Price', 'wc-cart-pdf' ); ?>">
 							<?php
-								echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key ); // PHPCS: XSS ok.
+								echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key ); // phpcs:ignore
 							?>
 						</td>
 
@@ -121,7 +117,7 @@ $customer = new \WC_Customer( get_current_user_id() );
 
 						<td class="product-subtotal" data-title="<?php esc_attr_e( 'Total', 'wc-cart-pdf' ); ?>">
 							<?php
-								echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); // PHPCS: XSS ok.
+								echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); // phpcs:ignore
 							?>
 						</td>
 					</tr>

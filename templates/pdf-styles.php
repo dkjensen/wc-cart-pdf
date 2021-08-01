@@ -1,6 +1,8 @@
 <?php
 /**
  * PDF styles
+ * 
+ * @package dkjensen/wc-cart-pdf
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

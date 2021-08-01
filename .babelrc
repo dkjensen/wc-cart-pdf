@@ -1,0 +1,11 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env", { "useBuiltIns": "entry", "debug": true, "corejs": 3 }
+        ]
+    ],
+    "plugins": [
+        "transform-class-properties",
+        "@babel/plugin-transform-classes"
+    ]
+}

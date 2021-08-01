@@ -1,8 +1,8 @@
 #!/bin/sh
 
 PLUGIN_SLUG="wc-cart-pdf"
-PROJECT_PATH=$(pwd)
-BUILD_PATH="${PROJECT_PATH}/build"
+PROJECT_PATH="."
+BUILD_PATH="./build"
 DEST_PATH="$BUILD_PATH/$PLUGIN_SLUG"
 
 echo "Generating build directory..."
@@ -10,7 +10,12 @@ rm -rf "$BUILD_PATH"
 mkdir -p "$DEST_PATH"
 
 echo "Installing PHP and JS dependencies..."
+npm ci --no-optional
 composer install || exit "$?"
+echo "Running JS Build..."
+npm run build || exit "$?"
+echo "Generating translations..."
+npm run i18n || exit "$?"
 echo "Cleaning up PHP dependencies..."
 composer install --no-dev || exit "$?"
 

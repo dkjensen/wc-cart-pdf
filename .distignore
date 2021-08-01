@@ -7,6 +7,7 @@
 /.eslintignore
 /phpcs.xml
 /node_modules
+/resources
 /tests
 /bin
 /build
@@ -15,22 +16,27 @@
 # Files
 .babelrc
 .distignore
+.env
 .eslintignore
 .eslintrc
 .eslintrc.json
 .gitignore
+.releaserc.js
 .travis.yml
 CHANGELOG.md
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
 CREDITS.md
 LICENSE.md
+LICENSE
 README.md
 composer.json
 composer.lock
+mix-manifest.json
 package-lock.json
 package.json
 phpcs.xml
 phpunit.xml
 webpack.config.js
 webpack.gutenberg.config.js
+webpack.mix.js

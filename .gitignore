@@ -58,8 +58,9 @@ node_modules
 
 # Compiled Files and Build Dirs #
 ##########
-/README.html
-/build/
+README.html
+build/
+assets/
 
 # PhpStrom Project Files #
 .idea/
