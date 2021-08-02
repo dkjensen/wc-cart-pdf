@@ -2,7 +2,7 @@
 Contributors: dkjensen, seattlewebco, davidperez
 Tested up to: 5.8
 Requires PHP: 5.6.0
-Stable tag: 2.1.4
+Stable tag: 2.1.5
 
 Adds ability for users and guests to download their WooCommerce cart as PDF
 
@@ -20,6 +20,9 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 2. Ensure WooCommerce is installed and activated as well
 
 == Changelog ==
+2.1.5
+* Fix capture customer feature to only capture certain checkout fields
+
 2.1.4
 * Customizer option to show Download Cart as PDF button on checkout
 * Ability to capture customer and guest information from checkout and display on PDF
