@@ -73,3 +73,6 @@ Rails
 
 # Localization #
 languages/
+
+# Environment #
+.env
