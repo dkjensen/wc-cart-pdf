@@ -14,23 +14,18 @@
 do_action( 'wc_cart_pdf_before_template' );
 
 $customer = wc_cart_pdf_get_customer();
+$logo     = get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_header_image' ) );
 ?>
 <div class="wc_cart_pdf_template">
-	<?php
-	$logo = wp_parse_url( get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_header_image' ) ), PHP_URL_PATH );
-	$logo = ! $logo ? '' : isset( $_SERVER['DOCUMENT_ROOT'] ) ? sanitize_file_name( wp_unslash( $_SERVER['DOCUMENT_ROOT'] ) ) : '' . $logo;
+	<?php if ( $logo ) { ?>
 
-	if ( file_exists( $logo ) ) {
-		printf(
-			'<div id="template_header_image"><p style="margin-top: 0; text-align: %s;"><img src="%s" style="width: %s;" alt="%s" /></p></div>',
-			get_option( 'wc_cart_pdf_logo_alignment', 'center' ),
-			esc_url( $logo ),
-			get_option( 'wc_cart_pdf_logo_width' ) ? esc_attr( get_option( 'wc_cart_pdf_logo_width' ) ) . 'px' : 'auto',
-			esc_attr( get_bloginfo( 'name', 'display' ) )
-		);
-	}
-	?>
+		<div id="template_header_image">
+			<p style="margin-top: 0; text-align: <?php echo esc_attr( get_option( 'wc_cart_pdf_logo_alignment', 'center' ) ); ?>;">
+				<img src="<?php echo esc_url( $logo ); ?>" style="width: <?php echo get_option( 'wc_cart_pdf_logo_width' ) ? esc_attr( get_option( 'wc_cart_pdf_logo_width' ) ) . 'px' : 'auto'; ?>;" alt="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" />
+			</p>
+		</div>
 
+	<?php } ?>
 	<div id="template_header_meta">
 		<p>
 			<?php echo esc_html( gmdate( get_option( 'date_format' ) ) ); ?>
