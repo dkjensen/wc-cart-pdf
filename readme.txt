@@ -2,11 +2,14 @@
 Contributors: dkjensen, seattlewebco, davidperez
 Tested up to: 5.8
 Requires PHP: 5.6.0
-Stable tag: 2.1.6
+Stable tag: 2.1.7
+Requires at least: 5.0
+Donate link: https://www.buymeacoffee.com/dkjensen
 
 Adds ability for users and guests to download their WooCommerce cart as PDF
 
 == Description ==
+
 Adds ability for users and guests to download their WooCommerce cart as PDF. Useful for many cases such as if a user needs a quote before completing purchase.
 
 = Features =
@@ -19,7 +22,17 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 1. Upload plugin and then activate
 2. Ensure WooCommerce is installed and activated as well
 
+== Screenshots ==
+
+1. Preview of an example PDF generated from the WooCommerce Cart
+2. Customizer settings
+
 == Changelog ==
+
+2.1.7
+* Disable lazy loading product thumbnails by default
+* Add `define( 'WC_CART_PDF_THUMBNAIL_COMPATIBILITY', true );` to **wp-config.php** in an attempt to fix product thumbnails not loading
+
 2.1.6
 * Fix logo rendering on cart table PDF template
 
@@ -102,11 +115,13 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 * Initial plugin release
 
 == Upgrade Notice ==
+
 2.0.0
 * PDF generation library changed from Dompdf to mPDF
 * Requires PHP >= 5.6.0
 
 == Frequently Asked Questions ==
+
 = How to view or open PDF instead of download? =
 
 Add the following code snippet to your themes functions.php:
@@ -156,7 +171,9 @@ Add the following code snippet to your themes functions.php:
 
 = Product images are not showing on PDF =
 
-The library that generates the PDF (mPDF), requires images to be hosted locally, and not on an external server such as a CDN. 
+Try adding the following to your **wp-config.php** file:
+
+`define( 'WC_CART_PDF_THUMBNAIL_COMPATIBILITY', true );`
 
 = How can I customize the PDF template? =
 
