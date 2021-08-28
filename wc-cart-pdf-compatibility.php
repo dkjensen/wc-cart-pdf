@@ -47,3 +47,18 @@ function wc_cart_pdf_compatibility_visual_products_configurator() {
 	);
 }
 add_action( 'wc_cart_pdf_before_process', 'wc_cart_pdf_compatibility_visual_products_configurator' );
+
+/**
+ * Try removing product thumbnails filters if not rendering properly
+ *
+ * @return void
+ */
+function child_wc_cart_pdf_remove_thumbnail_filters() {
+	if ( defined( 'WC_CART_PDF_THUMBNAIL_COMPATIBILITY' ) && constant( 'WC_CART_PDF_THUMBNAIL_COMPATIBILITY' ) ) {
+		remove_all_filters( 'wp_get_attachment_image_src' );
+		remove_all_filters( 'wp_get_attachment_image' );
+		remove_all_filters( 'woocommerce_cart_item_thumbnail' );
+		remove_all_filters( 'woocommerce_product_get_image' );
+	}
+}
+add_action( 'wc_cart_pdf_before_process', 'child_wc_cart_pdf_remove_thumbnail_filters' );
