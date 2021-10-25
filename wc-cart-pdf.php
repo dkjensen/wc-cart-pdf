@@ -40,6 +40,7 @@ require_once WC_CART_PDF_PATH . 'includes/markup.php';
 
 require_once WC_CART_PDF_PATH . 'includes/modules/capture-customer.php';
 require_once WC_CART_PDF_PATH . 'includes/modules/copy-admin.php';
+require_once WC_CART_PDF_PATH . 'includes/modules/unique-increment.php';
 
 /**
  * Load localization files
@@ -351,6 +352,18 @@ function wc_cart_pdf_customize_register( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_setting(
+		'wc_cart_pdf_unique_increment',
+		array(
+			'default'               => '',
+			'type'                  => 'option',
+			'capability'            => 'manage_woocommerce',
+			'sanitize_callback'     => 'wc_clean',
+			'sanitize_js_callback'  => 'wc_clean',
+			'transport'             => 'postMessage',
+		)
+	);
+
 	$wp_customize->add_control(
 		'wc_cart_pdf_copy_admin',
 		array(
@@ -377,6 +390,16 @@ function wc_cart_pdf_customize_register( $wp_customize ) {
 			'label'                 => __( 'Capture customer information on checkout', 'wc-cart-pdf' ),
 			'section'               => 'wc_cart_pdf',
 			'settings'              => 'wc_cart_pdf_capture_customer',
+			'type'                  => 'checkbox',
+		)
+	);
+
+	$wp_customize->add_control(
+		'wc_cart_pdf_unique_increment',
+		array(
+			'label'                 => __( 'Display unique generated PDF number', 'wc-cart-pdf' ),
+			'section'               => 'wc_cart_pdf',
+			'settings'              => 'wc_cart_pdf_unique_increment',
 			'type'                  => 'checkbox',
 		)
 	);

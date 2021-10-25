@@ -28,6 +28,15 @@ $logo     = get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_heade
 	<?php } ?>
 	<div id="template_header_meta">
 		<p>
+			<?php
+			if ( get_option( 'wc_cart_pdf_unique_increment', false ) ) {
+				$pdf_incrementer = absint( get_option( 'wc_cart_pdf_unique_increment_num', 1 ) );
+
+				echo wp_kses_post( apply_filters( 'wc_cart_pdf_unique_increment_string', sprintf( '%04d', $pdf_incrementer ) . '<br>', $pdf_incrementer ) );
+			}
+
+			?>
+
 			<?php echo esc_html( gmdate( get_option( 'date_format' ) ) ); ?>
 		</p>
 		<p>

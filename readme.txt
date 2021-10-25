@@ -29,6 +29,9 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 
 == Changelog ==
 
+2.2.0
+* Add customizer option to display unique generated PDF number on PDF
+
 2.1.7
 * Disable lazy loading product thumbnails by default
 * Add `define( 'WC_CART_PDF_THUMBNAIL_COMPATIBILITY', true );` to **wp-config.php** in an attempt to fix product thumbnails not loading
