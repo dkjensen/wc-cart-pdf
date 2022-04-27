@@ -25,11 +25,13 @@
     "node-wp-i18n": "^1.2.5"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.14.9",
+    "@babel/eslint-parser": "^7.17.0",
     "@babel/plugin-transform-classes": "^7.9.5",
     "@babel/polyfill": "^7.8.7",
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
+    "@wordpress/eslint-plugin": "^10.0.1",
+    "@wordpress/stylelint-config": "^20.0.1",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.7.0",
     "browser-sync": "^2.26.3",
@@ -37,7 +39,6 @@
     "copy-webpack-plugin": "^4.6.0",
     "core-js": "^3.6.5",
     "cross-env": "^5.2.0",
-    "eslint": "^7.5.0",
     "eslint-config-wordpress": "^2.0.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^8.0.0",
@@ -46,6 +47,7 @@
     "laravel-mix": "^6.0.11",
     "laravel-mix-polyfill": "^3.0.0",
     "laravel-mix-svg-sprite": "^1.0.2",
+    "micromodal": "^0.4.10",
     "node-wp-i18n": "^1.2.2",
     "postcss-preset-env": "^6.7.0",
     "prettier": "^1.13.4",
@@ -53,6 +55,7 @@
     "sass": "^1.37.0",
     "sass-loader": "^12.1.0",
     "semantic-release-version-bump": "^1.4.1",
+    "stylelint-order": "^5.0.0",
     "vue": "^2.6.11",
     "vue-template-compiler": "^2.6.10"
   },

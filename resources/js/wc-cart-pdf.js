@@ -1,24 +1,26 @@
 import Cookies from 'js-cookie';
 
-(function ($) {
-    const $form = $('form[name="checkout"]');
+(function($) {
+	const $form = $('form[name="checkout"]');
 
-    const captureFields = cartpdf.capture_fields || [];
+	const captureFields = cartpdf.capture_fields || [];
 
-    $form.on('change', ':input', function (e) {
-        e.preventDefault();
+	$form.on('change', ':input', function(e) {
+		e.preventDefault();
 
-        let formData = new FormData(document.querySelectorAll('form[name="checkout"]')[0]);
+		const formData = new FormData(
+			document.querySelectorAll('form[name="checkout"]')[0]
+		);
 
-        var object = {};
-        formData.forEach(function(value, key) {
-            if (captureFields.includes(key)) {
-                object[ key ] = value;
-            }
-        });
+		const object = {};
+		formData.forEach(function(value, key) {
+			if (captureFields.includes(key)) {
+				object[key] = value;
+			}
+		});
 
-        var json = JSON.stringify(object);
+		const json = JSON.stringify(object);
 
-        Cookies.set('wc-cart-pdf-customer', json);
-    });
+		Cookies.set('wc-cart-pdf-customer', json);
+	});
 })(jQuery);

@@ -15,7 +15,7 @@ if ( ! function_exists( 'get_option' ) || ! get_option( 'wc_cart_pdf_capture_cus
  * @since 2.1.4
  * @return void
  */
-function wc_cart_pdf_scripts() {
+function wc_cart_pdf_capture_customer_scripts() {
 	wp_register_script( 'wc-cart-pdf', WC_CART_PDF_URL . 'assets/js/wc-cart-pdf.js', array( 'jquery' ), WC_CART_PDF_VER, true );
 
 	wp_localize_script(
@@ -57,7 +57,7 @@ function wc_cart_pdf_scripts() {
 
 	wp_enqueue_script( 'wc-cart-pdf' );
 }
-add_action( 'wp_enqueue_scripts', 'wc_cart_pdf_scripts' );
+add_action( 'wp_enqueue_scripts', 'wc_cart_pdf_capture_customer_scripts' );
 
 /**
  * Set default checkout field values to what is saved in the cookie

@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     WooCommerce Cart PDF
  * Description:     Allows customers to download their cart as a PDF
- * Version:         2.2.0
+ * Version:         2.3.0
  * Author:          Seattle Web Co.
  * Author URI:      https://seattlewebco.com
  * Text Domain:     wc-cart-pdf
@@ -41,6 +41,7 @@ require_once WC_CART_PDF_PATH . 'includes/markup.php';
 require_once WC_CART_PDF_PATH . 'includes/modules/capture-customer.php';
 require_once WC_CART_PDF_PATH . 'includes/modules/copy-admin.php';
 require_once WC_CART_PDF_PATH . 'includes/modules/unique-increment.php';
+require_once WC_CART_PDF_PATH . 'includes/modules/info-modal.php';
 
 /**
  * Load localization files
@@ -364,6 +365,18 @@ function wc_cart_pdf_customize_register( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_setting(
+		'wc_cart_pdf_info_modal',
+		array(
+			'default'               => '',
+			'type'                  => 'option',
+			'capability'            => 'manage_woocommerce',
+			'sanitize_callback'     => 'wc_clean',
+			'sanitize_js_callback'  => 'wc_clean',
+			'transport'             => 'postMessage',
+		)
+	);
+
 	$wp_customize->add_control(
 		'wc_cart_pdf_copy_admin',
 		array(
@@ -400,6 +413,16 @@ function wc_cart_pdf_customize_register( $wp_customize ) {
 			'label'                 => __( 'Display unique generated PDF number', 'wc-cart-pdf' ),
 			'section'               => 'wc_cart_pdf',
 			'settings'              => 'wc_cart_pdf_unique_increment',
+			'type'                  => 'checkbox',
+		)
+	);
+
+	$wp_customize->add_control(
+		'wc_cart_pdf_info_modal',
+		array(
+			'label'                 => __( 'Prompt user for contact information prior to downloading PDF', 'wc-cart-pdf' ),
+			'section'               => 'wc_cart_pdf',
+			'settings'              => 'wc_cart_pdf_info_modal',
 			'type'                  => 'checkbox',
 		)
 	);

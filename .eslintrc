@@ -1,23 +1,26 @@
 {
-    "parser": "@babel/eslint-parser",
-    "extends": [
-
-    ],
-    "env": {
-      "browser": true,
-      "es6": true,
-		  "node": true,
-		  "mocha": true
-    },
-    "globals": {
-      "wp": true,
-      "wpApiSettings": true,
-      "window": true,
-      "document": true
-	  },
-    "rules": {
-      "object-curly-spacing": "warn",
-      "array-bracket-spacing": 1,
-      "space-in-parens": 1
-    }
+	"extends": ["plugin:@wordpress/eslint-plugin/recommended"],
+	"env": {
+		"browser": true,
+		"es6": true,
+		"node": true
+	},
+	"globals": {
+		"wp": true,
+		"wpApiSettings": true,
+		"wcSettings": true,
+		"es6": true,
+		"jQuery": true,
+		"cartpdf": true,
+		"cartpdfInfoModal": true
+	},
+	"parser": "@babel/eslint-parser",
+	"parserOptions": {
+		"ecmaVersion": 8,
+		"ecmaFeatures": {
+			"modules": true,
+			"experimentalObjectRestSpread": true,
+			"jsx": true
+		}
+	}
 }
