@@ -22,7 +22,7 @@
       "phpcs -s -p"
     ],
     "phpcs-pre-commit": [
-      "phpcs -s -p -n"
+      "phpcs -s -p -n --exclude=Generic.Files.LineEndings"
     ],
     "phpcbf": [
       "phpcbf -p"

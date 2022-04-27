@@ -2,7 +2,7 @@
 Contributors: dkjensen, seattlewebco, davidperez
 Tested up to: 5.8.1
 Requires PHP: 5.6.0
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 Requires at least: 5.0
 Donate link: https://www.buymeacoffee.com/dkjensen
 
@@ -28,6 +28,9 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 2. Customizer settings
 
 == Changelog ==
+
+2.2.1
+* Fix capture customer not working properly for logged in users
 
 2.2.0
 * Add customizer option to display unique generated PDF number on PDF
