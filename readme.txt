@@ -2,7 +2,7 @@
 Contributors: cloudcatch, dkjensen, seattlewebco, davidperez
 Tested up to: 6.1
 Requires PHP: 5.6.0
-Stable tag: 2.2.2
+Stable tag: 2.2.3
 Requires at least: 5.0
 Donate link: https://www.buymeacoffee.com/dkjensen
 
@@ -28,6 +28,9 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 2. Customizer settings
 
 == Changelog ==
+
+2.2.3
+* Update compatibility
 
 2.2.2
 * Update compatibility
