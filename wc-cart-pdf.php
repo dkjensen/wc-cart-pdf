@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     WooCommerce Cart PDF
  * Description:     Allows customers to download their cart as a PDF
- * Version:         2.2.1
+ * Version:         2.2.2
  * Author:          CloudCatch LLC
  * Author URI:      https://cloudcatch.io
  * Text Domain:     wc-cart-pdf
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'WC_CART_PDF_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'WC_CART_PDF_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
-define( 'WC_CART_PDF_VER', '2.2.1' );
+define( 'WC_CART_PDF_VER', '2.2.2' );
 
 require_once WC_CART_PDF_PATH . 'vendor/autoload.php';
 require_once WC_CART_PDF_PATH . 'wc-cart-pdf-compatibility.php';

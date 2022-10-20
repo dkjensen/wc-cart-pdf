@@ -2,7 +2,7 @@
 Contributors: cloudcatch, dkjensen, seattlewebco, davidperez
 Tested up to: 6.1
 Requires PHP: 5.6.0
-Stable tag: 2.2.1
+Stable tag: 2.2.2
 Requires at least: 5.0
 Donate link: https://www.buymeacoffee.com/dkjensen
 
