@@ -125,8 +125,8 @@ function wc_cart_pdf_process_download() {
 	$mpdf->packTableData        = true;
 	$mpdf->autoLangToFont       = true;
 
-	$cart_table = wc_locate_template( 'cart-table.php', '/woocommerce/wc-cart-pdf/', __DIR__ . '/templates/' );
-	$css        = wc_locate_template( 'pdf-styles.php', '/woocommerce/wc-cart-pdf/', __DIR__ . '/templates/' );
+	$cart_table    = wc_locate_template( 'cart-table.php', '/woocommerce/wc-cart-pdf/', __DIR__ . '/templates/' );
+	$css           = wc_locate_template( 'pdf-styles.php', '/woocommerce/wc-cart-pdf/', __DIR__ . '/templates/' );
 
 	/**
 	 * Disable lazy loading images
@@ -146,6 +146,17 @@ function wc_cart_pdf_process_download() {
 		include $cart_table;
 
 		$content = ob_get_clean();
+	}
+
+	if ( get_option( 'wc_cart_pdf_add_each_product_page', false ) ) {
+		$products_html = wc_locate_template( 'products.php', '/woocommerce/wc-cart-pdf/', __DIR__ . '/templates/' );
+		if ( file_exists( $products_html ) ) {
+			ob_start();
+
+			include $products_html;
+
+			$content .= ob_get_clean();
+		}
 	}
 
 	if ( file_exists( $css ) ) {
@@ -171,7 +182,7 @@ function wc_cart_pdf_process_download() {
 	);
 
 	// phpcs:ignore
-	if ( $stream_options['Attachment'] == 0 ) {
+	if ( $stream_options['Attachment'] == 0 || get_option( 'wc_cart_pdf_open_instead_of_download', false ) ) {
 		$dest = \Mpdf\Output\Destination::INLINE;
 	}
 
@@ -364,6 +375,42 @@ function wc_cart_pdf_customize_register( $wp_customize ) {
 		)
 	);
 
+	$wp_customize->add_setting(
+		'wc_cart_pdf_open_instead_of_download',
+		array(
+			'default'               => '',
+			'type'                  => 'option',
+			'capability'            => 'manage_woocommerce',
+			'sanitize_callback'     => 'wc_clean',
+			'sanitize_js_callback'  => 'wc_clean',
+			'transport'             => 'postMessage',
+		)
+	);
+
+	$wp_customize->add_setting(
+		'wc_cart_pdf_add_each_product_page',
+		array(
+			'default'               => '',
+			'type'                  => 'option',
+			'capability'            => 'manage_woocommerce',
+			'sanitize_callback'     => 'wc_clean',
+			'sanitize_js_callback'  => 'wc_clean',
+			'transport'             => 'postMessage',
+		)
+	);
+
+	$wp_customize->add_setting(
+		'wc_cart_pdf_show_bottom_site_url',
+		array(
+			'default'               => '',
+			'type'                  => 'option',
+			'capability'            => 'manage_woocommerce',
+			'sanitize_callback'     => 'wc_clean',
+			'sanitize_js_callback'  => 'wc_clean',
+			'transport'             => 'postMessage',
+		)
+	);
+
 	$wp_customize->add_control(
 		'wc_cart_pdf_copy_admin',
 		array(
@@ -400,6 +447,34 @@ function wc_cart_pdf_customize_register( $wp_customize ) {
 			'label'                 => __( 'Display unique generated PDF number', 'wc-cart-pdf' ),
 			'section'               => 'wc_cart_pdf',
 			'settings'              => 'wc_cart_pdf_unique_increment',
+			'type'                  => 'checkbox',
+		)
+	);
+
+	$wp_customize->add_control(
+		'wc_cart_pdf_open_instead_of_download',
+		array(
+			'label'                 => __( 'Open PDF in a new tab instead of downloading', 'wc-cart-pdf' ),
+			'section'               => 'wc_cart_pdf',
+			'settings'              => 'wc_cart_pdf_open_instead_of_download',
+			'type'                  => 'checkbox',
+		)
+	);
+	$wp_customize->add_control(
+		'wc_cart_pdf_add_each_product_page',
+		array(
+			'label'                 => __( 'Add full products description', 'wc-cart-pdf' ),
+			'section'               => 'wc_cart_pdf',
+			'settings'              => 'wc_cart_pdf_add_each_product_page',
+			'type'                  => 'checkbox',
+		)
+	);
+	$wp_customize->add_control(
+		'wc_cart_pdf_show_bottom_site_url',
+		array(
+			'label'                 => __( 'Add site URL at the bottom of each page', 'wc-cart-pdf' ),
+			'section'               => 'wc_cart_pdf',
+			'settings'              => 'wc_cart_pdf_show_bottom_site_url',
 			'type'                  => 'checkbox',
 		)
 	);

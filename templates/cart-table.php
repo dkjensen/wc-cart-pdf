@@ -198,6 +198,11 @@ $logo     = get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_heade
 </div>
 
 <?php
+
+if ( get_option( 'wc_cart_pdf_show_bottom_site_url' ) ) {
+	echo '<p style="text-align: center;"><a style="color:#000000;" href="' . esc_url( site_url() ) . '">' .  esc_url( site_url() ) . '</a></p>';
+}
+
 /**
  * After template hook
  *
