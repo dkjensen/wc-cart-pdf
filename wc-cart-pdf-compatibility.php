@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin compatibility
+ * Plugin and language compatibility
  *
  * @package dkjensen/wc-cart-pdf
  */
@@ -62,3 +62,73 @@ function child_wc_cart_pdf_remove_thumbnail_filters() {
 	}
 }
 add_action( 'wc_cart_pdf_before_process', 'child_wc_cart_pdf_remove_thumbnail_filters' );
+
+/**
+ * Multilingual support
+ *
+ * @param array $args MPDF args.
+ * @return array
+ */
+function wc_cart_pdf_compatibility_language( $args ) {
+	$site_lang = get_locale();
+
+	switch ( $site_lang ) {
+		case 'zh_CN': // Chinese (simplified).
+		case 'zh_TW': // Chinese (traditional).
+			$defaultConfig = ( new Mpdf\Config\ConfigVariables() )->getDefaults();
+			$fontDirs      = $defaultConfig['fontDir'];
+
+			$defaultFontConfig = ( new Mpdf\Config\FontVariables() )->getDefaults();
+			$fontData          = $defaultFontConfig['fontdata'];
+
+			$args['fontDir'] = array_merge(
+				$fontDirs,
+				array(
+					WC_CART_PDF_PATH . 'resources/fonts',
+				)
+			);
+
+			$args['fontdata'] = $fontData + array(
+				'yahei' => array(
+					'R'  => 'yahei.ttf',
+				),
+			);
+
+			$args['default_font'] = 'yahei';
+			$args['mode']         = '+aCJK';
+			break;
+
+		case 'ja': // Japanese.
+		case 'ur': // Urdu.
+		case 'am': // Amharic.
+		case 'gu': // Gujarati.
+		case 'hi_IN': // Hindi.
+		case 'kn': // Kannada.
+		case 'km': // Khmer.
+		case 'ko_KR': // Korean.
+		case 'ml_IN': // Malayalam.
+		case 'mr': // Marathi.
+		case 'my_MM': // Myanmar (burmese).
+		case 'ne_NP': // Nepali.
+		case 'pa_IN': // Punjabi.
+		case 'si_LK': // Sinhala.
+		case 'ta_IN': // Tamil.
+		case 'te': // Telugu.
+		case 'th': // Thai.
+			add_filter(
+				'wc_cart_pdf_mpdf',
+				function( $mpdf ) {
+					$mpdf->autoScriptToLang = true;
+
+					return $mpdf;
+				}
+			);
+
+			$args['mode'] = '+aCJK';
+
+			break;
+	}
+
+	return $args;
+}
+add_filter( 'wc_cart_pdf_mpdf_args', 'wc_cart_pdf_compatibility_language' );

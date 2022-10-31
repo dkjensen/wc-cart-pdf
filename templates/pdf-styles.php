@@ -1,7 +1,7 @@
 <?php
 /**
  * PDF styles
- * 
+ *
  * @package dkjensen/wc-cart-pdf
  */
 

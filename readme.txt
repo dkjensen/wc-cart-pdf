@@ -1,8 +1,8 @@
 === WooCommerce Cart PDF ===
-Contributors: cloudcatch, dkjensen, seattlewebco, davidperez
+Contributors: cloudcatch, dkjensen, seattlewebco, davidperez, exstheme
 Tested up to: 6.1
 Requires PHP: 5.6.0
-Stable tag: 2.2.3
+Stable tag: 2.3.0
 Requires at least: 5.0
 Donate link: https://www.buymeacoffee.com/dkjensen
 
@@ -28,6 +28,10 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 2. Customizer settings
 
 == Changelog ==
+
+2.3.0
+* Improve multilingual capabilities
+* Add customizer control to open PDF in new tab
 
 2.2.3
 * Update compatibility

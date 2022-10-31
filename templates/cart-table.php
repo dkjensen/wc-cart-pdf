@@ -49,10 +49,10 @@ $logo     = get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_heade
 		<thead>
 			<tr>
 				<th class="product-thumbnail">&nbsp;</th>
-				<th class="product-name"><?php esc_html_e( 'Product', 'wc-cart-pdf' ); ?></th>
-				<th class="product-price"><?php esc_html_e( 'Price', 'wc-cart-pdf' ); ?></th>
-				<th class="product-quantity"><?php esc_html_e( 'Quantity', 'wc-cart-pdf' ); ?></th>
-				<th class="product-subtotal"><?php esc_html_e( 'Total', 'wc-cart-pdf' ); ?></th>
+				<th class="product-name"><?php esc_html_e( 'Product', 'woocommerce' ); ?></th>
+				<th class="product-price"><?php esc_html_e( 'Price', 'woocommerce' ); ?></th>
+				<th class="product-quantity"><?php esc_html_e( 'Quantity', 'woocommerce' ); ?></th>
+				<th class="product-subtotal"><?php esc_html_e( 'Total', 'woocommerce' ); ?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -89,7 +89,7 @@ $logo     = get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_heade
 						?>
 						</td>
 
-						<td class="product-name" data-title="<?php esc_attr_e( 'Product', 'wc-cart-pdf' ); ?>">
+						<td class="product-name" data-title="<?php esc_attr_e( 'Product', 'woocommerce' ); ?>">
 						<?php
 						if ( ! $product_permalink ) {
 							echo wp_kses_post( apply_filters( 'woocommerce_cart_item_name', $_product->get_name(), $cart_item, $cart_item_key ) . '&nbsp;' );
@@ -104,22 +104,22 @@ $logo     = get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_heade
 
 						// Backorder notification.
 						if ( $_product->backorders_require_notification() && $_product->is_on_backorder( $cart_item['quantity'] ) ) {
-							echo wp_kses_post( apply_filters( 'woocommerce_cart_item_backorder_notification', '<p class="backorder_notification">' . esc_html__( 'Available on backorder', 'wc-cart-pdf' ) . '</p>', $product_id ) );
+							echo wp_kses_post( apply_filters( 'woocommerce_cart_item_backorder_notification', '<p class="backorder_notification">' . esc_html__( 'Available on backorder', 'woocommerce' ) . '</p>', $product_id ) );
 						}
 						?>
 						</td>
 
-						<td class="product-price" data-title="<?php esc_attr_e( 'Price', 'wc-cart-pdf' ); ?>">
+						<td class="product-price" data-title="<?php esc_attr_e( 'Price', 'woocommerce' ); ?>">
 							<?php
 								echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key ); // phpcs:ignore
 							?>
 						</td>
 
-						<td class="product-quantity" data-title="<?php esc_attr_e( 'Quantity', 'wc-cart-pdf' ); ?>">
+						<td class="product-quantity" data-title="<?php esc_attr_e( 'Quantity', 'woocommerce' ); ?>">
 							<?php print esc_html( $cart_item['quantity'] ); ?>
 						</td>
 
-						<td class="product-subtotal" data-title="<?php esc_attr_e( 'Total', 'wc-cart-pdf' ); ?>">
+						<td class="product-subtotal" data-title="<?php esc_attr_e( 'Total', 'woocommerce' ); ?>">
 							<?php
 								echo apply_filters( 'woocommerce_cart_item_subtotal', WC()->cart->get_product_subtotal( $_product, $cart_item['quantity'] ), $cart_item, $cart_item_key ); // phpcs:ignore
 							?>
@@ -131,14 +131,14 @@ $logo     = get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_heade
 			?>
 
 			<tr class="cart-subtotal cart-total-row">
-				<th class="row-subtotal" colspan="4" style="text-align: right;"><?php esc_html_e( 'Subtotal', 'wc-cart-pdf' ); ?></th>
-				<td class="row-subtotal" data-title="<?php esc_attr_e( 'Subtotal', 'wc-cart-pdf' ); ?>"><?php wc_cart_totals_subtotal_html(); ?></td>
+				<th class="row-subtotal" colspan="4" style="text-align: right;"><?php esc_html_e( 'Subtotal', 'woocommerce' ); ?></th>
+				<td class="row-subtotal" data-title="<?php esc_attr_e( 'Subtotal', 'woocommerce' ); ?>"><?php wc_cart_totals_subtotal_html(); ?></td>
 			</tr>
 			
 			<?php if ( 0 < WC()->cart->get_shipping_total() ) : ?>
 				<tr class="shipping cart-total-row">
-					<th class="row-subtotal" colspan="4" style="text-align: right;"><?php esc_html_e( 'Shipping', 'wc-cart-pdf' ); ?></th>
-					<td class="row-subtotal" data-title="<?php esc_attr_e( 'Shipping', 'wc-cart-pdf' ); ?>"><?php echo WC()->cart->get_cart_shipping_total(); ?></td>
+					<th class="row-subtotal" colspan="4" style="text-align: right;"><?php esc_html_e( 'Shipping', 'woocommerce' ); ?></th>
+					<td class="row-subtotal" data-title="<?php esc_attr_e( 'Shipping', 'woocommerce' ); ?>"><?php echo WC()->cart->get_cart_shipping_total(); ?></td>
 				</tr>
 			<?php endif; ?>
 
@@ -160,7 +160,7 @@ $logo     = get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_heade
 			if ( wc_tax_enabled() && ! WC()->cart->display_prices_including_tax() ) :
 				$taxable_address = WC()->customer->get_taxable_address();
 				$estimated_text  = WC()->customer->is_customer_outside_base() && ! WC()->customer->has_calculated_shipping()
-						? sprintf( ' <small>' . __( '(estimated for %s)', 'wc-cart-pdf' ) . '</small>', WC()->countries->estimated_for_prefix( $taxable_address[0] ) . WC()->countries->countries[ $taxable_address[0] ] )
+						? sprintf( ' <small>' . __( '(estimated for %s)', 'woocommerce' ) . '</small>', WC()->countries->estimated_for_prefix( $taxable_address[0] ) . WC()->countries->countries[ $taxable_address[0] ] )
 						: '';
 
 				if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) :
@@ -182,8 +182,8 @@ $logo     = get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_heade
 			<?php do_action( 'woocommerce_cart_totals_before_order_total' ); ?>
 
 			<tr class="order-total cart-total-row">
-				<th class="row-subtotal" colspan="4" style="text-align: right;"><?php esc_html_e( 'Total', 'wc-cart-pdf' ); ?></th>
-				<td class="row-subtotal" data-title="<?php esc_attr_e( 'Total', 'wc-cart-pdf' ); ?>"><?php wc_cart_totals_order_total_html(); ?></td>
+				<th class="row-subtotal" colspan="4" style="text-align: right;"><?php esc_html_e( 'Total', 'woocommerce' ); ?></th>
+				<td class="row-subtotal" data-title="<?php esc_attr_e( 'Total', 'woocommerce' ); ?>"><?php wc_cart_totals_order_total_html(); ?></td>
 			</tr>
 
 			<?php do_action( 'woocommerce_cart_totals_after_order_total' ); ?>

@@ -2,12 +2,12 @@
 /**
  * Plugin Name:     WooCommerce Cart PDF
  * Description:     Allows customers to download their cart as a PDF
- * Version:         2.2.3
+ * Version:         2.3.0
  * Author:          CloudCatch LLC
  * Author URI:      https://cloudcatch.io
  * Text Domain:     wc-cart-pdf
  * Domain Path:     /languages/
- * Contributors:    cloudcatch, dkjensen, seattlewebco, davidperez
+ * Contributors:    cloudcatch, dkjensen, seattlewebco, davidperez, exstheme
  * Requires PHP:    5.6.0
  * WC tested up to: 7.0.0
  *
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'WC_CART_PDF_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'WC_CART_PDF_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
-define( 'WC_CART_PDF_VER', '2.2.3' );
+define( 'WC_CART_PDF_VER', '2.3.0' );
 
 require_once WC_CART_PDF_PATH . 'vendor/autoload.php';
 require_once WC_CART_PDF_PATH . 'wc-cart-pdf-compatibility.php';
@@ -171,7 +171,7 @@ function wc_cart_pdf_process_download() {
 	);
 
 	// phpcs:ignore
-	if ( $stream_options['Attachment'] == 0 ) {
+	if ( $stream_options['Attachment'] == 0 || get_option( 'wc_cart_pdf_open_pdf', false ) ) {
 		$dest = \Mpdf\Output\Destination::INLINE;
 	}
 
@@ -317,6 +317,18 @@ function wc_cart_pdf_customize_register( $wp_customize ) {
 	);
 
 	$wp_customize->add_setting(
+		'wc_cart_pdf_open_pdf',
+		array(
+			'default'               => '',
+			'type'                  => 'option',
+			'capability'            => 'manage_woocommerce',
+			'sanitize_callback'     => 'wc_clean',
+			'sanitize_js_callback'  => 'wc_clean',
+			'transport'             => 'postMessage',
+		)
+	);
+
+	$wp_customize->add_setting(
 		'wc_cart_pdf_copy_admin',
 		array(
 			'default'               => '',
@@ -361,6 +373,16 @@ function wc_cart_pdf_customize_register( $wp_customize ) {
 			'sanitize_callback'     => 'wc_clean',
 			'sanitize_js_callback'  => 'wc_clean',
 			'transport'             => 'postMessage',
+		)
+	);
+
+	$wp_customize->add_control(
+		'wc_cart_pdf_open_pdf',
+		array(
+			'label'                 => __( 'Open PDF in new tab instead of downloading', 'wc-cart-pdf' ),
+			'section'               => 'wc_cart_pdf',
+			'settings'              => 'wc_cart_pdf_open_pdf',
+			'type'                  => 'checkbox',
 		)
 	);
 
