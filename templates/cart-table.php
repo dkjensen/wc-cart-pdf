@@ -50,6 +50,7 @@ $logo     = get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_heade
 			<tr>
 				<th class="product-thumbnail">&nbsp;</th>
 				<th class="product-name"><?php esc_html_e( 'Product', 'woocommerce' ); ?></th>
+				<th class="product-sku"><?php esc_html_e( 'SKU', 'woocommerce' ); ?></th>
 				<th class="product-price"><?php esc_html_e( 'Price', 'woocommerce' ); ?></th>
 				<th class="product-quantity"><?php esc_html_e( 'Quantity', 'woocommerce' ); ?></th>
 				<th class="product-subtotal"><?php esc_html_e( 'Total', 'woocommerce' ); ?></th>
@@ -108,7 +109,14 @@ $logo     = get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_heade
 						}
 						?>
 						</td>
-
+						<td class="product-sku" data-title="<?php esc_attr_e( 'SKU', 'wc-cart-pdf' ); ?>">
+							<?php
+								// Retrieve the product SKU
+								$product = apply_filters( 'woocommerce_cart_item_product', $cart_item['data'], $cart_item, $cart_item_key );
+								$sku = $product->get_sku();
+								echo apply_filters( 'woocommerce_cart_item_sku',$sku , $cart_item, $cart_item_key ); // phpcs:ignore
+							?>
+						</td>
 						<td class="product-price" data-title="<?php esc_attr_e( 'Price', 'woocommerce' ); ?>">
 							<?php
 								echo apply_filters( 'woocommerce_cart_item_price', WC()->cart->get_product_price( $_product ), $cart_item, $cart_item_key ); // phpcs:ignore
