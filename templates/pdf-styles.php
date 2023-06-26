@@ -192,6 +192,7 @@ td {
 	text-align: right;
 }
 .shop_table .product-price,
+.shop_table .product-sku,
 .shop_table .product-subtotal {
 	width: 20%;
 	text-align: right;
