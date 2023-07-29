@@ -2,14 +2,14 @@
 /**
  * Plugin Name:     WooCommerce Cart PDF
  * Description:     Allows customers to download their cart as a PDF
- * Version:         2.3.0
+ * Version:         0.0.0-development
  * Author:          CloudCatch LLC
  * Author URI:      https://cloudcatch.io
  * Text Domain:     wc-cart-pdf
  * Domain Path:     /languages/
  * Contributors:    cloudcatch, dkjensen, seattlewebco, davidperez, exstheme
  * Requires PHP:    5.6.0
- * WC tested up to: 7.0.0
+ * WC tested up to: 7.9.0
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'WC_CART_PDF_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'WC_CART_PDF_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
-define( 'WC_CART_PDF_VER', '2.3.0' );
+define( 'WC_CART_PDF_VER', '0.0.0-development' );
 
 require_once WC_CART_PDF_PATH . 'vendor/autoload.php';
 require_once WC_CART_PDF_PATH . 'wc-cart-pdf-compatibility.php';

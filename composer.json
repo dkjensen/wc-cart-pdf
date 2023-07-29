@@ -39,5 +39,10 @@
       "name": "David Jensen",
       "email": "david@dkjensen.com"
     }
-  ]
+  ],
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  }
 }
