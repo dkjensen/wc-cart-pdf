@@ -66,7 +66,7 @@
     "i18n": "npm run i18n:textdomain && npm run i18n:pot",
     "i18n:textdomain": "npx wpi18n addtextdomain --exclude=vendor,tests,node_modules",
     "i18n:pot": "npx wpi18n makepot --domain-path=languages",
-    "package": "./bin/build-zip.sh",
+    "plugin-zip": "./bin/build-zip.sh",
     "prepare": "husky install"
   }
 }
