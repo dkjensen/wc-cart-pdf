@@ -28,6 +28,10 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 
 == Changelog ==
 
+2.4.0
+* Update broken image compatibility
+* Add debug capability using constant `define( 'WC_CART_PDF_DEBUG', true );` to **wp-config.php**
+
 2.3.1
 * Update compatibility
 
