@@ -184,6 +184,15 @@ function wc_cart_pdf_process_download() {
 
 	$mpdf->WriteHTML( $css, \Mpdf\HTMLParserMode::HEADER_CSS );
 	$mpdf->WriteHTML( $content, \Mpdf\HTMLParserMode::HTML_BODY );
+
+	if ( defined( 'WC_CART_PDF_DEBUG' ) && constant( 'WC_CART_PDF_DEBUG' ) ) {
+		echo '<pre>';
+		echo esc_html( '<style>' . $css . '</style>' );
+		echo esc_html( $content );
+		echo '</pre>';
+		exit;
+	}
+
 	$mpdf->Output(
 		apply_filters( 'wc_cart_pdf_filename', 'WC_Cart-' . gmdate( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) ) . '.pdf',
 		apply_filters( 'wc_cart_pdf_destination', $dest )
