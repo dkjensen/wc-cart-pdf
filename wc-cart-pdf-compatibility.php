@@ -59,6 +59,7 @@ function child_wc_cart_pdf_remove_thumbnail_filters() {
 		remove_all_filters( 'wp_get_attachment_image' );
 		remove_all_filters( 'woocommerce_cart_item_thumbnail' );
 		remove_all_filters( 'woocommerce_product_get_image' );
+		remove_all_filters( 'wp_get_attachment_image_attributes' );
 	}
 }
 add_action( 'wc_cart_pdf_before_process', 'child_wc_cart_pdf_remove_thumbnail_filters' );
