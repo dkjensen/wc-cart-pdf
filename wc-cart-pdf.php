@@ -145,7 +145,7 @@ function wc_cart_pdf_process_download() {
 
 		include $cart_table;
 
-		$content = ob_get_clean();
+		$content = apply_filters( 'wc_cart_pdf_content', ob_get_clean() );
 	}
 
 	if ( file_exists( $css ) ) {

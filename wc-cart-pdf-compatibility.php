@@ -133,3 +133,34 @@ function wc_cart_pdf_compatibility_language( $args ) {
 	return $args;
 }
 add_filter( 'wc_cart_pdf_mpdf_args', 'wc_cart_pdf_compatibility_language' );
+
+/**
+ * TranslatePress
+ */
+function wc_cart_pdf_compatibility_translatepress() {
+	if ( function_exists( 'trp_translate' ) ) {
+		// Clear output buffer from TranslatePress.
+		while ( ob_get_level() ) {
+			ob_end_clean();
+		}
+
+		// TranslatePress removes duplicate width / height attributes, let's force the width with a style attribute.
+		add_filter(
+			'wp_get_attachment_image_attributes',
+			function( $attr ) {
+				$attr['style'] = 'width: 60px; height: auto;';
+
+				return $attr;
+			}
+		);
+
+		// Translate again without output buffer.
+		add_filter(
+			'wc_cart_pdf_content',
+			function( $content ) {
+				return trp_translate( $content );
+			}
+		);
+	}
+}
+add_action( 'wc_cart_pdf_before_process', 'wc_cart_pdf_compatibility_translatepress' );
