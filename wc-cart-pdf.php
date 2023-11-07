@@ -9,7 +9,7 @@
  * Domain Path:     /languages/
  * Contributors:    cloudcatch, dkjensen, seattlewebco, davidperez, exstheme
  * Requires PHP:    5.6.0
- * WC tested up to: 7.9.0
+ * WC tested up to: 8.2.1
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -436,3 +436,15 @@ function wc_cart_pdf_customize_register( $wp_customize ) {
 	);
 }
 add_action( 'customize_register', 'wc_cart_pdf_customize_register' );
+
+/**
+ * Declare compatibility with HPOS.
+ */
+add_action(
+	'before_woocommerce_init',
+	function() {
+		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
+		}
+	}
+);

@@ -1,6 +1,6 @@
 === WooCommerce Cart PDF ===
 Contributors: cloudcatch, dkjensen, seattlewebco, davidperez, exstheme
-Tested up to: 6.3
+Tested up to: 6.4
 Requires PHP: 5.6.0
 Stable tag: 0.0.0-development
 Requires at least: 5.0
@@ -27,6 +27,12 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 2. Customizer settings
 
 == Changelog ==
+
+2.6.0
+* HPOS (high performance order storage) compatibility
+
+2.5.0
+* TranslatePress compatibility
 
 2.4.0
 * Update broken image compatibility
