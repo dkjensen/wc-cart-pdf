@@ -91,17 +91,23 @@ const Save = ({ attributes }) => {
 registerBlockType('wc-cart-pdf/cart-pdf', {
 	name,
 	...metadata,
+	example: {
+		attributes: {
+			text: 'Download Cart as PDF',
+		},
+	},
 	edit: Edit,
 	save: Save,
 });
 
+/**
+ * Register the block with the cart and checkout area.
+ */
 document.addEventListener('DOMContentLoaded', function () {
 	const { registerCheckoutFilters } = window.wc.blocksCheckout;
 
-	// Adjust allowed cart and checkout inner block types.
 	registerCheckoutFilters('example-extension', {
 		additionalCartCheckoutInnerBlockTypes: (value) => {
-			// Add core/quote to any inner block area.
 			value.push('wc-cart-button/cart-pdf-button');
 
 			return value;
