@@ -37,6 +37,7 @@ require_once WC_CART_PDF_PATH . 'wc-cart-pdf-compatibility.php';
 
 require_once WC_CART_PDF_PATH . 'includes/helpers.php';
 require_once WC_CART_PDF_PATH . 'includes/markup.php';
+require_once WC_CART_PDF_PATH . 'includes/blocks.php';
 
 require_once WC_CART_PDF_PATH . 'includes/modules/capture-customer.php';
 require_once WC_CART_PDF_PATH . 'includes/modules/copy-admin.php';

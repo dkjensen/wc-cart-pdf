@@ -11,6 +11,7 @@
 // Import required packages.
 const mix = require('laravel-mix');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extraction-webpack-plugin');
 
 require('laravel-mix-polyfill');
 require('laravel-mix-svg-sprite');
@@ -62,12 +63,17 @@ mix.setPublicPath('./');
 mix.version();
 
 /*
- * Compile JavaScript.
- *
- * @link https://laravel.com/docs/5.6/mix#working-with-scripts
+ * Compile CSS.
  */
 mix
-    .js(`${devPath}/js/wc-cart-pdf.js`, `${distPath}/js`);
+    .sass(`${devPath}/js/blocks.scss`, `${distPath}/blocks`);
+
+/*
+ * Compile JavaScript.
+ */
+mix
+    .js(`${devPath}/js/wc-cart-pdf.js`, `${distPath}/js`)
+    .js(`${devPath}/js/blocks.js`, `${distPath}/blocks`).react();
 
 /*
  * Add custom Webpack configuration.
@@ -82,7 +88,14 @@ mix
 mix.webpackConfig({
     stats: 'minimal',
     performance: {hints: false},
-    externals: {jquery: 'jQuery'}
+    externals: {jquery: 'jQuery'},
+    plugins: [
+		new DependencyExtractionWebpackPlugin(),
+        new CopyWebpackPlugin([{
+			from: `${devPath}/js/block.json`, 
+            to: `${distPath}/blocks`,
+		}])
+    ]
 });
 
 if (process.env.sync) {

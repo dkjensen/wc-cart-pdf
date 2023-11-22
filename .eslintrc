@@ -1,23 +1,26 @@
 {
-    "parser": "@babel/eslint-parser",
-    "extends": [
-
-    ],
-    "env": {
-      "browser": true,
-      "es6": true,
-		  "node": true,
-		  "mocha": true
-    },
-    "globals": {
-      "wp": true,
-      "wpApiSettings": true,
-      "window": true,
-      "document": true
-	  },
-    "rules": {
-      "object-curly-spacing": "warn",
-      "array-bracket-spacing": 1,
-      "space-in-parens": 1
-    }
+	"parser": "@babel/eslint-parser",
+	"extends": [ "plugin:@wordpress/eslint-plugin/recommended" ],
+	"parserOptions": {
+		"babelOptions": {
+			"presets": ["@babel/preset-react"]
+		}
+	},
+	"env": {
+		"browser": true,
+		"es6": true,
+		"node": true,
+		"mocha": true
+	},
+	"globals": {
+		"wp": true,
+		"wpApiSettings": true,
+		"window": true,
+		"document": true
+	},
+	"rules": {
+		"object-curly-spacing": "warn",
+		"array-bracket-spacing": 1,
+		"space-in-parens": 1
+	}
 }

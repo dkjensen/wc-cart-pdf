@@ -1,0 +1,86 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "wc-cart-button/cart-pdf-button",
+    "title": "Cart PDF Button",
+    "category": "design",
+    "description": "Download WooCommerce cart as PDF.",
+    "keywords": [
+        "button",
+        "cart",
+        "pdf"
+    ],
+    "textdomain": "wc-cart-pdf",
+    "attributes": {
+        "text": {
+			"type": "string",
+			"source": "html",
+			"selector": "a",
+			"__experimentalRole": "content",
+			"default": "Download Cart as PDF"
+		},
+        "backgroundColor": {
+			"type": "string"
+		},
+		"textColor": {
+			"type": "string"
+		},
+		"gradient": {
+			"type": "string"
+		},
+		"width": {
+			"type": "number"
+		}
+    },
+    "supports": {
+        "anchor": true,
+		"align": false,
+		"alignWide": false,
+		"color": {
+			"__experimentalSkipSerialization": true,
+			"gradients": true,
+			"__experimentalDefaultControls": {
+				"background": true,
+				"text": true
+			}
+		},
+		"typography": {
+			"fontSize": true,
+			"lineHeight": true,
+			"__experimentalFontFamily": true,
+			"__experimentalFontWeight": true,
+			"__experimentalFontStyle": true,
+			"__experimentalTextTransform": true,
+			"__experimentalTextDecoration": true,
+			"__experimentalLetterSpacing": true,
+			"__experimentalDefaultControls": {
+				"fontSize": true
+			}
+		},
+		"reusable": false,
+		"shadow": true,
+		"spacing": {
+			"__experimentalSkipSerialization": true,
+			"padding": [ "horizontal", "vertical" ],
+			"__experimentalDefaultControls": {
+				"padding": true
+			}
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"radius": true,
+			"style": true,
+			"width": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"radius": true,
+				"style": true,
+				"width": true
+			}
+		},
+		"__experimentalSelector": ".wp-block-wc-cart-button-cart-pdf-button .cart-pdf-button"
+    },
+	"editorScript": "file:./blocks.js",
+	"style": ["file:./blocks.css"]
+}
