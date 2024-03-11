@@ -29,6 +29,8 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 
 2.8.0
 * Migrate settings to WooCommerce > Settings > Integration > Cart PDF
+* Add ability to capture customer details via modal popup before downloading cart as PDF
+* Additional compatbility with WooCommerce blocks
 
 2.7.0
 * Add Cart PDF Button block

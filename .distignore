@@ -39,6 +39,7 @@ package-lock.json
 package.json
 phpcs.xml
 phpunit.xml
+stylelint.config.js
 webpack.config.js
 webpack.gutenberg.config.js
 webpack.mix.js
