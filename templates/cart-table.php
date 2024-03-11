@@ -2,14 +2,11 @@
 /**
  * WC Cart PDF template
  *
- * @package wc-cart-pdf
+ * @package dkjensen/wc-cart-pdf
  */
 
 /**
  * Before template hook
- *
- * @since 1.0.4
- * @package dkjensen/wc-cart-pdf
  */
 do_action( 'wc_cart_pdf_before_template' );
 
@@ -200,7 +197,5 @@ $logo     = get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_heade
 <?php
 /**
  * After template hook
- *
- * @since 1.0.4
  */
 do_action( 'wc_cart_pdf_after_template' );

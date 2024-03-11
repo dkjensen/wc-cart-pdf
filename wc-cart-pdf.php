@@ -31,6 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'WC_CART_PDF_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'WC_CART_PDF_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
+define( 'WC_CART_PDF_TEMPLATE_PATH', WC_CART_PDF_PATH . 'templates/' );
 define( 'WC_CART_PDF_VER', '0.0.0-development' );
 
 require_once WC_CART_PDF_PATH . 'vendor/autoload.php';
@@ -41,9 +42,29 @@ require_once WC_CART_PDF_PATH . 'includes/markup.php';
 require_once WC_CART_PDF_PATH . 'includes/blocks.php';
 require_once WC_CART_PDF_PATH . 'includes/settings.php';
 
-require_once WC_CART_PDF_PATH . 'includes/modules/capture-customer.php';
-require_once WC_CART_PDF_PATH . 'includes/modules/copy-admin.php';
-require_once WC_CART_PDF_PATH . 'includes/modules/unique-increment.php';
+/**
+ * Load modules
+ *
+ * @return void
+ */
+function wc_cart_pdf_load_modules() {
+	if ( get_option( 'wc_cart_pdf_capture_customer', false ) ) {
+		require_once WC_CART_PDF_PATH . 'includes/modules/capture-customer.php';
+	}
+
+	if ( get_option( 'wc_cart_pdf_copy_admin', false ) ) {
+		require_once WC_CART_PDF_PATH . 'includes/modules/copy-admin.php';
+	}
+
+	if ( get_option( 'wc_cart_pdf_unique_increment', false ) ) {
+		require_once WC_CART_PDF_PATH . 'includes/modules/unique-increment.php';
+	}
+
+	if ( get_option( 'wc_cart_pdf_modal_capture', false ) ) {
+		require_once WC_CART_PDF_PATH . 'includes/modules/modal-capture.php';
+	}
+}
+add_action( 'plugins_loaded', 'wc_cart_pdf_load_modules' );
 
 /**
  * Load localization files
@@ -128,8 +149,8 @@ function wc_cart_pdf_process_download() {
 	$mpdf->packTableData        = true;
 	$mpdf->autoLangToFont       = true;
 
-	$cart_table = wc_locate_template( 'cart-table.php', '/woocommerce/wc-cart-pdf/', __DIR__ . '/templates/' );
-	$css        = wc_locate_template( 'pdf-styles.php', '/woocommerce/wc-cart-pdf/', __DIR__ . '/templates/' );
+	$cart_table = wc_locate_template( 'cart-table.php', '/woocommerce/wc-cart-pdf/', WC_CART_PDF_TEMPLATE_PATH );
+	$css        = wc_locate_template( 'pdf-styles.php', '/woocommerce/wc-cart-pdf/', WC_CART_PDF_TEMPLATE_PATH );
 
 	/**
 	 * Disable lazy loading images

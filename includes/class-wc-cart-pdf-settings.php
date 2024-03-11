@@ -45,6 +45,7 @@ class WC_Cart_PDF_Settings extends WC_Integration {
 		$show_checkout    = get_option( 'wc_cart_pdf_show_checkout', null );
 		$capture_customer = get_option( 'wc_cart_pdf_capture_customer', null );
 		$unique_increment = get_option( 'wc_cart_pdf_unique_increment', null );
+		$modal_capture    = get_option( 'wc_cart_pdf_modal_capture', null );
 
 		$this->settings = array(
 			'button_label'     => $button_label,
@@ -56,6 +57,7 @@ class WC_Cart_PDF_Settings extends WC_Integration {
 			'show_checkout'    => $show_checkout,
 			'capture_customer' => $capture_customer,
 			'unique_increment' => $unique_increment,
+			'modal_capture'    => $modal_capture,
 		);
 
 		$form_fields = $this->get_form_fields();
@@ -224,11 +226,11 @@ class WC_Cart_PDF_Settings extends WC_Integration {
 				'default'  => '',
 			),
 			'show_checkout' => array(
-				'title'    => __( 'Show Download Cart as PDF on checkout', 'wc-cart-pdf' ),
-				'desc'     => '',
-				'id'       => 'wc_cart_pdf_show_checkout',
-				'type'     => 'checkbox',
-				'default'  => '',
+				'title'        => __( 'Show Download Cart as PDF on checkout', 'wc-cart-pdf' ),
+				'description'  => 'If using WooCommerce cart and checkout blocks, manually add the "Cart PDF Button" block to the checkout page.',
+				'id'           => 'wc_cart_pdf_show_checkout',
+				'type'         => 'checkbox',
+				'default'      => '',
 			),
 			'capture_customer' => array(
 				'title'    => __( 'Capture customer information on checkout', 'wc-cart-pdf' ),
@@ -241,6 +243,13 @@ class WC_Cart_PDF_Settings extends WC_Integration {
 				'title'    => __( 'Display unique generated PDF number', 'wc-cart-pdf' ),
 				'desc'     => '',
 				'id'       => 'wc_cart_pdf_unique_increment',
+				'type'     => 'checkbox',
+				'default'  => '',
+			),
+			'modal_capture' => array(
+				'title'    => __( 'Require customer to populate their information before downloading PDF', 'wc-cart-pdf' ),
+				'desc'     => '',
+				'id'       => 'wc_cart_pdf_modal_capture',
 				'type'     => 'checkbox',
 				'default'  => '',
 			),

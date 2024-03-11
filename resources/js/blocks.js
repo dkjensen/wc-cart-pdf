@@ -106,7 +106,7 @@ registerBlockType('wc-cart-pdf/cart-pdf', {
 document.addEventListener('DOMContentLoaded', function () {
 	const { registerCheckoutFilters } = window.wc.blocksCheckout;
 
-	registerCheckoutFilters('example-extension', {
+	registerCheckoutFilters('wc-cart-pdf', {
 		additionalCartCheckoutInnerBlockTypes: (value) => {
 			value.push('wc-cart-button/cart-pdf-button');
 
