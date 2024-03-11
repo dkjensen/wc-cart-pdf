@@ -1,0 +1,52 @@
+.wc-cart-pdf-modal {
+    --wc-cart-pdf-modal-bg: #fff;
+    --wc-cart-pdf-padding: 50px 20px 20px;
+    --wc-cart-pdf-modal-width: 600px;
+    --wc-cart-pdf-input-border-color: #ccc;
+
+    background: var(--wc-cart-pdf-modal-bg);
+    border: 0;
+    overflow: hidden;
+    padding: 0;
+    width: var(--wc-cart-pdf-modal-width);
+
+    &-close {
+        all: unset;
+        border: 0;
+        padding: 0;
+        box-shadow: none;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: transparent;
+        cursor: pointer;
+        font-size: 24px;
+        height: 40px;
+        width: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &-content {
+        padding: var(--wc-cart-pdf-padding);
+    }
+
+    form {
+        display: grid;
+        gap: 20px;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"],
+    input[type="number"],
+    input[type="password"],
+    textarea {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 10px;
+        border: 1px solid var(--wc-cart-pdf-input-border-color);
+        border-radius: 5px;
+    }
+}

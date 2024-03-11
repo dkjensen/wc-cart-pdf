@@ -5,7 +5,7 @@
         ]
     ],
     "plugins": [
-        "transform-class-properties",
+        "@babel/plugin-transform-class-properties",
         "@babel/plugin-transform-classes"
     ]
 }

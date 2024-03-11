@@ -5,10 +5,6 @@
  * @package dkjensen/wc-cart-pdf
  */
 
-if ( ! function_exists( 'get_option' ) || ! get_option( 'wc_cart_pdf_copy_admin', false ) ) {
-	return;
-}
-
 /**
  * Maybe send a copy of the PDF to admin
  *

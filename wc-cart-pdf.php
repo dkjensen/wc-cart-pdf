@@ -10,7 +10,7 @@
  * Contributors:        cloudcatch, dkjensen, seattlewebco, davidperez, exstheme
  * Requires at least:   6.2
  * Requires PHP:        5.6.0
- * WC tested up to:     8.3.1
+ * WC tested up to:     8.6.1
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 define( 'WC_CART_PDF_PATH', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 define( 'WC_CART_PDF_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
+define( 'WC_CART_PDF_TEMPLATE_PATH', WC_CART_PDF_PATH . 'templates/' );
 define( 'WC_CART_PDF_VER', '0.0.0-development' );
 
 require_once WC_CART_PDF_PATH . 'vendor/autoload.php';
@@ -39,10 +40,31 @@ require_once WC_CART_PDF_PATH . 'wc-cart-pdf-compatibility.php';
 require_once WC_CART_PDF_PATH . 'includes/helpers.php';
 require_once WC_CART_PDF_PATH . 'includes/markup.php';
 require_once WC_CART_PDF_PATH . 'includes/blocks.php';
+require_once WC_CART_PDF_PATH . 'includes/settings.php';
 
-require_once WC_CART_PDF_PATH . 'includes/modules/capture-customer.php';
-require_once WC_CART_PDF_PATH . 'includes/modules/copy-admin.php';
-require_once WC_CART_PDF_PATH . 'includes/modules/unique-increment.php';
+/**
+ * Load modules
+ *
+ * @return void
+ */
+function wc_cart_pdf_load_modules() {
+	if ( get_option( 'wc_cart_pdf_capture_customer', false ) ) {
+		require_once WC_CART_PDF_PATH . 'includes/modules/capture-customer.php';
+	}
+
+	if ( get_option( 'wc_cart_pdf_copy_admin', false ) ) {
+		require_once WC_CART_PDF_PATH . 'includes/modules/copy-admin.php';
+	}
+
+	if ( get_option( 'wc_cart_pdf_unique_increment', false ) ) {
+		require_once WC_CART_PDF_PATH . 'includes/modules/unique-increment.php';
+	}
+
+	if ( get_option( 'wc_cart_pdf_modal_capture', false ) ) {
+		require_once WC_CART_PDF_PATH . 'includes/modules/modal-capture.php';
+	}
+}
+add_action( 'plugins_loaded', 'wc_cart_pdf_load_modules' );
 
 /**
  * Load localization files
@@ -127,8 +149,8 @@ function wc_cart_pdf_process_download() {
 	$mpdf->packTableData        = true;
 	$mpdf->autoLangToFont       = true;
 
-	$cart_table = wc_locate_template( 'cart-table.php', '/woocommerce/wc-cart-pdf/', __DIR__ . '/templates/' );
-	$css        = wc_locate_template( 'pdf-styles.php', '/woocommerce/wc-cart-pdf/', __DIR__ . '/templates/' );
+	$cart_table = wc_locate_template( 'cart-table.php', '/woocommerce/wc-cart-pdf/', WC_CART_PDF_TEMPLATE_PATH );
+	$css        = wc_locate_template( 'pdf-styles.php', '/woocommerce/wc-cart-pdf/', WC_CART_PDF_TEMPLATE_PATH );
 
 	/**
 	 * Disable lazy loading images
@@ -212,239 +234,11 @@ function wc_cart_pdf_process_download() {
 add_action( 'template_redirect', 'wc_cart_pdf_process_download' );
 
 /**
- * Register various customizer options for modifying the cart PDF
- *
- * @since 1.0.3
- * @param WP_Customize_Manager $wp_customize Theme Customizer object.
- * @return void
- */
-function wc_cart_pdf_customize_register( $wp_customize ) {
-	$wp_customize->add_section(
-		'wc_cart_pdf',
-		array(
-			'title'                 => __( 'Cart PDF', 'wc-cart-pdf' ),
-			'priority'              => 50,
-			'panel'                 => 'woocommerce',
-		)
-	);
-
-	$wp_customize->add_setting(
-		'wc_cart_pdf_button_label',
-		array(
-			'default'               => __( 'Download Cart as PDF', 'wc-cart-pdf' ),
-			'type'                  => 'option',
-			'capability'            => 'manage_woocommerce',
-			'sanitize_callback'     => 'esc_html',
-			'transport'             => 'refresh',
-		)
-	);
-
-	$wp_customize->add_control(
-		'wc_cart_pdf_button_label',
-		array(
-			'label'                 => __( 'Button label', 'wc-cart-pdf' ),
-			'description'           => __( 'Text that is displayed on the button which generates the PDF.', 'wc-cart-pdf' ),
-			'section'               => 'wc_cart_pdf',
-			'settings'              => 'wc_cart_pdf_button_label',
-			'type'                  => 'text',
-		)
-	);
-
-	$wp_customize->add_setting(
-		'wc_cart_pdf_logo',
-		array(
-			'default'               => get_option( 'woocommerce_email_header_image' ),
-			'type'                  => 'option',
-			'capability'            => 'manage_woocommerce',
-			'sanitize_callback'     => 'esc_url',
-			'transport'             => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_control(
-		'wc_cart_pdf_logo',
-		array(
-			'label'                 => __( 'Logo URL', 'wc-cart-pdf' ),
-			'description'           => __( 'Image URL of logo for the cart PDF, must live on current server.', 'wc-cart-pdf' ),
-			'section'               => 'wc_cart_pdf',
-			'settings'              => 'wc_cart_pdf_logo',
-			'type'                  => 'text',
-		)
-	);
-
-	$wp_customize->add_setting(
-		'wc_cart_pdf_logo_width',
-		array(
-			'default'               => 400,
-			'type'                  => 'option',
-			'capability'            => 'manage_woocommerce',
-			'sanitize_callback'     => 'absint',
-			'sanitize_js_callback'  => 'absint',
-			'transport'             => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_control(
-		'wc_cart_pdf_logo_width',
-		array(
-			'label'                 => __( 'Logo width', 'wc-cart-pdf' ),
-			'description'           => __( 'Logo size used for the cart PDF.', 'wc-cart-pdf' ),
-			'section'               => 'wc_cart_pdf',
-			'settings'              => 'wc_cart_pdf_logo_width',
-			'type'                  => 'number',
-			'input_attrs'           => array(
-				'min'           => 0,
-				'step'          => 1,
-			),
-		)
-	);
-
-	$wp_customize->add_setting(
-		'wc_cart_pdf_logo_alignment',
-		array(
-			'default'               => 'center',
-			'type'                  => 'option',
-			'capability'            => 'manage_woocommerce',
-			'sanitize_callback'     => 'wc_clean',
-			'sanitize_js_callback'  => 'wc_clean',
-			'transport'             => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_control(
-		'wc_cart_pdf_logo_alignment',
-		array(
-			'label'                 => __( 'Logo alignment', 'wc-cart-pdf' ),
-			'description'           => __( 'Alignment of the logo within header of the cart PDF.', 'wc-cart-pdf' ),
-			'section'               => 'wc_cart_pdf',
-			'settings'              => 'wc_cart_pdf_logo_alignment',
-			'type'                  => 'radio',
-			'choices'               => array(
-				'left'          => __( 'Left', 'wc-cart-pdf' ),
-				'center'        => __( 'Center', 'wc-cart-pdf' ),
-				'right'         => __( 'Right', 'wc-cart-pdf' ),
-			),
-		)
-	);
-
-	$wp_customize->add_setting(
-		'wc_cart_pdf_open_pdf',
-		array(
-			'default'               => '',
-			'type'                  => 'option',
-			'capability'            => 'manage_woocommerce',
-			'sanitize_callback'     => 'wc_clean',
-			'sanitize_js_callback'  => 'wc_clean',
-			'transport'             => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_setting(
-		'wc_cart_pdf_copy_admin',
-		array(
-			'default'               => '',
-			'type'                  => 'option',
-			'capability'            => 'manage_woocommerce',
-			'sanitize_callback'     => 'wc_clean',
-			'sanitize_js_callback'  => 'wc_clean',
-			'transport'             => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_setting(
-		'wc_cart_pdf_show_checkout',
-		array(
-			'default'               => '',
-			'type'                  => 'option',
-			'capability'            => 'manage_woocommerce',
-			'sanitize_callback'     => 'wc_clean',
-			'sanitize_js_callback'  => 'wc_clean',
-			'transport'             => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_setting(
-		'wc_cart_pdf_capture_customer',
-		array(
-			'default'               => '',
-			'type'                  => 'option',
-			'capability'            => 'manage_woocommerce',
-			'sanitize_callback'     => 'wc_clean',
-			'sanitize_js_callback'  => 'wc_clean',
-			'transport'             => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_setting(
-		'wc_cart_pdf_unique_increment',
-		array(
-			'default'               => '',
-			'type'                  => 'option',
-			'capability'            => 'manage_woocommerce',
-			'sanitize_callback'     => 'wc_clean',
-			'sanitize_js_callback'  => 'wc_clean',
-			'transport'             => 'postMessage',
-		)
-	);
-
-	$wp_customize->add_control(
-		'wc_cart_pdf_open_pdf',
-		array(
-			'label'                 => __( 'Open PDF in new tab instead of downloading', 'wc-cart-pdf' ),
-			'section'               => 'wc_cart_pdf',
-			'settings'              => 'wc_cart_pdf_open_pdf',
-			'type'                  => 'checkbox',
-		)
-	);
-
-	$wp_customize->add_control(
-		'wc_cart_pdf_copy_admin',
-		array(
-			'label'                 => __( 'Send a copy of PDF to admin via email', 'wc-cart-pdf' ),
-			'section'               => 'wc_cart_pdf',
-			'settings'              => 'wc_cart_pdf_copy_admin',
-			'type'                  => 'checkbox',
-		)
-	);
-
-	$wp_customize->add_control(
-		'wc_cart_pdf_show_checkout',
-		array(
-			'label'                 => __( 'Show Download Cart as PDF on checkout', 'wc-cart-pdf' ),
-			'section'               => 'wc_cart_pdf',
-			'settings'              => 'wc_cart_pdf_show_checkout',
-			'type'                  => 'checkbox',
-		)
-	);
-
-	$wp_customize->add_control(
-		'wc_cart_pdf_capture_customer',
-		array(
-			'label'                 => __( 'Capture customer information on checkout', 'wc-cart-pdf' ),
-			'section'               => 'wc_cart_pdf',
-			'settings'              => 'wc_cart_pdf_capture_customer',
-			'type'                  => 'checkbox',
-		)
-	);
-
-	$wp_customize->add_control(
-		'wc_cart_pdf_unique_increment',
-		array(
-			'label'                 => __( 'Display unique generated PDF number', 'wc-cart-pdf' ),
-			'section'               => 'wc_cart_pdf',
-			'settings'              => 'wc_cart_pdf_unique_increment',
-			'type'                  => 'checkbox',
-		)
-	);
-}
-add_action( 'customize_register', 'wc_cart_pdf_customize_register' );
-
-/**
  * Declare compatibility with HPOS.
  */
 add_action(
 	'before_woocommerce_init',
-	function() {
+	function () {
 		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
 			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
 		}

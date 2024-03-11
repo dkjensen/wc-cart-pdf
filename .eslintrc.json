@@ -1,6 +1,6 @@
 {
 	"parser": "@babel/eslint-parser",
-	"extends": [ "plugin:@wordpress/eslint-plugin/recommended" ],
+	"extends": [ "plugin:@wordpress/eslint-plugin/recommended", "plugin:prettier/recommended" ],
 	"parserOptions": {
 		"babelOptions": {
 			"presets": ["@babel/preset-react"]
@@ -9,14 +9,14 @@
 	"env": {
 		"browser": true,
 		"es6": true,
-		"node": true,
-		"mocha": true
+		"node": true
 	},
 	"globals": {
 		"wp": true,
 		"wpApiSettings": true,
 		"window": true,
-		"document": true
+		"document": true,
+		"cartpdf": true
 	},
 	"rules": {
 		"object-curly-spacing": "warn",
