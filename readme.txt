@@ -1,6 +1,6 @@
 === WooCommerce Cart PDF ===
 Contributors: cloudcatch, dkjensen, seattlewebco, davidperez, exstheme
-Tested up to: 6.4.3
+Tested up to: 6.5
 Requires PHP: 5.6.0
 Stable tag: 0.0.0-development
 
@@ -26,6 +26,10 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 2. Customizer settings
 
 == Changelog ==
+
+2.9.0
+* Compatbility with All Products for Woo Subscriptions
+* Improve PDF product thumbnail compatibility
 
 2.8.0
 * Migrate settings to WooCommerce > Settings > Integration > Cart PDF

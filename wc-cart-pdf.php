@@ -10,7 +10,7 @@
  * Contributors:        cloudcatch, dkjensen, seattlewebco, davidperez, exstheme
  * Requires at least:   6.2
  * Requires PHP:        5.6.0
- * WC tested up to:     8.6.1
+ * WC tested up to:     8.7.0
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

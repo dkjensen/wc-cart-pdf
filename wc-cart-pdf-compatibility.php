@@ -37,7 +37,7 @@ add_action( 'plugins_loaded', 'wc_cart_pdf_compatibility_gravity_pdf', 0 );
 function wc_cart_pdf_compatibility_visual_products_configurator() {
 	add_filter(
 		'vpc_get_config_data',
-		function( $thumbnail_code ) {
+		function ( $thumbnail_code ) {
 			$edit_i18n = __( 'Edit', 'wc-cart-pdf' );
 
 			$thumbnail_code = preg_replace( '/<\s*a[^>]*>' . $edit_i18n . '<\s*\/\s*a>/', '', $thumbnail_code ); // Hide the "Edit" link.
@@ -60,6 +60,15 @@ function child_wc_cart_pdf_remove_thumbnail_filters() {
 		remove_all_filters( 'woocommerce_cart_item_thumbnail' );
 		remove_all_filters( 'woocommerce_product_get_image' );
 		remove_all_filters( 'wp_get_attachment_image_attributes' );
+
+		add_filter(
+			'wc_cart_pdf_mpdf',
+			function ( $mpdf ) {
+				$mpdf->curlUserAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36';
+
+				return $mpdf;
+			}
+		);
 	}
 }
 add_action( 'wc_cart_pdf_before_process', 'child_wc_cart_pdf_remove_thumbnail_filters' );
@@ -118,7 +127,7 @@ function wc_cart_pdf_compatibility_language( $args ) {
 		case 'th': // Thai.
 			add_filter(
 				'wc_cart_pdf_mpdf',
-				function( $mpdf ) {
+				function ( $mpdf ) {
 					$mpdf->autoScriptToLang = true;
 
 					return $mpdf;
@@ -147,7 +156,7 @@ function wc_cart_pdf_compatibility_translatepress() {
 		// TranslatePress removes duplicate width / height attributes, let's force the width with a style attribute.
 		add_filter(
 			'wp_get_attachment_image_attributes',
-			function( $attr ) {
+			function ( $attr ) {
 				$attr['style'] = 'width: 60px; height: auto;';
 
 				return $attr;
@@ -157,10 +166,24 @@ function wc_cart_pdf_compatibility_translatepress() {
 		// Translate again without output buffer.
 		add_filter(
 			'wc_cart_pdf_content',
-			function( $content ) {
+			function ( $content ) {
 				return trp_translate( $content );
 			}
 		);
 	}
 }
 add_action( 'wc_cart_pdf_before_process', 'wc_cart_pdf_compatibility_translatepress' );
+
+/**
+ * All Products for Woo Subscriptions
+ *
+ * Hides the subscription options from the cart PDF.
+ *
+ * @return void
+ */
+function wc_cart_pdf_compatibility_all_products_woo_subscriptions() {
+	if ( class_exists( '\WCS_ATT_Display_Cart' ) ) {
+		remove_filter( 'woocommerce_cart_item_price', array( 'WCS_ATT_Display_Cart', 'show_cart_item_subscription_options' ), 1000 );
+	}
+}
+add_action( 'wc_cart_pdf_before_process', 'wc_cart_pdf_compatibility_all_products_woo_subscriptions' );
