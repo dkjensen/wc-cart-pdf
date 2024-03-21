@@ -108,30 +108,17 @@ if ( ! extension_loaded( 'gd' ) || ! extension_loaded( 'mbstring' ) || version_c
 }
 
 /**
- * Generates the PDF for download
+ * Get the mPDF object
  *
- * @return void
+ * @return \Mpdf\Mpdf|bool
  */
-function wc_cart_pdf_process_download() {
+function wc_cart_pdf_render() {
+	if ( ! function_exists( 'WC' ) ) {
+		return false;
+	}
+
 	$content = '';
 	$css     = '';
-
-	if ( ! function_exists( 'WC' ) ) {
-		return;
-	}
-
-	if ( ! isset( $_GET['cart-pdf'] ) ) {
-		return;
-	}
-
-	if ( ! is_cart() || WC()->cart->is_empty() ) {
-		return;
-	}
-
-	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'cart-pdf' ) ) {
-		wc_add_notice( __( 'Invalid nonce. Unable to process PDF for download.', 'wc-cart-pdf' ), 'error' );
-		return;
-	}
 
 	$mpdf = new \Mpdf\Mpdf(
 		apply_filters(
@@ -180,23 +167,8 @@ function wc_cart_pdf_process_download() {
 		$css = apply_filters( 'woocommerce_email_styles', ob_get_clean() );
 	}
 
-	$dest = \Mpdf\Output\Destination::DOWNLOAD;
-
 	if ( is_rtl() ) {
 		$mpdf->SetDirectionality( 'rtl' );
-	}
-
-	$stream_options = apply_filters(
-		'wc_cart_pdf_stream_options',
-		array(
-			'compress'   => 1,
-			'Attachment' => 1,
-		)
-	);
-
-	// phpcs:ignore
-	if ( $stream_options['Attachment'] == 0 || get_option( 'wc_cart_pdf_open_pdf', false ) ) {
-		$dest = \Mpdf\Output\Destination::INLINE;
 	}
 
 	/**
@@ -217,17 +189,80 @@ function wc_cart_pdf_process_download() {
 		exit;
 	}
 
-	$mpdf->Output(
-		apply_filters( 'wc_cart_pdf_filename', 'WC_Cart-' . gmdate( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) ) . '.pdf',
-		apply_filters( 'wc_cart_pdf_destination', $dest )
-	);
-
 	/**
 	 * Perform custom actions after PDF generated
 	 *
 	 * @since 2.0.6
 	 */
 	do_action( 'wc_cart_pdf_output', $mpdf );
+
+	return $mpdf;
+}
+
+/**
+ * AJAX handler for PDF preview
+ *
+ * @return array
+ */
+function wc_cart_pdf_preview() {
+	check_ajax_referer( 'wc-cart-pdf-preview', 'security' );
+
+	$mpdf = wc_cart_pdf_render();
+
+	if ( ! $mpdf ) {
+		return wp_send_json_error( __( 'Unable to generate PDF', 'wc-cart-pdf' ) );
+	}
+
+	$pdf_content = $mpdf->Output( '', \Mpdf\Output\Destination::STRING_RETURN );
+
+	return wp_send_json_success( base64_encode( $pdf_content ) );
+}
+add_action( 'wp_ajax_wc_cart_pdf_preview', 'wc_cart_pdf_preview' );
+
+/**
+ * Generates the PDF for download
+ *
+ * @return void
+ */
+function wc_cart_pdf_process_download() {
+	if ( ! function_exists( 'WC' ) ) {
+		return;
+	}
+
+	if ( ! isset( $_GET['cart-pdf'] ) ) {
+		return;
+	}
+
+	if ( ! is_cart() || WC()->cart->is_empty() ) {
+		return;
+	}
+
+	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'cart-pdf' ) ) {
+		wc_add_notice( __( 'Invalid nonce. Unable to process PDF for download.', 'wc-cart-pdf' ), 'error' );
+		return;
+	}
+
+	$mpdf = wc_cart_pdf_render();
+
+	$dest = \Mpdf\Output\Destination::DOWNLOAD;
+
+	$stream_options = apply_filters(
+		'wc_cart_pdf_stream_options',
+		array(
+			'compress'   => 1,
+			'Attachment' => 1,
+		)
+	);
+
+	// phpcs:ignore
+	if ( $stream_options['Attachment'] == 0 || get_option( 'wc_cart_pdf_open_pdf', false ) ) {
+		$dest = \Mpdf\Output\Destination::INLINE;
+	}
+
+	$mpdf->Output(
+		apply_filters( 'wc_cart_pdf_filename', 'WC_Cart-' . gmdate( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) ) . '.pdf',
+		apply_filters( 'wc_cart_pdf_destination', $dest )
+	);
 
 	exit;
 }

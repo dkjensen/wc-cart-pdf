@@ -22,10 +22,46 @@ class WC_Cart_PDF_Settings extends WC_Integration {
 		$this->init_form_fields();
 		$this->init_settings();
 
+		if ( isset( $_GET['page'] ) && 'wc-settings' === $_GET['page'] && isset( $_GET['section'] ) && 'wc_cart_pdf' === $_GET['section'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		}
+
 		// Save settings if the we are in the right section.
 		if ( isset( $_POST['section'] ) && $this->id === $_POST['section'] ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			add_action( 'woocommerce_update_options_integration_' . $this->id, array( $this, 'process_admin_options' ) );
 		}
+	}
+
+	/**
+	 * Enqueue scripts.
+	 *
+	 * @return void
+	 */
+	public function enqueue_scripts() {
+		wp_register_script( 'wc-cart-pdf-admin-settings', WC_CART_PDF_URL . 'assets/js/settings.js', array(), WC_CART_PDF_VER, true );
+		wp_localize_script(
+			'wc-cart-pdf-admin-settings',
+			'wc_cart_pdf_settings',
+			array(
+				'ajax_url' => admin_url( 'admin-ajax.php' ),
+				'security' => wp_create_nonce( 'wc-cart-pdf-preview' ),
+				'worker'   => WC_CART_PDF_URL . 'assets/js/worker.js',
+			)
+		);
+		wp_enqueue_script( 'wc-cart-pdf-admin-settings' );
+	}
+
+	/**
+	 * Output the admin options table.
+	 *
+	 * @return void
+	 */
+	public function admin_options() {
+		echo '<div id="wc-cart-pdf-settings">';
+		echo '<table class="form-table">' . $this->generate_settings_html( $this->get_form_fields(), false ) . '</table>';  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<canvas id="wc-cart-pdf-preview"></canvas>';
+		echo '</div>';
+		echo '<style>#wc-cart-pdf-settings { display: grid; grid-template-columns: repeat( 2, 1fr ); column-gap: 50px; }</style>';
 	}
 
 	/**

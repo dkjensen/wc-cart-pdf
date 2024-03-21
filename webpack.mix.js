@@ -68,6 +68,8 @@ mix.sass(`${devPath}/scss/blocks.scss`, `${distPath}/blocks`)
  * Compile JavaScript.
  */
 mix.js(`${devPath}/js/wc-cart-pdf.js`, `${distPath}/js`)
+	.js(`${devPath}/js/settings.js`, `${distPath}/js`)
+	.js(`${devPath}/js/worker.js`, `${distPath}/js`)
 	.js(`${devPath}/js/blocks.js`, `${distPath}/blocks`)
 	.react();
 
