@@ -207,6 +207,8 @@ function wc_cart_pdf_render() {
 function wc_cart_pdf_preview() {
 	check_ajax_referer( 'wc-cart-pdf-preview', 'security' );
 
+	define( 'WC_CART_PDF_PREVIEW', true );
+
 	$mpdf = wc_cart_pdf_render();
 
 	if ( ! $mpdf ) {

@@ -3,7 +3,7 @@ import * as pdfjs from 'pdfjs-dist';
 ( function () {
 	const settings = window.wc_cart_pdf_settings || {};
 
-	const getPDFPreview = () => {
+	const getPDFPreview = ( formData = null ) => {
 		// Perform POST request to get the PDF preview.
 		const xhr = new XMLHttpRequest();
 		xhr.open( 'POST', settings.ajax_url );
@@ -18,7 +18,15 @@ import * as pdfjs from 'pdfjs-dist';
 		data.append( 'security', settings.security );
 
 		// Add settings
-		data.append( 'settings', JSON.stringify( settings ) );
+		data.append(
+			'settings',
+			JSON.stringify(
+				Array.from(formData.entries()).reduce((json, [key, value]) => {
+					json[key] = value;
+					return json;
+				}, {} )
+			)
+		);
 
 		// Send request
 		xhr.send( data );
@@ -88,4 +96,13 @@ import * as pdfjs from 'pdfjs-dist';
 	document.addEventListener( 'DOMContentLoaded', () => {
 		getPDFPreview();
 	} );
+
+	const form = document.getElementById('mainform');
+
+	// When form field changes, get the PDF preview.
+	form.addEventListener('change', () => {
+		const formData = new FormData(form);
+
+		getPDFPreview( formData );
+	});
 } )();

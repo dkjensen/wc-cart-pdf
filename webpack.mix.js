@@ -62,6 +62,7 @@ mix.version();
  * Compile CSS.
  */
 mix.sass(`${devPath}/scss/blocks.scss`, `${distPath}/blocks`)
+.sass(`${devPath}/scss/settings.scss`, `${distPath}/css`)
 .sass(`${devPath}/scss/wc-cart-pdf.scss`, `${distPath}/css`);
 
 /*

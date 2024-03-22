@@ -1,0 +1,17 @@
+#wc-cart-pdf-settings {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	column-gap: 50px;
+
+	> :nth-child(2) {
+		text-align: center;
+	}
+}
+
+#wc-cart-pdf-preview {
+	display: inline-block;
+	max-width: 100%;
+	max-height: 85vh;
+	margin: 0 auto;
+	aspect-ratio: 1 / 1.414;
+}

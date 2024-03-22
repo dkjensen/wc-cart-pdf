@@ -38,6 +38,7 @@ class WC_Cart_PDF_Settings extends WC_Integration {
 	 * @return void
 	 */
 	public function enqueue_scripts() {
+		wp_enqueue_style( 'wc-cart-pdf-admin-settings', WC_CART_PDF_URL . 'assets/css/settings.css', array(), WC_CART_PDF_VER );
 		wp_register_script( 'wc-cart-pdf-admin-settings', WC_CART_PDF_URL . 'assets/js/settings.js', array(), WC_CART_PDF_VER, true );
 		wp_localize_script(
 			'wc-cart-pdf-admin-settings',
@@ -57,11 +58,13 @@ class WC_Cart_PDF_Settings extends WC_Integration {
 	 * @return void
 	 */
 	public function admin_options() {
+		echo '<h2>' . esc_html( $this->get_method_title() ) . '</h2>';
+		echo wp_kses_post( wpautop( $this->get_method_description() ) );
+		echo '<div><input type="hidden" name="section" value="' . esc_attr( $this->id ) . '" /></div>';
 		echo '<div id="wc-cart-pdf-settings">';
-		echo '<table class="form-table">' . $this->generate_settings_html( $this->get_form_fields(), false ) . '</table>';  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo '<canvas id="wc-cart-pdf-preview"></canvas>';
+		echo '<div><table class="form-table">' . $this->generate_settings_html( $this->get_form_fields(), false ) . '</table></div>';  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo '<div><canvas id="wc-cart-pdf-preview"></canvas></div>';
 		echo '</div>';
-		echo '<style>#wc-cart-pdf-settings { display: grid; grid-template-columns: repeat( 2, 1fr ); column-gap: 50px; }</style>';
 	}
 
 	/**
