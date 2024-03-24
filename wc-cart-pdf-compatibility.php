@@ -80,27 +80,27 @@ add_action( 'wc_cart_pdf_before_process', 'child_wc_cart_pdf_remove_thumbnail_fi
  * @return array
  */
 function wc_cart_pdf_compatibility_language( $args ) {
+	$defaultConfig = ( new Mpdf\Config\ConfigVariables() )->getDefaults();
+	$fontDirs      = $defaultConfig['fontDir'];
+
+	$defaultFontConfig = ( new Mpdf\Config\FontVariables() )->getDefaults();
+	$fontData          = $defaultFontConfig['fontdata'];
+
+	$args['fontDir'] = array_merge(
+		$fontDirs,
+		array(
+			WC_CART_PDF_PATH . 'assets/fonts',
+		)
+	);
+
 	$site_lang = get_locale();
 
 	switch ( $site_lang ) {
 		case 'zh_CN': // Chinese (simplified).
 		case 'zh_TW': // Chinese (traditional).
-			$defaultConfig = ( new Mpdf\Config\ConfigVariables() )->getDefaults();
-			$fontDirs      = $defaultConfig['fontDir'];
-
-			$defaultFontConfig = ( new Mpdf\Config\FontVariables() )->getDefaults();
-			$fontData          = $defaultFontConfig['fontdata'];
-
-			$args['fontDir'] = array_merge(
-				$fontDirs,
-				array(
-					WC_CART_PDF_PATH . 'resources/fonts',
-				)
-			);
-
 			$args['fontdata'] = $fontData + array(
 				'yahei' => array(
-					'R'  => 'yahei.ttf',
+					'R'  => 'Yahei.ttf',
 				),
 			);
 
@@ -135,6 +135,16 @@ function wc_cart_pdf_compatibility_language( $args ) {
 			);
 
 			$args['mode'] = '+aCJK';
+
+			break;
+		case 'ka_GE': // Georgian.
+			$args['fontdata'] = $fontData + array(
+				'notosans-georgian' => array(
+					'R'  => 'NotoSansGeorgian.ttf',
+				),
+			);
+
+			$args['default_font'] = 'notosans-georgian';
 
 			break;
 	}

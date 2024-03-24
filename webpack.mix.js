@@ -90,6 +90,7 @@ mix.webpackConfig({
 		new CopyPlugin({
 			patterns: [
 				{ from: `${devPath}/js/block.json`, to: `${distPath}/blocks` },
+				{ from: `${devPath}/fonts`, to: `${distPath}/fonts` },
 			],
 		}),
 	],

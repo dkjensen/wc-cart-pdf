@@ -31,7 +31,6 @@ $text_lighter_20 = wc_hex_lighter( $text, 20 );
 ?>
 .wc_cart_pdf_template {
 	color: <?php echo esc_attr( $text_lighter_20 ); ?>;
-	font-family: "dejavusans", "notosans", "helveticaneue", helvetica, roboto, arial, sans-serif;
 	font-size: 13px;
 	margin: 0;
 	text-indent: 0pt;
