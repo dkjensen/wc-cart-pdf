@@ -27,6 +27,9 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 
 == Changelog ==
 
+2.9.1
+* Fix Georgian language not displaying all characters
+
 2.9.0
 * Compatbility with All Products for Woo Subscriptions
 * Improve PDF product thumbnail compatibility
