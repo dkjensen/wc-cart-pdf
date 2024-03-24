@@ -11,6 +11,7 @@
  * Requires at least:   6.2
  * Requires PHP:        5.6.0
  * WC tested up to:     8.7.0
+ * Requires Plugins:    woocommerce
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -202,22 +203,47 @@ function wc_cart_pdf_render() {
 /**
  * AJAX handler for PDF preview
  *
- * @return array
+ * @return void
  */
 function wc_cart_pdf_preview() {
+	if ( ! current_user_can( 'manage_woocommerce' ) ) {
+		wp_send_json_error( __( 'You do not have permission to perform this action.', 'wc-cart-pdf' ) );
+	}
+
 	check_ajax_referer( 'wc-cart-pdf-preview', 'security' );
 
 	define( 'WC_CART_PDF_PREVIEW', true );
 
+	if ( isset( $_POST['settings'] ) ) {
+		$settings = array_map( 'sanitize_text_field', json_decode( sanitize_textarea_field( wp_unslash( $_POST['settings'] ) ), true ) );
+
+		add_filter(
+			'pre_option',
+			function ( $value, $option ) use ( $settings ) {
+				if ( substr( $option, 0, 12 ) !== 'wc_cart_pdf_' ) {
+					return $value;
+				}
+
+				if ( array_key_exists( $option, $settings ) ) {
+					return sanitize_text_field( $settings[ $option ] );
+				}
+
+				return null;
+			},
+			10,
+			2
+		);
+	}
+
 	$mpdf = wc_cart_pdf_render();
 
 	if ( ! $mpdf ) {
-		return wp_send_json_error( __( 'Unable to generate PDF', 'wc-cart-pdf' ) );
+		wp_send_json_error( __( 'Unable to generate PDF', 'wc-cart-pdf' ) );
 	}
 
 	$pdf_content = $mpdf->Output( '', \Mpdf\Output\Destination::STRING_RETURN );
 
-	return wp_send_json_success( base64_encode( $pdf_content ) );
+	wp_send_json_success( base64_encode( $pdf_content ) ); // phpcs:ignore WordPress.PHP.DiscouragedPHPFunctions.obfuscation_base64_encode
 }
 add_action( 'wp_ajax_wc_cart_pdf_preview', 'wc_cart_pdf_preview' );
 

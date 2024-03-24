@@ -1,7 +1,11 @@
 #wc-cart-pdf-settings {
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	column-gap: 50px;
+	grid-template-columns: 1fr;
+	gap: 50px;
+
+	@media (min-width: 1400px) {
+		grid-template-columns: repeat(2, 1fr);
+	}
 
 	> :nth-child(2) {
 		text-align: center;

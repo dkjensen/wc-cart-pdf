@@ -63,8 +63,28 @@ class WC_Cart_PDF_Settings extends WC_Integration {
 		echo '<div><input type="hidden" name="section" value="' . esc_attr( $this->id ) . '" /></div>';
 		echo '<div id="wc-cart-pdf-settings">';
 		echo '<div><table class="form-table">' . $this->generate_settings_html( $this->get_form_fields(), false ) . '</table></div>';  // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo '<div><canvas id="wc-cart-pdf-preview"></canvas></div>';
+		echo '<div><div id="wc-cart-pdf-preview-notices"></div><p><button id="wc-cart-pdf-refresh-preview" class="button button-secondary">' . esc_html__( 'Refresh Preview', 'wc-cart-pdf' ) . '</button></p><canvas id="wc-cart-pdf-preview"></canvas></div>';
 		echo '</div>';
+	}
+
+	/**
+	 * Get settings.
+	 *
+	 * @return array
+	 */
+	public static function get_settings_keys() {
+		return array(
+			'button_label',
+			'logo',
+			'logo_width',
+			'logo_alignment',
+			'open_pdf',
+			'copy_admin',
+			'show_checkout',
+			'capture_customer',
+			'unique_increment',
+			'modal_capture',
+		);
 	}
 
 	/**
@@ -75,29 +95,13 @@ class WC_Cart_PDF_Settings extends WC_Integration {
 	 * @return void
 	 */
 	public function init_settings() {
-		$button_label     = get_option( 'wc_cart_pdf_button_label', null );
-		$logo             = get_option( 'wc_cart_pdf_logo', null );
-		$logo_width       = get_option( 'wc_cart_pdf_logo_width', null );
-		$logo_alignment   = get_option( 'wc_cart_pdf_logo_alignment', null );
-		$open_pdf         = get_option( 'wc_cart_pdf_open_pdf', null );
-		$copy_admin       = get_option( 'wc_cart_pdf_copy_admin', null );
-		$show_checkout    = get_option( 'wc_cart_pdf_show_checkout', null );
-		$capture_customer = get_option( 'wc_cart_pdf_capture_customer', null );
-		$unique_increment = get_option( 'wc_cart_pdf_unique_increment', null );
-		$modal_capture    = get_option( 'wc_cart_pdf_modal_capture', null );
+		$settings_keys = self::get_settings_keys();
 
-		$this->settings = array(
-			'button_label'     => $button_label,
-			'logo'             => $logo,
-			'logo_width'       => $logo_width,
-			'logo_alignment'   => $logo_alignment,
-			'open_pdf'         => $open_pdf,
-			'copy_admin'       => $copy_admin,
-			'show_checkout'    => $show_checkout,
-			'capture_customer' => $capture_customer,
-			'unique_increment' => $unique_increment,
-			'modal_capture'    => $modal_capture,
-		);
+		$this->settings = array();
+
+		foreach ( $settings_keys as $key ) {
+			$this->settings[ $key ] = get_option( 'wc_cart_pdf_' . $key, null );
+		}
 
 		$form_fields = $this->get_form_fields();
 
