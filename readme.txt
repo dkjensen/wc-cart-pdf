@@ -1,8 +1,10 @@
 === WooCommerce Cart PDF ===
 Contributors: cloudcatch, dkjensen, seattlewebco, davidperez, exstheme
-Tested up to: 6.5
+Tested up to: 6.5.5
 Requires PHP: 5.6.0
 Stable tag: 0.0.0-development
+License: GPLv3 or later
+License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
 Adds ability for users and guests to download their WooCommerce cart as PDF
 
@@ -26,6 +28,9 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 2. Customizer settings
 
 == Changelog ==
+
+2.9.2
+* Update compatibility with WooCommerce cart and checkout blocks
 
 2.9.1
 * Fix Georgian language not displaying all characters
