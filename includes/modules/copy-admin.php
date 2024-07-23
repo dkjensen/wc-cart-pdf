@@ -13,7 +13,7 @@
  * @return void
  */
 function wc_cart_pdf_maybe_send_admin_copy( $mpdf ) {
-	$file_path = get_temp_dir() . 'WC_Cart-' . gmdate( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) . '.pdf';
+	$file_path = get_temp_dir() . apply_filters( 'wc_cart_pdf_filename', 'WC_Cart-' . gmdate( 'Ymd' ) . bin2hex( openssl_random_pseudo_bytes( 5 ) ) ) . '.pdf';
 
 	$mpdf->Output( $file_path, 'F' );
 
