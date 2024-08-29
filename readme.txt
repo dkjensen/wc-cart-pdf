@@ -29,6 +29,9 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 
 == Changelog ==
 
+2.9.4
+* Fix fatal error due to missing second parameter on `woocommerce_email_styles` filter. (Filter removed)
+
 2.9.3
 * Fix `wc_cart_pdf_filename` filter not being applied to admin copy
 

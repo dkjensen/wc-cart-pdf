@@ -177,7 +177,7 @@ function wc_cart_pdf_process_download() {
 
 		include $css;
 
-		$css = apply_filters( 'woocommerce_email_styles', ob_get_clean() );
+		$css = ob_get_clean();
 	}
 
 	$dest = \Mpdf\Output\Destination::DOWNLOAD;
