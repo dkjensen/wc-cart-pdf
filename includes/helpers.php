@@ -40,7 +40,6 @@ function wc_cart_pdf_get_customer() {
 
 	if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'POST' === $_SERVER['REQUEST_METHOD'] ) {
 		$customer->set_object_read( false );
-		// $customer->set_props( $_POST );
 	}
 
 	return $customer;
