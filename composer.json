@@ -12,17 +12,14 @@
     "php-stubs/woocommerce-stubs": "*"
   },
   "require": {
-    "mpdf/mpdf": "^8.0"
+    "mpdf/mpdf": "8.2.4"
   },
   "scripts": {
     "test": [
       "phpunit"
     ],
     "phpcs": [
-      "phpcs -s -p"
-    ],
-    "phpcs-pre-commit": [
-      "phpcs -s -p -n --exclude=Generic.Files.LineEndings"
+      "phpcs -s -p --extensions=php"
     ],
     "phpcbf": [
       "phpcbf -p"
@@ -41,6 +38,9 @@
     }
   ],
   "config": {
+    "platform": {
+      "php": "8.0.0"
+    },
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
     }
