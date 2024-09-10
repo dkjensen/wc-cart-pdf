@@ -15,6 +15,24 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set-up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
+          coverage: none
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure GitHub token for Composer
+        run: composer config --global github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add private repository to Composer's global config
+        run: |
+          composer global config repositories.mozart '{"type": "vcs", "url": "https://github.com/dkjensen/mozart"}'
+
+      - name: Install Mozart globally
+        run: composer global require dkjensen/mozart:dev-master
+
       - name: Install npm packages
         run: |
           npm i

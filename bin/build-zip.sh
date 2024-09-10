@@ -9,11 +9,12 @@ echo "Generating build directory..."
 rm -rf "$BUILD_PATH"
 mkdir -p "$DEST_PATH"
 
-echo "Installing PHP and JS dependencies..."
-npm ci --no-optional
+echo "Installing PHP dependencies..."
 composer install --no-dev || exit "$?"
+
 echo "Running JS Build..."
 npm run build || exit "$?"
+
 echo "Generating translations..."
 npm run i18n || exit "$?"
 

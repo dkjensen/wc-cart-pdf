@@ -20,27 +20,19 @@
     }
   },
   "scripts": {
-    "test": [
-      "phpunit"
-    ],
-    "phpcs": [
-      "phpcs -s -p --extensions=php"
-    ],
-    "phpcbf": [
-      "phpcbf -p"
-    ],
     "post-install-cmd": [
-      "mozart compose",
-      "composer dump-autoload",
-      "mkdir -p ./src/dependencies/data; cp -R vendor/mpdf/mpdf/data/ ./src/dependencies",
-      "mkdir -p ./src/dependencies/ttfonts; cp -R vendor/mpdf/mpdf/ttfonts/ ./src/dependencies"
-    ],
-    "post-update-cmd": [
-      "mozart compose",
-      "composer dump-autoload",
       "mkdir -p ./src/data; cp -R vendor/mpdf/mpdf/data/ ./src/",
       "mkdir -p ./src/ttfonts; cp -R vendor/mpdf/mpdf/ttfonts/ ./src/",
-      "bash ./bin/update-assets-dir.sh"
+      "bash ./bin/update-assets-dir.sh",
+      "mozart compose",
+      "composer dump-autoload"
+    ],
+    "post-update-cmd": [
+      "mkdir -p ./src/data; cp -R vendor/mpdf/mpdf/data/ ./src/",
+      "mkdir -p ./src/ttfonts; cp -R vendor/mpdf/mpdf/ttfonts/ ./src/",
+      "bash ./bin/update-assets-dir.sh",
+      "mozart compose",
+      "composer dump-autoload"
     ]
   },
   "authors": [
@@ -66,7 +58,7 @@
       "packages": [
         "mpdf/mpdf"
       ],
-      "delete_vendor_directories": false
+      "delete_vendor_directories": true
     }
   }
 }
