@@ -23,16 +23,16 @@
     "post-install-cmd": [
       "mkdir -p ./src/data; cp -R vendor/mpdf/mpdf/data/ ./src/",
       "mkdir -p ./src/ttfonts; cp -R vendor/mpdf/mpdf/ttfonts/ ./src/",
-      "bash ./bin/update-assets-dir.sh",
       "mozart compose",
-      "composer dump-autoload"
+      "composer dump-autoload",
+      "bash ./bin/update-assets-dir.sh"
     ],
     "post-update-cmd": [
       "mkdir -p ./src/data; cp -R vendor/mpdf/mpdf/data/ ./src/",
       "mkdir -p ./src/ttfonts; cp -R vendor/mpdf/mpdf/ttfonts/ ./src/",
-      "bash ./bin/update-assets-dir.sh",
       "mozart compose",
-      "composer dump-autoload"
+      "composer dump-autoload",
+      "bash ./bin/update-assets-dir.sh"
     ]
   },
   "authors": [
