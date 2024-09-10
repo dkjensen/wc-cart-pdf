@@ -133,7 +133,7 @@ function wc_cart_pdf_process_download() {
 		return;
 	}
 
-	$mpdf = new \Mpdf\Mpdf(
+	$mpdf = new \WCCartPDF\Mpdf\Mpdf(
 		apply_filters(
 			'wc_cart_pdf_mpdf_args',
 			array(

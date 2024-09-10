@@ -14,6 +14,11 @@
   "require": {
     "mpdf/mpdf": "8.2.4"
   },
+  "autoload": {
+    "psr-4": {
+      "WCCartPDF\\": "src/dependencies"
+    }
+  },
   "scripts": {
     "test": [
       "phpunit"
@@ -25,10 +30,17 @@
       "phpcbf -p"
     ],
     "post-install-cmd": [
-      "composer dump-autoload -o"
+      "mozart compose",
+      "composer dump-autoload",
+      "mkdir -p ./src/dependencies/data; cp -R vendor/mpdf/mpdf/data/ ./src/dependencies",
+      "mkdir -p ./src/dependencies/ttfonts; cp -R vendor/mpdf/mpdf/ttfonts/ ./src/dependencies"
     ],
     "post-update-cmd": [
-      "composer dump-autoload -o"
+      "mozart compose",
+      "composer dump-autoload",
+      "mkdir -p ./src/data; cp -R vendor/mpdf/mpdf/data/ ./src/",
+      "mkdir -p ./src/ttfonts; cp -R vendor/mpdf/mpdf/ttfonts/ ./src/",
+      "bash ./bin/update-assets-dir.sh"
     ]
   },
   "authors": [
@@ -43,6 +55,18 @@
     },
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true
+    }
+  },
+  "extra": {
+    "mozart": {
+      "dep_namespace": "WCCartPDF",
+      "dep_directory": "/src/dependencies/",
+      "classmap_directory": "/src/classmap/",
+      "classmap_prefix": "WCCartPDF_",
+      "packages": [
+        "mpdf/mpdf"
+      ],
+      "delete_vendor_directories": false
     }
   }
 }

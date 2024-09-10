@@ -80,10 +80,10 @@ add_action( 'wc_cart_pdf_before_process', 'child_wc_cart_pdf_remove_thumbnail_fi
  * @return array
  */
 function wc_cart_pdf_compatibility_language( $args ) {
-	$defaultConfig = ( new Mpdf\Config\ConfigVariables() )->getDefaults();
+	$defaultConfig = ( new \WCCartPDF\Mpdf\Config\ConfigVariables() )->getDefaults();
 	$fontDirs      = $defaultConfig['fontDir'];
 
-	$defaultFontConfig = ( new Mpdf\Config\FontVariables() )->getDefaults();
+	$defaultFontConfig = ( new \WCCartPDF\Mpdf\Config\FontVariables() )->getDefaults();
 	$fontData          = $defaultFontConfig['fontdata'];
 
 	$args['fontDir'] = array_merge(

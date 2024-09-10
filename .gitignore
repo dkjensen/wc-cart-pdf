@@ -62,6 +62,8 @@ mix-manifest.json
 README.html
 build/
 assets/
+classes/
+src/
 
 # PhpStrom Project Files #
 .idea/
