@@ -57,6 +57,19 @@ jobs:
         run: |
           npm run plugin-zip
 
+      - name: Email release with attachment 
+        uses: dawidd6/action-send-mail@v2
+        with:
+          server_address: smtp.resend.com
+          server_port: 465
+          username: resend
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          from: noreply@resend.dkjensen.com
+          subject: New release of WC Cart PDF
+          body: A new release of WC Cart PDF has been published. Please find the attached zip file.
+          to: ${{ secrets.EMAIL }}
+          attachments: build/wc-cart-pdf.zip
+
       - name: Release
         if: steps.semantic.outputs.new_release_published == 'true'
         uses: softprops/action-gh-release@v1
