@@ -10,7 +10,7 @@
  * Contributors:        cloudcatch, dkjensen, seattlewebco, davidperez, exstheme
  * Requires at least:   6.2
  * Requires PHP:        8.0.0
- * WC tested up to:     9.1.2
+ * WC tested up to:     9.2.3
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -140,6 +140,7 @@ function wc_cart_pdf_process_download() {
 				'mode'           => get_locale(),
 				'format'         => 'A4',
 				'default_font'   => 'dejavusans',
+				'tempDir'        => apply_filters( 'wc_cart_pdf_temp_dir', get_temp_dir() ),
 			)
 		)
 	);
