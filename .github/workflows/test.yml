@@ -46,14 +46,3 @@ jobs:
           tag_name: ${{ steps.semantic.outputs.new_release_version }}
           files: |
             build/wc-cart-pdf.zip
-
-      - name: WordPress Plugin Deploy
-        id: deploy
-        if: steps.semantic.outputs.new_release_published == 'true'
-        uses: 10up/action-wordpress-plugin-deploy@1.5.0
-        env:
-          SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
-          SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-          SLUG: wc-cart-pdf
-          VERSION: ${{ steps.semantic.outputs.new_release_version }}
-          BUILD_DIR: build/wc-cart-pdf
