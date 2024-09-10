@@ -36,6 +36,7 @@ jobs:
       - name: Build release
         shell: bash
         run: |
+          npm ci --no-optional
           npm run plugin-zip
 
       - name: Email release with attachment 
