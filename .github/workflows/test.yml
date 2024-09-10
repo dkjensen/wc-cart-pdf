@@ -39,7 +39,15 @@ jobs:
           npm ci --no-optional
           npm run plugin-zip
 
-      - name: Email release with attachment 
+      - name: Upload to File.io
+        id: upload_file
+        run: |
+          response=$(curl -F "file=@build/wc-cart-pdf.zip" https://file.io)
+          echo "Response: $response"
+          url=$(echo $response | jq -r '.link')
+          echo "::set-output name=file_url::$url"
+
+      - name: Email release with File.io link
         uses: dawidd6/action-send-mail@v2
         with:
           server_address: smtp.resend.com
@@ -48,6 +56,7 @@ jobs:
           password: ${{ secrets.EMAIL_PASSWORD }}
           from: David Jensen <noreply@resend.dkjensen.com>
           subject: New release of WC Cart PDF
-          body: A new release of WC Cart PDF has been published. Please find the attached zip file.
+          body: |
+            A new release of WC Cart PDF has been published.
+            You can download the file from the following link: ${{ steps.upload_file.outputs.file_url }}
           to: ${{ secrets.EMAIL }}
-          attachments: build/wc-cart-pdf.zip
