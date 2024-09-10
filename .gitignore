@@ -41,6 +41,7 @@ vendor/
 vendors/composer/
 !assets/js/vendor/
 wpcs/
+third-party/
 
 # Bower #
 ##########

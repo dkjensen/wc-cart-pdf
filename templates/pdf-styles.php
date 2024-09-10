@@ -235,8 +235,12 @@ td {
 .cart-total-row th,
 .cart-total-row td {
 	background: #fafafa;
+	padding: 50px;
 }
 .cart-total-row td {
+	text-align: right;
+}
+.row-subtotal {
 	text-align: right;
 }
 .woocommerce-remove-coupon {
@@ -249,6 +253,10 @@ td {
 #template_header_meta {
 	font-size: 12px;
 	text-align: right;
+}
+#template_header_meta p {
+	margin-bottom: 20px;
+	padding: 10px;
 }
 #template_footer {
 	color: <?php echo esc_attr( $text_lighter_20 ); ?>;

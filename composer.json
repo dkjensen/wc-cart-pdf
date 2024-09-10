@@ -9,26 +9,24 @@
     "wp-coding-standards/wpcs": "^2.2",
     "squizlabs/php_codesniffer": "^3.5",
     "automattic/vipwpcs": "^2.2",
-    "php-stubs/woocommerce-stubs": "*"
+    "php-stubs/woocommerce-stubs": "*",
+    "sniccowp/php-scoper-wordpress-excludes": "*",
+    "humbug/php-scoper": "^0.17.2"
   },
   "require": {
     "mpdf/mpdf": "8.2.4"
   },
   "scripts": {
-    "test": [
-      "phpunit"
-    ],
-    "phpcs": [
-      "phpcs -s -p --extensions=php"
-    ],
-    "phpcbf": [
-      "phpcbf -p"
-    ],
     "post-install-cmd": [
-      "composer dump-autoload -o"
+      "@prefix-dependencies"
     ],
     "post-update-cmd": [
-      "composer dump-autoload -o"
+      "@prefix-dependencies"
+    ],
+    "prefix-dependencies": [
+      "php-scoper add-prefix --output-dir=./third-party --force --quiet",
+      "echo '{ \"autoload\": { \"classmap\": [\"\"] } }' > ./third-party/composer.json",
+      "@composer dump-autoload --working-dir ./third-party --no-dev --classmap-authoritative"
     ]
   },
   "authors": [

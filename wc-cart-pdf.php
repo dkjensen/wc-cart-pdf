@@ -34,7 +34,7 @@ define( 'WC_CART_PDF_URL', trailingslashit( plugin_dir_url( __FILE__ ) ) );
 define( 'WC_CART_PDF_TEMPLATE_PATH', WC_CART_PDF_PATH . 'templates/' );
 define( 'WC_CART_PDF_VER', '0.0.0-development' );
 
-require_once WC_CART_PDF_PATH . 'vendor/autoload.php';
+require_once WC_CART_PDF_PATH . 'third-party/vendor/scoper-autoload.php';
 require_once WC_CART_PDF_PATH . 'wc-cart-pdf-compatibility.php';
 
 require_once WC_CART_PDF_PATH . 'includes/helpers.php';
@@ -76,7 +76,7 @@ function wc_cart_pdf_language_init() {
 }
 add_action( 'plugins_loaded', 'wc_cart_pdf_language_init' );
 
-if ( ! extension_loaded( 'gd' ) || ! extension_loaded( 'mbstring' ) || version_compare( phpversion(), '5.6.0', '<' ) ) {
+if ( ! extension_loaded( 'gd' ) || ! extension_loaded( 'mbstring' ) || version_compare( phpversion(), '8.0.0', '<' ) ) {
 
 	/**
 	 * Admin notice to display requirements
@@ -88,7 +88,7 @@ if ( ! extension_loaded( 'gd' ) || ! extension_loaded( 'mbstring' ) || version_c
 
 		<div class="notice notice-warning is-dismissible">
 			<p><strong><?php esc_html_e( 'WooCommerce Cart PDF requirements not met', 'wc-cart-pdf' ); ?></strong></p>
-			<p><?php esc_html_e( 'WooCommerce Cart PDF requires at least PHP 5.6.0 with the mbstring and gd extensions loaded. ', 'wc-cart-pdf' ); ?></p>
+			<p><?php esc_html_e( 'WooCommerce Cart PDF requires at least PHP 8.0.0 with the mbstring and gd extensions loaded. ', 'wc-cart-pdf' ); ?></p>
 		</div>
 
 		<?php
@@ -133,7 +133,7 @@ function wc_cart_pdf_process_download() {
 		return;
 	}
 
-	$mpdf = new \Mpdf\Mpdf(
+	$mpdf = new \WCCartPDF\Mpdf\Mpdf(
 		apply_filters(
 			'wc_cart_pdf_mpdf_args',
 			array(
@@ -180,7 +180,7 @@ function wc_cart_pdf_process_download() {
 		$css = ob_get_clean();
 	}
 
-	$dest = \Mpdf\Output\Destination::DOWNLOAD;
+	$dest = 'D';
 
 	if ( is_rtl() ) {
 		$mpdf->SetDirectionality( 'rtl' );
@@ -196,7 +196,7 @@ function wc_cart_pdf_process_download() {
 
 	// phpcs:ignore
 	if ( $stream_options['Attachment'] == 0 || get_option( 'wc_cart_pdf_open_pdf', false ) ) {
-		$dest = \Mpdf\Output\Destination::INLINE;
+		$dest = 'I';
 	}
 
 	/**
@@ -206,8 +206,8 @@ function wc_cart_pdf_process_download() {
 	 */
 	$mpdf = apply_filters( 'wc_cart_pdf_mpdf', $mpdf );
 
-	$mpdf->WriteHTML( $css, \Mpdf\HTMLParserMode::HEADER_CSS );
-	$mpdf->WriteHTML( $content, \Mpdf\HTMLParserMode::HTML_BODY );
+	$mpdf->WriteHTML( $css, 1 );
+	$mpdf->WriteHTML( $content, 2 );
 
 	if ( defined( 'WC_CART_PDF_DEBUG' ) && constant( 'WC_CART_PDF_DEBUG' ) ) {
 		echo '<pre>';

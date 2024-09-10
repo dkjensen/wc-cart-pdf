@@ -17,8 +17,8 @@
 	"phpsab.snifferShowSources": true,
 	"files.eol": "\n",
 	"[php]": {
-		"editor.formatOnSave": true,
-		"editor.defaultFormatter": "valeryanm.vscode-phpsab"
+		// "editor.formatOnSave": true,
+		// "editor.defaultFormatter": "valeryanm.vscode-phpsab"
 	},
 	"[js]": {
 		"editor.formatOnSave": true
