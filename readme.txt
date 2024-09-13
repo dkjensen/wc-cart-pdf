@@ -186,8 +186,8 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 Add the following code snippet to your themes functions.php:
 
     function child_theme_wc_cart_pdf_destination( $dest ) {
-        if ( class_exists( '\Mpdf\Output\Destination' ) ) {
-            $dest = \Mpdf\Output\Destination::INLINE;
+        if ( class_exists( '\WCCartPDF\Mpdf\Output\Destination' ) ) {
+            $dest = \WCCartPDF\Mpdf\Output\Destination::INLINE;
         }
 
         return $dest;
