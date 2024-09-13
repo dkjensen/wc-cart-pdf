@@ -13,11 +13,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      - name: Install npm packages
+      - name: Set-up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
+          coverage: none
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Configure GitHub token for Composer
+        run: composer config --global github-oauth.github.com ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Add private repository to Composer's global config
         run: |
-          npm i
+          composer global config repositories.mozart '{"type": "vcs", "url": "https://github.com/dkjensen/mozart"}'
+
+      - name: Install Mozart globally
+        run: composer global require dkjensen/mozart:dev-master
+
+      - name: Build release
+        shell: bash
+        run: |
+          npm ci --no-optional
 
       - name: Semantic release
         id: semantic
