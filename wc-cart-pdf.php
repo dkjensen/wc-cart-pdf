@@ -124,7 +124,7 @@ function wc_cart_pdf_process_download() {
 		return;
 	}
 
-	if ( ! is_cart() || WC()->cart->is_empty() ) {
+	if ( WC()->cart->is_empty() ) {
 		return;
 	}
 
@@ -232,7 +232,7 @@ function wc_cart_pdf_process_download() {
 
 	exit;
 }
-add_action( 'template_redirect', 'wc_cart_pdf_process_download' );
+add_action( 'template_redirect', 'wc_cart_pdf_process_download', 0 );
 
 /**
  * Declare compatibility with HPOS and Cart / Checkout blocks.

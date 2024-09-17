@@ -29,6 +29,9 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 
 == Changelog ==
 
+3.0.1
+* Fix PDF not generating when changing shipping method
+
 3.0.0
 * **BREAKING CHANGE**: Scoped dependencies to prevent collisions. References to namespace `\Mpdf` is now `\WCCartPDF\Mpdf`
 
