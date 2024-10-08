@@ -34,7 +34,7 @@ $logo     = get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_heade
 
 			?>
 
-			<?php echo esc_html( gmdate( get_option( 'date_format' ) ) ); ?>
+			<?php echo esc_html( date_i18n( get_option( 'date_format' ), current_time( 'timestamp', true ) ) ); ?>
 		</p>
 		<p>
 			<?php echo esc_html( $customer->get_billing_first_name() . ' ' . $customer->get_billing_last_name() ); ?><br>
