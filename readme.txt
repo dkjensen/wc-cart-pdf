@@ -29,6 +29,9 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 
 == Changelog ==
 
+3.0.2
+* Fix PDF template not translating the date
+
 3.0.1
 * Fix PDF not generating when changing shipping method
 
