@@ -2,7 +2,6 @@ import classnames from 'classnames';
 
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import { createBlock } from '@wordpress/blocks';
 import {
 	useBlockProps,
 	RichText,
@@ -47,7 +46,6 @@ const Edit = ({ attributes, setAttributes }) => {
 					...colorProps.style,
 					...spacingProps.style,
 				}}
-				onSplit={() => createBlock('core/paragraph')}
 				identifier="text"
 				rel="nofollow noopener"
 			/>
