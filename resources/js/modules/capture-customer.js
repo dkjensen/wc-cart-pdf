@@ -5,7 +5,7 @@ const saveCustomerData = (object) => {
 	const captureFields = cartpdf.capture_fields || [];
 
 	try {
-		if (!object || typeof object !== 'object') {
+		if (!object || typeof object !== 'object' ) {
 			throw new Error('Invalid object');
 		}
 
@@ -31,6 +31,11 @@ const subscribeToCustomerData = () => {
 	if (typeof wp !== 'undefined' && wp && wp.data) {
 		const debouncedSubscription = debounce(() => {
 			const select = wp.data.select('wc/store/cart');
+
+			if (typeof select !== 'object') {
+				return;
+			}
+
 			const customerData = select.getCustomerData();
 
 			const object = {};
