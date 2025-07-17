@@ -68,10 +68,13 @@ $logo     = get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_heade
 						$thumbnail = apply_filters(
 							'woocommerce_cart_item_thumbnail',
 							$_product->get_image(
-								'woocommerce_thumbnail',
+								array( 
+									apply_filters( 'wc_cart_pdf_thumbnail_width', 60 ), 
+									apply_filters( 'wc_cart_pdf_thumbnail_height', 60 ) 
+								),
 								array(
-									'width'  => 60,
-									'height' => 'auto',
+									'width'  => apply_filters( 'wc_cart_pdf_thumbnail_width', 60 ),
+									'height' => apply_filters( 'wc_cart_pdf_thumbnail_height', 60 ),
 								)
 							),
 							$cart_item,

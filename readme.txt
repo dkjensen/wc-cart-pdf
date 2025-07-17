@@ -1,6 +1,6 @@
 === WooCommerce Cart PDF ===
 Contributors: cloudcatch, dkjensen, seattlewebco, davidperez, exstheme
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 8.0.0
 Stable tag: 0.0.0-development
 License: GPLv3 or later
@@ -28,6 +28,10 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 2. Customizer settings
 
 == Changelog ==
+
+3.1.2
+* Fix product thumbnail width too large
+* Add filters `wc_cart_pdf_thumbnail_width` and `wc_cart_pdf_thumbnail_height`
 
 3.1.1
 * Fix JS error `select.getCustomerData()` undefined under certain scenarios
@@ -60,7 +64,7 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 * Fix Georgian language not displaying all characters
 
 2.9.0
-* Compatbility with All Products for Woo Subscriptions
+* Compatibility with All Products for Woo Subscriptions
 * Improve PDF product thumbnail compatibility
 
 2.8.0
