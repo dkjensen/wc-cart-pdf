@@ -157,27 +157,34 @@ $logo     = get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_heade
 			<?php endforeach; ?>
 
 			<?php
-			if ( wc_tax_enabled() && ! WC()->cart->display_prices_including_tax() ) :
+			if ( wc_tax_enabled() && ! WC()->cart->display_prices_including_tax() ) {
 				$taxable_address = WC()->customer->get_taxable_address();
-				$estimated_text  = WC()->customer->is_customer_outside_base() && ! WC()->customer->has_calculated_shipping()
-						? sprintf( ' <small>' . __( '(estimated for %s)', 'wc-cart-pdf' ) . '</small>', WC()->countries->estimated_for_prefix( $taxable_address[0] ) . WC()->countries->countries[ $taxable_address[0] ] )
-						: '';
+				$estimated_text  = '';
 
-				if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) :
-					?>
-					<?php foreach ( WC()->cart->get_tax_totals() as $code => $tax ) : ?>
-						<tr class="tax-rate tax-rate-<?php echo sanitize_title( $code ); ?> cart-total-row">
-							<th class="row-subtotal" colspan="4" style="text-align: right;"><?php echo esc_html( $tax->label ) . $estimated_text; ?></th>
+				if ( WC()->customer->is_customer_outside_base() && ! WC()->customer->has_calculated_shipping() ) {
+					/* translators: %s location. */
+					$estimated_text = sprintf( ' <small>' . esc_html__( '(estimated for %s)', 'woocommerce' ) . '</small>', WC()->countries->estimated_for_prefix( $taxable_address[0] ) . WC()->countries->countries[ $taxable_address[0] ] );
+				}
+
+				if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) {
+					foreach ( WC()->cart->get_tax_totals() as $code => $tax ) { // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
+						?>
+						<tr class="tax-rate tax-rate-<?php echo esc_attr( sanitize_title( $code ) ); ?> cart-total-row">
+							<th class="row-subtotal" colspan="4" style="text-align: right;"><?php echo esc_html( $tax->label ) . $estimated_text; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></th>
 							<td class="row-subtotal" data-title="<?php echo esc_attr( $tax->label ); ?>"><?php echo wp_kses_post( $tax->formatted_amount ); ?></td>
 						</tr>
-					<?php endforeach; ?>
-				<?php else : ?>
+						<?php
+					}
+				} else {
+					?>
 					<tr class="tax-total cart-total-row">
-						<th class="row-subtotal" colspan="4" style="text-align: right;"><?php echo esc_html( WC()->countries->tax_or_vat() ) . esc_html( $estimated_text ); ?></th>
+						<th class="row-subtotal" colspan="4" style="text-align: right;"><?php echo esc_html( WC()->countries->tax_or_vat() ) . $estimated_text; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></th>
 						<td class="row-subtotal" data-title="<?php echo esc_attr( WC()->countries->tax_or_vat() ); ?>"><?php wc_cart_totals_taxes_total_html(); ?></td>
 					</tr>
-				<?php endif; ?>
-			<?php endif; ?>
+					<?php
+				}
+			}
+			?>
 
 			<?php do_action( 'woocommerce_cart_totals_before_order_total' ); ?>
 
