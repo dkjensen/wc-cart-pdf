@@ -9,7 +9,7 @@ const modalCapture = () => {
 	);
 
 	if (!modal || !modalForm || !modalFormAction || !modalFormErrors) {
-		console.error('WC Cart PDF: Modal capture elements not found.'); // eslint-disable-line no-console
+		console.error('Cart PDF for WooCommerce: Modal capture elements not found.'); // eslint-disable-line no-console
 		return;
 	}
 

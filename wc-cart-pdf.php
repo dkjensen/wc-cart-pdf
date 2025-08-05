@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name:         WooCommerce Cart PDF
+ * Plugin Name:         Cart PDF for WooCommerce
  * Description:         Allows customers to download their cart as a PDF
  * Version:             0.0.0-development
  * Author:              CloudCatch LLC
@@ -87,8 +87,8 @@ if ( ! extension_loaded( 'gd' ) || ! extension_loaded( 'mbstring' ) || version_c
 		?>
 
 		<div class="notice notice-warning is-dismissible">
-			<p><strong><?php esc_html_e( 'WooCommerce Cart PDF requirements not met', 'wc-cart-pdf' ); ?></strong></p>
-			<p><?php esc_html_e( 'WooCommerce Cart PDF requires at least PHP 8.0.0 with the mbstring and gd extensions loaded. ', 'wc-cart-pdf' ); ?></p>
+			<p><strong><?php esc_html_e( 'Cart PDF for WooCommerce requirements not met', 'wc-cart-pdf' ); ?></strong></p>
+			<p><?php esc_html_e( 'Cart PDF for WooCommerce requires at least PHP 8.0.0 with the mbstring and gd extensions loaded. ', 'wc-cart-pdf' ); ?></p>
 		</div>
 
 		<?php

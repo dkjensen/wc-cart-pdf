@@ -16,7 +16,7 @@ class WC_Cart_PDF_Settings extends WC_Integration {
 	public function __construct() {
 		$this->id                 = 'wc_cart_pdf';
 		$this->method_title       = __( 'Cart PDF', 'wc-cart-pdf' );
-		$this->method_description = __( 'WC Cart PDF allows customers to download their cart as a PDF.', 'wc-cart-pdf' );
+		$this->method_description = __( 'Cart PDF for WooCommerce allows customers to download their cart as a PDF.', 'wc-cart-pdf' );
 
 		// Load the settings.
 		$this->init_form_fields();
