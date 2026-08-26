@@ -1,25 +1,21 @@
 {
-    "$schema": "https://schemas.wp.org/trunk/block.json",
-    "apiVersion": 3,
-    "name": "wc-cart-button/cart-pdf-button",
-    "title": "Cart PDF Button",
-    "category": "design",
-    "description": "Download WooCommerce cart as PDF.",
-    "keywords": [
-        "button",
-        "cart",
-        "pdf"
-    ],
-    "textdomain": "wc-cart-pdf",
-    "attributes": {
-        "text": {
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "wc-cart-button/cart-pdf-button",
+	"title": "Cart PDF Button",
+	"category": "design",
+	"description": "Download WooCommerce cart as PDF.",
+	"keywords": [ "button", "cart", "pdf" ],
+	"textdomain": "wc-cart-pdf",
+	"attributes": {
+		"text": {
 			"type": "string",
 			"source": "html",
 			"selector": "a",
 			"role": "content",
 			"default": "Download Cart as PDF"
 		},
-        "backgroundColor": {
+		"backgroundColor": {
 			"type": "string"
 		},
 		"textColor": {
@@ -31,9 +27,9 @@
 		"width": {
 			"type": "number"
 		}
-    },
-    "supports": {
-        "anchor": true,
+	},
+	"supports": {
+		"anchor": true,
 		"splitting": true,
 		"align": false,
 		"alignWide": false,
@@ -82,7 +78,12 @@
 			}
 		},
 		"__experimentalSelector": ".wp-block-wc-cart-button-cart-pdf-button .cart-pdf-button"
-    },
-	"editorScript": "file:./blocks.js",
-	"style": ["file:./blocks.css"]
+	},
+	"example": {
+		"attributes": {
+			"text": "Download Cart as PDF"
+		}
+	},
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
 }

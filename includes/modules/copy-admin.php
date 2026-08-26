@@ -51,6 +51,6 @@ function wc_cart_pdf_maybe_send_admin_copy( $mpdf ) {
 		array( $file_path )
 	);
 
-	unlink( $file_path );
+	wp_delete_file( $file_path );
 }
 add_action( 'wc_cart_pdf_output', 'wc_cart_pdf_maybe_send_admin_copy' );

@@ -38,6 +38,7 @@ Thumbs.db
 # Composer #
 ##########
 vendor/
+bin/strauss.phar
 vendors/composer/
 !assets/js/vendor/
 wpcs/

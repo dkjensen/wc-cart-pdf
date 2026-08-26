@@ -11,19 +11,44 @@
  * @return void
  */
 function wc_cart_pdf_register_blocks() {
-	register_block_type_from_metadata( WC_CART_PDF_PATH . 'assets/blocks' );
+	register_block_type_from_metadata( WC_CART_PDF_PATH . 'assets/blocks/cart-pdf-button' );
 }
 add_action( 'init', 'wc_cart_pdf_register_blocks' );
 
 /**
- * Enqueue editor scripts
+ * Allow the Cart PDF button inside WooCommerce Cart and Checkout blocks.
  *
  * @return void
  */
-function wc_cart_pdf_block_assets() {
-	wp_enqueue_script( 'wc-cart-pdf-blocks', WC_CART_PDF_URL . 'assets/blocks/blocks.js', array(), WC_CART_PDF_VER, true );
+function wc_cart_pdf_enqueue_checkout_filters() {
+	if ( ! wp_script_is( 'wc-blocks-checkout', 'registered' ) ) {
+		return;
+	}
+
+	$asset_path = WC_CART_PDF_PATH . 'assets/js/checkout-filters.asset.php';
+	$asset      = file_exists( $asset_path )
+		? require $asset_path
+		: array(
+			'dependencies' => array(),
+			'version'      => WC_CART_PDF_VER,
+		);
+
+	$dependencies = array_unique(
+		array_merge(
+			$asset['dependencies'],
+			array( 'wc-blocks-checkout' )
+		)
+	);
+
+	wp_enqueue_script(
+		'wc-cart-pdf-checkout-filters',
+		WC_CART_PDF_URL . 'assets/js/checkout-filters.js',
+		$dependencies,
+		$asset['version'],
+		true
+	);
 }
-add_action( 'enqueue_block_editor_assets', 'wc_cart_pdf_block_assets' );
+add_action( 'enqueue_block_assets', 'wc_cart_pdf_enqueue_checkout_filters' );
 
 /**
  * Add the anchor link to the cart button block

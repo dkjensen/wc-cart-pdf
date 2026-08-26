@@ -1,3 +1,6 @@
+/**
+ * External dependencies
+ */
 import Cookies from 'js-cookie';
 
 const modalCapture = () => {
@@ -9,7 +12,10 @@ const modalCapture = () => {
 	);
 
 	if (!modal || !modalForm || !modalFormAction || !modalFormErrors) {
-		console.error('Cart PDF for WooCommerce: Modal capture elements not found.'); // eslint-disable-line no-console
+		// eslint-disable-next-line no-console
+		console.error(
+			'Cart PDF for WooCommerce: Modal capture elements not found.'
+		); // eslint-disable-line no-console
 		return;
 	}
 

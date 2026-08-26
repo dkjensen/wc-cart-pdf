@@ -163,7 +163,7 @@ $logo     = get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_heade
 
 				if ( WC()->customer->is_customer_outside_base() && ! WC()->customer->has_calculated_shipping() ) {
 					/* translators: %s location. */
-					$estimated_text = sprintf( ' <small>' . esc_html__( '(estimated for %s)', 'woocommerce' ) . '</small>', WC()->countries->estimated_for_prefix( $taxable_address[0] ) . WC()->countries->countries[ $taxable_address[0] ] );
+					$estimated_text = sprintf( ' <small>' . esc_html__( '(estimated for %s)', 'wc-cart-pdf' ) . '</small>', WC()->countries->estimated_for_prefix( $taxable_address[0] ) . WC()->countries->countries[ $taxable_address[0] ] );
 				}
 
 				if ( 'itemized' === get_option( 'woocommerce_tax_total_display' ) ) {

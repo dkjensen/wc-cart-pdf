@@ -1,11 +1,22 @@
+/**
+ * External dependencies
+ */
 import Cookies from 'js-cookie';
-import debounce from 'lodash/debounce';
+
+const debounce = (fn, wait) => {
+	let timeoutId;
+
+	return (...args) => {
+		clearTimeout(timeoutId);
+		timeoutId = setTimeout(() => fn(...args), wait);
+	};
+};
 
 const saveCustomerData = (object) => {
 	const captureFields = cartpdf.capture_fields || [];
 
 	try {
-		if (!object || typeof object !== 'object' ) {
+		if (!object || typeof object !== 'object') {
 			throw new Error('Invalid object');
 		}
 

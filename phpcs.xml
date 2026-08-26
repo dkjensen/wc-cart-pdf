@@ -22,13 +22,21 @@
 	<arg name="parallel" value="8" />
 
 	<!-- Configs -->
-	<config name="minimum_supported_wp_version" value="5.0" />
+	<config name="minimum_wp_version" value="6.2" />
 	<config name="testVersion" value="8.0-" />
 
 	<rule ref="WordPress">
-		<exclude name="WordPress.NamingConventions.PrefixAllGlobals.ShortPrefixPassed"/>
-		<exclude name="WordPress.PHP.YodaConditions"/>
 		<exclude name="WordPress.NamingConventions.ValidVariableName"/>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="wc_cart_pdf"/>
+				<element value="WC_CART_PDF"/>
+				<element value="WC_Cart_PDF"/>
+			</property>
+		</properties>
 	</rule>
 
 	<rule ref="WordPress.Files.FileName.NotHyphenatedLowercase">
@@ -41,7 +49,11 @@
 
 	<rule ref="WordPress.NamingConventions.ValidVariableName">
 		<properties>
-			<property name="customPropertiesWhitelist" type="array" value="clientId,clientSecret,redirectUri"/>
+			<property name="allowed_custom_properties" type="array">
+				<element value="clientId"/>
+				<element value="clientSecret"/>
+				<element value="redirectUri"/>
+			</property>
 		</properties>
 	</rule>
 
@@ -57,10 +69,12 @@
 	</rule>
 
 	<rule ref="WordPress.WP.I18n">
-        <properties>
-            <property name="text_domain" type="array" value="wc-cart-pdf"/>
-        </properties>
-    </rule>
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="wc-cart-pdf"/>
+			</property>
+		</properties>
+	</rule>
 
 	<rule ref="PHPCompatibilityWP" />
 

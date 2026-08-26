@@ -12,60 +12,30 @@
     "url": "https://github.com/dkjensen/wc-cart-pdf/issues"
   },
   "homepage": "https://github.com/dkjensen/wc-cart-pdf#readme",
-  "lint-staged": {
-    "*.php": [
-      "php -d display_errors=1 -l",
-      "composer run-script phpcs-pre-commit"
-    ],
-    "*.js": [
-      "eslint --fix"
-    ]
-  },
-  "dependencies": {
-    "js-cookie": "^3.0.5",
-    "lodash": "^4.17.21"
-  },
   "devDependencies": {
     "@babel/core": "^7.24.0",
     "@babel/eslint-parser": "^7.23.10",
-    "@babel/plugin-transform-class-properties": "^7.23.3",
-    "@babel/plugin-transform-classes": "^7.23.8",
-    "@babel/polyfill": "^7.12.1",
-    "@babel/preset-env": "^7.24.0",
     "@babel/preset-react": "^7.23.3",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.11",
-    "@wordpress/dependency-extraction-webpack-plugin": "^5.3.0",
+    "@cloudcatch/wp-esbuild": "^1.2.0",
     "@wordpress/eslint-plugin": "^16.0.0",
-    "@wordpress/stylelint-config": "^21.35.0",
-    "classnames": "^2.5.1",
-    "copy-webpack-plugin": "^12.0.2",
-    "cross-env": "^7.0.3",
+    "clsx": "^2.1.1",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
-    "laravel-mix": "^6.0.49",
-    "node-wp-i18n": "^1.2.7",
+    "js-cookie": "^3.0.5",
     "prettier": "^3.2.5",
-    "prettier-stylelint": "^0.4.2",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-refresh": "^0.14.0",
-    "resolve-url-loader": "^5.0.0",
-    "sass": "^1.68.0",
-    "sass-loader": "^13.3.2",
-    "semantic-release": "^21.1.2",
-    "semantic-release-plugin-update-version-in-files": "^1.1.0",
-    "stylelint-order": "^6.0.4"
+    "semantic-release-plugin-update-version-in-files": "^1.1.0"
+  },
+  "overrides": {
+    "minimatch": "^9.0.7"
   },
   "scripts": {
-    "build": "npx mix --production",
-    "start": "npx mix watch",
+    "build": "NODE_ENV=production wp-esbuild",
+    "start": "wp-esbuild --watch",
     "lint": "npm run lint:scripts && npm run lint:php",
-    "lint:scripts": "eslint './resources/js/*.js'",
+    "lint:scripts": "eslint './resources/**/*.{js,jsx}'",
     "lint:php": "./vendor/bin/phpcs . -s --extensions=php",
-    "i18n": "npm run i18n:textdomain && npm run i18n:pot",
-    "i18n:textdomain": "npx wpi18n addtextdomain --exclude=vendor,tests,node_modules",
-    "i18n:pot": "npx wpi18n makepot --domain-path=languages",
+    "i18n": "wp i18n make-pot . languages/wc-cart-pdf.pot --slug=wc-cart-pdf --domain=wc-cart-pdf --exclude=vendor,node_modules,tests,src,build,assets",
     "plugin-zip": "./bin/build-zip.sh"
   }
 }
