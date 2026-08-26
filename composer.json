@@ -14,25 +14,20 @@
   "require": {
     "mpdf/mpdf": "8.2.4"
   },
-  "autoload": {
-    "psr-4": {
-      "WCCartPDF\\": "src/dependencies"
-    }
-  },
   "scripts": {
+    "prefix-namespaces": [
+      "sh -c 'test -f ./bin/strauss.phar || mkdir -p bin && curl -o bin/strauss.phar -L -C - https://github.com/BrianHenryIE/strauss/releases/download/0.29.1/strauss.phar'",
+      "@php bin/strauss.phar",
+      "@composer dump-autoload"
+    ],
     "post-install-cmd": [
-      "mkdir -p ./src/data; cp -R vendor/mpdf/mpdf/data/ ./src/",
-      "mkdir -p ./src/ttfonts; cp -R vendor/mpdf/mpdf/ttfonts/ ./src/",
-      "mozart compose",
-      "composer dump-autoload",
-      "bash ./bin/update-assets-dir.sh"
+      "@prefix-namespaces"
     ],
     "post-update-cmd": [
-      "mkdir -p ./src/data; cp -R vendor/mpdf/mpdf/data/ ./src/",
-      "mkdir -p ./src/ttfonts; cp -R vendor/mpdf/mpdf/ttfonts/ ./src/",
-      "mozart compose",
-      "composer dump-autoload",
-      "bash ./bin/update-assets-dir.sh"
+      "@prefix-namespaces"
+    ],
+    "post-autoload-dump": [
+      "sh -c 'test -f ./bin/strauss.phar && php bin/strauss.phar include-autoloader || true'"
     ]
   },
   "authors": [
@@ -50,15 +45,14 @@
     }
   },
   "extra": {
-    "mozart": {
-      "dep_namespace": "WCCartPDF",
-      "dep_directory": "/src/dependencies/",
-      "classmap_directory": "/src/classmap/",
+    "strauss": {
+      "target_directory": "src/dependencies",
+      "namespace_prefix": "WCCartPDF\\",
       "classmap_prefix": "WCCartPDF_",
       "packages": [
         "mpdf/mpdf"
       ],
-      "delete_vendor_directories": true
+      "delete_vendor_packages": true
     }
   }
 }
