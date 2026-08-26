@@ -11,9 +11,24 @@
  * @return void
  */
 function wc_cart_pdf_scripts() {
-	wp_enqueue_style( 'wc-cart-pdf', WC_CART_PDF_URL . 'assets/css/wc-cart-pdf.css', array(), WC_CART_PDF_VER );
+	$style_asset_path  = WC_CART_PDF_PATH . 'assets/css/wc-cart-pdf.asset.php';
+	$script_asset_path = WC_CART_PDF_PATH . 'assets/js/wc-cart-pdf.asset.php';
+	$style_asset       = file_exists( $style_asset_path )
+		? require $style_asset_path
+		: array(
+			'dependencies' => array(),
+			'version'      => WC_CART_PDF_VER,
+		);
+	$script_asset      = file_exists( $script_asset_path )
+		? require $script_asset_path
+		: array(
+			'dependencies' => array(),
+			'version'      => WC_CART_PDF_VER,
+		);
 
-	wp_register_script( 'wc-cart-pdf', WC_CART_PDF_URL . 'assets/js/wc-cart-pdf.js', array(), WC_CART_PDF_VER, true );
+	wp_enqueue_style( 'wc-cart-pdf', WC_CART_PDF_URL . 'assets/css/wc-cart-pdf.css', $style_asset['dependencies'], $style_asset['version'] );
+
+	wp_register_script( 'wc-cart-pdf', WC_CART_PDF_URL . 'assets/js/wc-cart-pdf.js', $script_asset['dependencies'], $script_asset['version'], true );
 
 	wp_localize_script(
 		'wc-cart-pdf',

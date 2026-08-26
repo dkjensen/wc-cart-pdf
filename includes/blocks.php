@@ -11,19 +11,9 @@
  * @return void
  */
 function wc_cart_pdf_register_blocks() {
-	register_block_type_from_metadata( WC_CART_PDF_PATH . 'assets/blocks' );
+	register_block_type_from_metadata( WC_CART_PDF_PATH . 'assets/blocks/cart-pdf-button' );
 }
 add_action( 'init', 'wc_cart_pdf_register_blocks' );
-
-/**
- * Enqueue editor scripts
- *
- * @return void
- */
-function wc_cart_pdf_block_assets() {
-	wp_enqueue_script( 'wc-cart-pdf-blocks', WC_CART_PDF_URL . 'assets/blocks/blocks.js', array(), WC_CART_PDF_VER, true );
-}
-add_action( 'enqueue_block_editor_assets', 'wc_cart_pdf_block_assets' );
 
 /**
  * Add the anchor link to the cart button block
