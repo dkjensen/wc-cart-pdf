@@ -53,7 +53,7 @@ add_action( 'wc_cart_pdf_before_process', 'wc_cart_pdf_compatibility_visual_prod
  *
  * @return void
  */
-function child_wc_cart_pdf_remove_thumbnail_filters() {
+function wc_cart_pdf_remove_thumbnail_filters() {
 	if ( defined( 'WC_CART_PDF_THUMBNAIL_COMPATIBILITY' ) && constant( 'WC_CART_PDF_THUMBNAIL_COMPATIBILITY' ) ) {
 		remove_all_filters( 'wp_get_attachment_image_src' );
 		remove_all_filters( 'wp_get_attachment_image' );
@@ -71,7 +71,7 @@ function child_wc_cart_pdf_remove_thumbnail_filters() {
 		);
 	}
 }
-add_action( 'wc_cart_pdf_before_process', 'child_wc_cart_pdf_remove_thumbnail_filters' );
+add_action( 'wc_cart_pdf_before_process', 'wc_cart_pdf_remove_thumbnail_filters' );
 
 /**
  * Multilingual support

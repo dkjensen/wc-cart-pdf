@@ -1,9 +1,6 @@
 name: Deploy
 
 on:
-  pull_request:
-    branches:
-      - master
   push:
     branches:
       - master
@@ -20,6 +17,7 @@ jobs:
         with:
           php-version: 8.0
           coverage: none
+          tools: wp-cli
         env:
           COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

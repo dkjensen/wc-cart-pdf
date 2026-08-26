@@ -17,6 +17,10 @@ export default defineConfig( {
 				global: 'wp.blockEditor',
 				handle: 'wp-block-editor',
 			},
+			'@woocommerce/blocks-checkout': {
+				global: 'wc.blocksCheckout',
+				handle: 'wc-blocks-checkout',
+			},
 		},
 	},
 	blocks: {
@@ -26,7 +30,7 @@ export default defineConfig( {
 	js: {
 		src: 'resources/js',
 		out: 'assets/js',
-		glob: 'wc-cart-pdf.js',
+		glob: '{wc-cart-pdf,checkout-filters}.js',
 	},
 	modules: {
 		enabled: false,

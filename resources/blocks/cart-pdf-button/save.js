@@ -1,6 +1,14 @@
-import classnames from 'classnames';
+/* eslint-disable @wordpress/no-unsafe-wp-apis */
+
+/**
+ * External dependencies
+ */
+import clsx from 'clsx';
 import React from 'react';
 
+/**
+ * WordPress dependencies
+ */
 import {
 	useBlockProps,
 	RichText,
@@ -9,14 +17,14 @@ import {
 	__experimentalGetSpacingClassesAndStyles as getSpacingClassesAndStyles,
 } from '@wordpress/blockEditor';
 
-export default function Save( { attributes } ) {
+export default function Save({ attributes }) {
 	const { text } = attributes;
 
-	const borderProps = getBorderClassesAndStyles( attributes );
-	const colorProps = getColorClassesAndStyles( attributes );
-	const spacingProps = getSpacingClassesAndStyles( attributes );
+	const borderProps = getBorderClassesAndStyles(attributes);
+	const colorProps = getColorClassesAndStyles(attributes);
+	const spacingProps = getSpacingClassesAndStyles(attributes);
 
-	const classes = classnames(
+	const classes = clsx(
 		'cart-pdf-button',
 		'button',
 		'wp-element-button',
@@ -25,16 +33,16 @@ export default function Save( { attributes } ) {
 	);
 
 	return (
-		<div { ...useBlockProps.save() }>
+		<div {...useBlockProps.save()}>
 			<RichText.Content
 				tagName="a"
-				value={ text }
-				className={ classes }
-				style={ {
+				value={text}
+				className={classes}
+				style={{
 					...borderProps.style,
 					...colorProps.style,
 					...spacingProps.style,
-				} }
+				}}
 				target="_blank"
 				rel="nofollow noopener"
 			/>

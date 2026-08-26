@@ -6,9 +6,9 @@
     "phpcompatibility/phpcompatibility-wp": "*",
     "php-stubs/wordpress-stubs": "*",
     "phpcompatibility/php-compatibility": "^9.3",
-    "wp-coding-standards/wpcs": "^2.2",
-    "squizlabs/php_codesniffer": "^3.5",
-    "automattic/vipwpcs": "^2.2",
+    "wp-coding-standards/wpcs": "^3.4.1",
+    "squizlabs/php_codesniffer": "^3.13.5",
+    "automattic/vipwpcs": "^3.1",
     "php-stubs/woocommerce-stubs": "*"
   },
   "require": {

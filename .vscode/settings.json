@@ -1,7 +1,6 @@
 {
 	"editor.codeActionsOnSave": {
-		"source.fixAll": "explicit",
-		"source.fixAll.eslint": "explicit"
+		"source.fixAll.eslint": "always"
 	},
 	"editor.formatOnSave": false,
 	"javascript.format.enable": false,
@@ -20,8 +19,13 @@
 		"editor.formatOnSave": true,
 		"editor.defaultFormatter": "valeryanm.vscode-phpsab"
 	},
+	"[javascript]": {
+		"editor.formatOnSave": false,
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	},
 	"[js]": {
-		"editor.formatOnSave": true
+		"editor.formatOnSave": false,
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
 	},
 	"[json]": {
 		"editor.formatOnSave": false

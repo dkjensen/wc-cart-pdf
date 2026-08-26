@@ -18,12 +18,11 @@
     "@babel/preset-react": "^7.23.3",
     "@cloudcatch/wp-esbuild": "^1.2.0",
     "@wordpress/eslint-plugin": "^16.0.0",
-    "classnames": "^2.5.1",
+    "clsx": "^2.1.1",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.1.3",
     "js-cookie": "^3.0.5",
-    "node-wp-i18n": "^1.2.7",
     "prettier": "^3.2.5",
     "semantic-release-plugin-update-version-in-files": "^1.1.0"
   },
@@ -36,9 +35,7 @@
     "lint": "npm run lint:scripts && npm run lint:php",
     "lint:scripts": "eslint './resources/**/*.{js,jsx}'",
     "lint:php": "./vendor/bin/phpcs . -s --extensions=php",
-    "i18n": "npm run i18n:textdomain && npm run i18n:pot",
-    "i18n:textdomain": "npx wpi18n addtextdomain --exclude=vendor,tests,node_modules",
-    "i18n:pot": "npx wpi18n makepot --domain-path=languages",
+    "i18n": "wp i18n make-pot . languages/wc-cart-pdf.pot --slug=wc-cart-pdf --domain=wc-cart-pdf --exclude=vendor,node_modules,tests,src,build,assets",
     "plugin-zip": "./bin/build-zip.sh"
   }
 }

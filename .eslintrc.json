@@ -18,9 +18,21 @@
 		"document": true,
 		"cartpdf": true
 	},
+	"settings": {
+		"import/core-modules": [
+			"react",
+			"@woocommerce/blocks-checkout",
+			"@wordpress/blockEditor"
+		]
+	},
 	"rules": {
-		"object-curly-spacing": "warn",
-		"array-bracket-spacing": 1,
-		"space-in-parens": 1
+		"object-curly-spacing": "off",
+		"array-bracket-spacing": "off",
+		"space-in-parens": "off",
+		"@wordpress/dependency-group": "error",
+		"@wordpress/i18n-text-domain": [ "error", { "allowedTextDomain": "wc-cart-pdf" } ],
+		"@wordpress/i18n-no-flanking-whitespace": "error",
+		"@wordpress/i18n-hyphenated-range": "error",
+		"@wordpress/react-no-unsafe-timeout": "error"
 	}
 }

@@ -1,3 +1,6 @@
+/**
+ * Internal dependencies
+ */
 import subscribeToCustomerData from './modules/capture-customer';
 import modalCapture from './modules/modal-capture';
 

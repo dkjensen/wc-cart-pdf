@@ -114,10 +114,10 @@ add_action( 'woocommerce_review_order_before_payment', 'wc_cart_pdf_show_checkou
 /**
  * Expand {site_title} placeholder variable
  *
- * @param string $string Default footer text.
+ * @param string $footer_text Default footer text.
  * @return string
  */
-function wc_cart_pdf_footer_text( $string ) {
-	return str_replace( '{site_title}', wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ), $string );
+function wc_cart_pdf_footer_text( $footer_text ) {
+	return str_replace( '{site_title}', wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ), $footer_text );
 }
 add_filter( 'woocommerce_email_footer_text', 'wc_cart_pdf_footer_text' );
