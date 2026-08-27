@@ -29,6 +29,9 @@ Adds ability for users and guests to download their WooCommerce cart as PDF. Use
 
 == Changelog ==
 
+3.4.0
+* Reduce plugin size by cleaning up extra ttfonts included from mPDF
+
 3.3.0
 * Compatibility with WordPress 7.1
 
