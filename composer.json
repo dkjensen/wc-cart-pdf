@@ -18,6 +18,7 @@
     "prefix-namespaces": [
       "sh -c 'test -f ./bin/strauss.phar || mkdir -p bin && curl -o bin/strauss.phar -L -C - https://github.com/BrianHenryIE/strauss/releases/download/0.29.1/strauss.phar'",
       "@php bin/strauss.phar",
+      "sh -c 'ttfonts=src/dependencies/mpdf/mpdf/ttfonts; if [ -d \"$ttfonts\" ]; then find \"$ttfonts\" -type f ! -name \"DejaVu*\" -delete; fi'",
       "@composer dump-autoload"
     ],
     "post-install-cmd": [
@@ -52,6 +53,11 @@
       "packages": [
         "mpdf/mpdf"
       ],
+      "exclude_from_copy": {
+        "file_patterns": [
+          "#(?:^|[/\\\\])ttfonts[/\\\\](?!DejaVu)#"
+        ]
+      },
       "delete_vendor_packages": true
     }
   }
