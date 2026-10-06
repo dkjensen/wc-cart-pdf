@@ -134,8 +134,45 @@ $logo     = get_option( 'wc_cart_pdf_logo', get_option( 'woocommerce_email_heade
 				<th class="row-subtotal" colspan="4" style="text-align: right;"><?php esc_html_e( 'Subtotal', 'wc-cart-pdf' ); ?></th>
 				<td class="row-subtotal" data-title="<?php esc_attr_e( 'Subtotal', 'wc-cart-pdf' ); ?>"><?php wc_cart_totals_subtotal_html(); ?></td>
 			</tr>
-			
-			<?php if ( 0 < WC()->cart->get_shipping_total() ) : ?>
+
+		<?php
+		// Check if "Show Total Weight in PDF" option is enabled
+		if (get_option('wc_cart_pdf_show_weight')):
+			$total_weight = WC()->cart->get_cart_contents_weight();
+
+			if ($total_weight > 0):
+				// Get the weight unit from WooCommerce settings
+				$weight_unit = get_option('woocommerce_weight_unit');
+				$display_weight = $total_weight;
+				$display_unit = $weight_unit;
+				
+				if (get_option('wc_cart_pdf_auto_weight_unit')):
+					// Automatically switch unit if total weight exceeds 1000g or 16oz
+					if ($weight_unit === 'g' && $total_weight >= 1000) {
+						$display_weight = $total_weight / 1000;
+						$display_unit = 'kg';
+					} elseif ($weight_unit === 'oz' && $total_weight >= 16) {
+						$display_weight = $total_weight / 16;
+						$display_unit = 'lbs';
+					}
+				endif;
+				
+				// Format the weight with proper number formatting (2 decimal places)
+				$formatted_weight = wc_format_localized_decimal(number_format($display_weight, 2, '.', ''));
+				?>
+				<tr class="cart-total-weight cart-total-row">
+					<th class="row-subtotal" colspan="4" style="text-align: right;">
+						<?php esc_html_e('Total weight', 'wc-cart-pdf'); ?>
+					</th>
+					<td class="row-subtotal" data-title="<?php esc_attr_e('Total weight', 'wc-cart-pdf'); ?>">
+						<?php echo esc_html($formatted_weight . ' ' . $display_unit); ?>
+					</td>
+				</tr>
+				<?php
+			endif;
+		endif;
+		?>
+					<?php if ( 0 < WC()->cart->get_shipping_total() ) : ?>
 				<tr class="shipping cart-total-row">
 					<th class="row-subtotal" colspan="4" style="text-align: right;"><?php esc_html_e( 'Shipping', 'wc-cart-pdf' ); ?></th>
 					<td class="row-subtotal" data-title="<?php esc_attr_e( 'Shipping', 'wc-cart-pdf' ); ?>"><?php echo WC()->cart->get_cart_shipping_total(); ?></td>
